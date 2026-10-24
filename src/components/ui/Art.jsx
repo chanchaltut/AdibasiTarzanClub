@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { TEAMS } from '../../data/club';
 import { tornStripPath } from '../../utils/helpers';
+import { useLang } from '../../i18n';
 
 /** Global SVG filters — rendered once in the layout. */
 export function SvgDefs() {
@@ -20,18 +21,20 @@ export function SvgDefs() {
   );
 }
 
-export function Crest({ size = 56, className = '', alt = 'Adibasi Tarzan Club crest' }) {
-  return <img className={`crest ${className}`} src="/brand/crest.webp" width={size} height={size} alt={alt} />;
+export function Crest({ size = 56, className = '', alt }) {
+  const { t } = useLang();
+  return <img className={`crest ${className}`} src="/brand/crest.webp" width={size} height={size} alt={alt ?? t('Adibasi Tarzan Club crest')} />;
 }
 
 export function TeamBadge({ code, size = 64 }) {
+  const { t: tr } = useLang();
   const t = TEAMS[code];
   if (!t) return null;
-  if (t.crest) return <img className="team-badge" src={t.crest} width={size} height={size} alt={t.name} />;
+  if (t.crest) return <img className="team-badge" src={t.crest} width={size} height={size} alt={tr(t.name)} />;
   const [a, b] = t.colors;
   const initials = t.name.split(' ').filter((w) => !/^(FC|SC|Club)$/.test(w)).map((w) => w[0]).join('').slice(0, 2);
   return (
-    <svg className="team-badge" width={size} height={size} viewBox="0 0 64 64" role="img" aria-label={t.name}>
+    <svg className="team-badge" width={size} height={size} viewBox="0 0 64 64" role="img" aria-label={tr(t.name)}>
       <path d="M32 3 56 10v20c0 15-10 25-24 31C18 55 8 45 8 30V10Z" fill={a} stroke={b} strokeWidth="2.5" />
       <path d="M32 9 50 14.5V30c0 11.5-7.5 19.5-18 24.5C21.5 49.5 14 41.5 14 30V14.5Z" fill="none" stroke={b} strokeOpacity=".35" />
       <text x="32" y="38" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="800" fontSize="19" fill={b} letterSpacing=".5">
@@ -44,9 +47,10 @@ export function TeamBadge({ code, size = 64 }) {
 /** Back of an ATC shirt with name and number. */
 export function Jersey({ name = '', number = '', className = '' }) {
   const id = useMemo(() => `j${Math.random().toString(36).slice(2, 8)}`, []);
+  const { t } = useLang();
   const body = 'M78 18 Q120 34 162 18 L212 38 L236 92 L200 108 L190 96 L190 236 Q120 246 50 236 L50 96 L40 108 L4 92 L28 38 Z';
   return (
-    <svg className={`jersey ${className}`} viewBox="0 0 240 250" role="img" aria-label={`Shirt number ${number}`}>
+    <svg className={`jersey ${className}`} viewBox="0 0 240 250" role="img" aria-label={t('Shirt number {n}', { n: number })}>
       <defs>
         <clipPath id={`${id}c`}><path d={body} /></clipPath>
         <pattern id={`${id}p`} width="22" height="10" patternUnits="userSpaceOnUse">
@@ -80,12 +84,13 @@ export function Jersey({ name = '', number = '', className = '' }) {
 
 /** A madal drum, for heritage content. */
 export function Drum({ className = '' }) {
+  const { t } = useLang();
   const lace = Array.from({ length: 9 }, (_, i) => {
     const x1 = 46 + i * 17;
     return `M${x1} ${i % 2 ? 70 : 152} L${x1 + 17} ${i % 2 ? 152 : 70}`;
   }).join(' ');
   return (
-    <svg className={`drum ${className}`} viewBox="0 0 240 220" role="img" aria-label="Madal drum">
+    <svg className={`drum ${className}`} viewBox="0 0 240 220" role="img" aria-label={t('Madal drum')}>
       <defs>
         <linearGradient id="drumBody" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#B4632A" />
@@ -109,6 +114,7 @@ export function Drum({ className = '' }) {
 
 /** Wax seal with the club monogram. */
 export function WaxSeal({ size = 88, className = '', label = 'ATC' }) {
+  const { t } = useLang();
   const d = useMemo(() => {
     let s = 9;
     const r = () => ((s = (s * 16807) % 2147483647) / 2147483647);
@@ -122,7 +128,7 @@ export function WaxSeal({ size = 88, className = '', label = 'ATC' }) {
     return `M${pts.join(' L')} Z`;
   }, []);
   return (
-    <svg className={`wax-seal ${className}`} width={size} height={size} viewBox="0 0 100 100" role="img" aria-label="Wax seal">
+    <svg className={`wax-seal ${className}`} width={size} height={size} viewBox="0 0 100 100" role="img" aria-label={t('Wax seal')}>
       <defs>
         <radialGradient id="wax" cx=".38" cy=".32" r=".75">
           <stop offset="0" stopColor="#B23A28" />

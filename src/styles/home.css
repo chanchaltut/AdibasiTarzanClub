@@ -1,6 +1,10 @@
 /* ═══ Hero ═══════════════════════════════════════════════════ */
 .hero { position: relative; background: var(--grain-dark), var(--bark-900); }
-.hero__primary { position: relative; display: block; height: clamp(560px, 78vh, 800px); overflow: hidden; }
+.hero__primary {
+  position: relative; display: flex; align-items: flex-end; overflow: hidden;
+  /* Content sits in flow so the hero grows instead of clipping on short screens */
+  min-height: clamp(560px, 78vh, 800px); padding: 96px 0 168px;
+}
 .hero__photo { position: absolute; inset: 0; }
 .hero__photo img { filter: sepia(.42) saturate(.78) contrast(1.08) brightness(.86); }
 .hero__primary:hover .hero__photo img { transform: scale(1.025); }
@@ -12,14 +16,14 @@
     linear-gradient(90deg, rgba(20, 8, 3, .7) 0%, rgba(20, 8, 3, .2) 55%, transparent 80%);
 }
 .hero__content {
-  position: absolute; left: 0; right: 0; bottom: 168px;
+  position: relative;
   display: flex; flex-direction: column; align-items: flex-start; gap: 18px;
 }
 .hero__kicker { display: flex; align-items: center; gap: 16px; }
 .hero__kicker .script { font-size: 50px; color: var(--gold); margin-bottom: -10px; }
 .hero__title {
   font-family: var(--f-display); font-weight: 800; text-transform: uppercase;
-  font-size: clamp(42px, 5.8vw, 92px); line-height: .9; letter-spacing: -.003em;
+  font-size: clamp(42px, min(5.8vw, 10.5vh), 92px); line-height: .9; letter-spacing: -.003em;
   max-width: 14ch; color: var(--parchment-light); text-wrap: balance;
 }
 .hero__desc { max-width: 560px; font-size: 18px; line-height: 1.55; color: rgba(241, 228, 200, .82); }
@@ -68,8 +72,8 @@ a:hover .play-badge { transform: translate(-50%, -50%) scale(1.08); }
   .hero__partners-slot .script { display: inline; margin-right: 8px; }
 }
 @media (max-width: 840px) {
-  .hero__primary { height: auto; min-height: 0; aspect-ratio: 4 / 5; max-height: 640px; width: 100%; }
-  .hero__content { bottom: 28px; gap: 12px; }
+  .hero__primary { min-height: 0; aspect-ratio: 4 / 5; max-height: 640px; width: 100%; padding: 24px 0 28px; }
+  .hero__content { gap: 12px; }
   .hero__kicker .script { font-size: 38px; }
   .hero__desc { display: none; }
   .hero__below { margin-top: 8px; }

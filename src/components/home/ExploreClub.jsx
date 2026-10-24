@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLang } from '../../i18n';
 import { EXPLORE } from '../../data/club';
 import { tornClip } from '../../utils/helpers';
 import Icon from '../ui/Icon';
@@ -11,11 +11,12 @@ const ART = {
 };
 
 export default function ExploreClub() {
+  const { t, ta } = useLang();
   return (
     <section className="section explore" aria-labelledby="explore-title">
       <div className="wrapper">
         <div className="widget-header">
-          <h2 className="widget-title" id="explore-title">Explore the <span className="script">Club</span></h2>
+          <h2 className="widget-title" id="explore-title">{ta('Explore the *Club*')}</h2>
         </div>
         <ul className="explore__list">
           {EXPLORE.map((e, i) => (
@@ -27,9 +28,9 @@ export default function ExploreClub() {
                 <span className="explore-card__body paper paper--kraft paper--flat">
                   <span className="explore-card__art">{ART[e.art]}</span>
                   <span className="explore-card__info">
-                    <span className="explore-card__title">{e.title}</span>
-                    <span className="explore-card__desc">{e.desc}</span>
-                    <span className="link-arrow">{e.cta} <Icon name="arrow" size={18} /></span>
+                    <span className="explore-card__title">{t(e.title)}</span>
+                    <span className="explore-card__desc">{t(e.desc)}</span>
+                    <span className="link-arrow">{t(e.cta)} <Icon name="arrow" size={18} /></span>
                   </span>
                 </span>
               </Link>

@@ -5,6 +5,7 @@ import { useScroller } from '../../utils/helpers';
 import Icon from '../ui/Icon';
 import { Crest, Photo, Sprig } from '../ui/Art';
 import { SliderControls } from '../ui/Slider';
+import { useLang } from '../../i18n';
 
 const SEEN_KEY = 'atc-stories-seen';
 const readSeen = () => { try { return JSON.parse(localStorage.getItem(SEEN_KEY)) || []; } catch { return []; } };
@@ -15,6 +16,7 @@ const SLIDE_MS = 5200;
 function Viewer({ start, onClose, onSeen }) {
   const [si, setSi] = useState(start);
   const [i, setI] = useState(0);
+  const { t } = useLang();
   const story = STORIES[si];
   const slide = story.slides[i];
 
@@ -46,7 +48,7 @@ function Viewer({ start, onClose, onSeen }) {
   });
 
   return (
-    <div className="story-viewer" role="dialog" aria-label={`Story: ${story.title}`}>
+    <div className="story-viewer" role="dialog" aria-label={t('Story: {title}', { title: t(story.title) })}>
       <div className="story-viewer__frame">
         <div className="story-viewer__bars">
           {story.slides.map((_, k) => (
@@ -61,29 +63,29 @@ function Viewer({ start, onClose, onSeen }) {
         </div>
         <div className="story-viewer__head">
           <Crest size={32} alt="" />
-          <span>{story.title}</span>
-          <button onClick={onClose} aria-label="Close story"><Icon name="close" size={22} /></button>
+          <span>{t(story.title)}</span>
+          <button onClick={onClose} aria-label={t('Close story')}><Icon name="close" size={22} /></button>
         </div>
 
         {slide.photo ? (
           <>
             <Photo src={slide.photo} className="story-viewer__photo" />
-            <p className="story-viewer__caption">{slide.text}</p>
+            <p className="story-viewer__caption">{t(slide.text)}</p>
           </>
         ) : (
           <div className="story-viewer__letter">
             <div className="paper story-viewer__sheet">
-              <p className="hand">{slide.letter}</p>
-              <p className="story-viewer__sign script">ATC</p>
+              <p className="hand">{t(slide.letter)}</p>
+              <p className="story-viewer__sign script">{t('ATC')}</p>
               <Sprig className="story-viewer__sprig" />
             </div>
           </div>
         )}
 
-        <button className="story-viewer__tap story-viewer__tap--prev" onClick={prev} aria-label="Previous" />
-        <button className="story-viewer__tap story-viewer__tap--next" onClick={next} aria-label="Next" />
+        <button className="story-viewer__tap story-viewer__tap--prev" onClick={prev} aria-label={t('Previous')} />
+        <button className="story-viewer__tap story-viewer__tap--next" onClick={next} aria-label={t('Next')} />
       </div>
-      <button className="story-viewer__scrim" onClick={onClose} aria-label="Close" tabIndex={-1} />
+      <button className="story-viewer__scrim" onClick={onClose} aria-label={t('Close')} tabIndex={-1} />
     </div>
   );
 }
@@ -92,6 +94,7 @@ export default function Stories() {
   const s = useScroller();
   const [open, setOpen] = useState(null);
   const [seen, setSeen] = useState(readSeen);
+  const { t, ta } = useLang();
 
   const markSeen = useCallback((id) => {
     setSeen((prev) => {
@@ -106,8 +109,8 @@ export default function Stories() {
     <section className="section stories" aria-labelledby="stories-title">
       <div className="wrapper">
         <div className="widget-header">
-          <h2 className="widget-title" id="stories-title">ATC <span className="script">Stories</span></h2>
-          <SliderControls s={s} label="stories" />
+          <h2 className="widget-title" id="stories-title">{ta('ATC *Stories*')}</h2>
+          <SliderControls s={s} label={t('stories')} />
         </div>
         <ul className="h-scroll stories__row" ref={s.ref}>
           {STORIES.map((st, idx) => (
@@ -116,7 +119,7 @@ export default function Stories() {
                 <span className="story-tile__ring">
                   <Photo src={st.cover} />
                 </span>
-                <span className="story-tile__title">{st.title}</span>
+                <span className="story-tile__title">{t(st.title)}</span>
               </button>
             </li>
           ))}

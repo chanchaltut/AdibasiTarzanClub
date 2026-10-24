@@ -11,12 +11,14 @@ import Gallery from './pages/Gallery';
 import Membership from './pages/Membership';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
+import { LANGS } from './i18n';
 
-export default function App() {
+// The same pages under "/", "/hi" and "/bn"; useLang() reads the prefix.
+export function AppRoutes() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
+    <Routes>
+      {Object.values(LANGS).map(({ code, prefix }) => (
+        <Route key={code} path={prefix || '/'} element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="club" element={<Club />} />
           <Route path="schedule" element={<Schedule />} />
@@ -29,7 +31,15 @@ export default function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Route>
-      </Routes>
+      ))}
+    </Routes>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
     </BrowserRouter>
   );
 }

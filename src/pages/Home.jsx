@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import HeroFeatured from '../components/home/HeroFeatured';
 import PromoCarousel from '../components/home/PromoCarousel';
 import CalendarWidget from '../components/home/CalendarWidget';
@@ -13,7 +12,6 @@ import { useReveal } from '../utils/helpers';
 
 export default function Home() {
   useReveal();
-  useEffect(() => { document.title = 'Adibasi Tarzan Club — Official Website | Est. 1981'; }, []);
 
   return (
     <>

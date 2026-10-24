@@ -3,6 +3,7 @@ import { CLUB, PHOTO } from '../data/club';
 import PageHero from '../components/page/PageHero';
 import { Photo } from '../components/ui/Art';
 import Icon from '../components/ui/Icon';
+import { useLang } from '../i18n';
 
 // SAMPLE captions — swap in real club photos and captions
 const SHOTS = [
@@ -22,6 +23,7 @@ const SHOTS = [
 
 export default function Gallery() {
   const [open, setOpen] = useState(null);
+  const { t, ta } = useLang();
 
   useEffect(() => {
     if (open === null) return undefined;
@@ -50,10 +52,10 @@ export default function Gallery() {
           <ul className="scrapbook">
             {SHOTS.map((s, i) => (
               <li key={s.cap} className="scrap" style={{ '--tilt': `${((i * 37) % 7) - 3}deg` }}>
-                <button className="scrap__btn" onClick={() => setOpen(i)} aria-label={`Open photo: ${s.cap}`}>
+                <button className="scrap__btn" onClick={() => setOpen(i)} aria-label={t('Open photo: {cap}', { cap: t(s.cap) })}>
                   <span className="tape" style={{ top: -10, left: '34%', transform: `rotate(${i % 2 ? 4 : -4}deg)` }} />
-                  <Photo src={s.src} />
-                  <span className="scrap__cap hand">{s.cap}</span>
+                  <Photo src={s.src} alt={`${t(s.cap)} — ${t(CLUB.name)}`} />
+                  <span className="scrap__cap hand">{t(s.cap)}</span>
                 </button>
               </li>
             ))}
@@ -64,24 +66,24 @@ export default function Gallery() {
       <section className="section bg-bark" id="videos">
         <div className="wrapper videos-cta">
           <div>
-            <p className="kicker">ATC Play</p>
-            <h2 className="h2 display">Watch the club <span className="script">on YouTube</span></h2>
-            <p>Highlights, Heritage Night performances and behind-the-scenes from the club's channel.</p>
+            <p className="kicker">{t('ATC Play')}</p>
+            <h2 className="h2 display">{ta('Watch the club *on YouTube*')}</h2>
+            <p>{t("Highlights, Heritage Night performances and behind-the-scenes from the club's channel.")}</p>
           </div>
-          <a className="btn btn--lg" href={CLUB.socials.youtube} target="_blank" rel="noopener noreferrer"><Icon name="youtube" size={20} /> Open channel</a>
+          <a className="btn btn--lg" href={CLUB.socials.youtube} target="_blank" rel="noopener noreferrer"><Icon name="youtube" size={20} /> {t('Open channel')}</a>
         </div>
       </section>
 
       {open !== null && (
-        <div className="lightbox" role="dialog" aria-label={SHOTS[open].cap}>
-          <button className="lightbox__scrim" onClick={() => setOpen(null)} aria-label="Close" tabIndex={-1} />
+        <div className="lightbox" role="dialog" aria-label={t(SHOTS[open].cap)}>
+          <button className="lightbox__scrim" onClick={() => setOpen(null)} aria-label={t('Close')} tabIndex={-1} />
           <figure className="lightbox__figure">
-            <img src={SHOTS[open].src} alt={SHOTS[open].cap} />
-            <figcaption className="hand">{SHOTS[open].cap}</figcaption>
+            <img src={SHOTS[open].src} alt={t(SHOTS[open].cap)} />
+            <figcaption className="hand">{t(SHOTS[open].cap)}</figcaption>
           </figure>
-          <button className="lightbox__nav lightbox__nav--prev slider-btn" onClick={() => setOpen((open - 1 + SHOTS.length) % SHOTS.length)} aria-label="Previous photo"><Icon name="chevron-left" /></button>
-          <button className="lightbox__nav lightbox__nav--next slider-btn" onClick={() => setOpen((open + 1) % SHOTS.length)} aria-label="Next photo"><Icon name="chevron-right" /></button>
-          <button className="lightbox__close" onClick={() => setOpen(null)} aria-label="Close"><Icon name="close" size={26} /></button>
+          <button className="lightbox__nav lightbox__nav--prev slider-btn" onClick={() => setOpen((open - 1 + SHOTS.length) % SHOTS.length)} aria-label={t('Previous photo')}><Icon name="chevron-left" /></button>
+          <button className="lightbox__nav lightbox__nav--next slider-btn" onClick={() => setOpen((open + 1) % SHOTS.length)} aria-label={t('Next photo')}><Icon name="chevron-right" /></button>
+          <button className="lightbox__close" onClick={() => setOpen(null)} aria-label={t('Close')}><Icon name="close" size={26} /></button>
         </div>
       )}
     </>

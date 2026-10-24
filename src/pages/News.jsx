@@ -3,11 +3,13 @@ import { NEWS, PHOTO } from '../data/club';
 import PageHero from '../components/page/PageHero';
 import { NewsCard } from '../components/home/NewsGrid';
 import { useReveal } from '../utils/helpers';
+import { useLang } from '../i18n';
 
 const TAGS = ['All', ...new Set(NEWS.map((n) => n.tag))];
 
 export default function News() {
   const [tag, setTag] = useState('All');
+  const { t } = useLang();
   const list = tag === 'All' ? NEWS : NEWS.filter((n) => n.tag === tag);
   useReveal([tag]);
 
@@ -22,10 +24,10 @@ export default function News() {
       />
       <section className="section bg-parchment news">
         <div className="wrapper">
-          <div className="chips" role="tablist" aria-label="Filter news">
-            {TAGS.map((t) => (
-              <button key={t} role="tab" aria-selected={tag === t} className={`chip ${tag === t ? 'is-active' : ''}`} onClick={() => setTag(t)}>
-                {t}
+          <div className="chips" role="tablist" aria-label={t('Filter news')}>
+            {TAGS.map((tg) => (
+              <button key={tg} role="tab" aria-selected={tag === tg} className={`chip ${tag === tg ? 'is-active' : ''}`} onClick={() => setTag(tg)}>
+                {t(tg)}
               </button>
             ))}
           </div>

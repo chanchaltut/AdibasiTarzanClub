@@ -5,6 +5,7 @@ import { FaqList } from './Club';
 import { WaxSeal } from '../components/ui/Art';
 import Icon from '../components/ui/Icon';
 import { useReveal } from '../utils/helpers';
+import { useLang } from '../i18n';
 
 const STEPS = [
   { n: '01', title: 'Write or visit', text: 'Send us a letter below, or visit the club office any evening.' },
@@ -20,6 +21,7 @@ const MEMBER_FAQ = [
 
 export default function Membership() {
   useReveal();
+  const { t, ta } = useLang();
   return (
     <>
       <PageHero
@@ -33,15 +35,15 @@ export default function Membership() {
       <section className="section bg-parchment">
         <div className="wrapper">
           <ul className="tiers">
-            {MEMBERSHIP_TIERS.map((t) => (
-              <li key={t.name} className={`tier paper ${t.featured ? 'tier--featured' : ''}`} data-reveal>
-                {t.featured && <WaxSeal size={86} className="tier__seal" />}
-                <p className="tier__price serif">{t.price}</p>
-                <h2 className="tier__name display">{t.name}</h2>
+            {MEMBERSHIP_TIERS.map((tier) => (
+              <li key={tier.name} className={`tier paper ${tier.featured ? 'tier--featured' : ''}`} data-reveal>
+                {tier.featured && <WaxSeal size={86} className="tier__seal" />}
+                <p className="tier__price serif">{t(tier.price)}</p>
+                <h2 className="tier__name display">{t(tier.name)}</h2>
                 <ul className="tier__perks">
-                  {t.perks.map((p) => <li key={p}><Icon name="seal" size={18} />{p}</li>)}
+                  {tier.perks.map((p) => <li key={p}><Icon name="seal" size={18} />{t(p)}</li>)}
                 </ul>
-                <a href="#join" className={`btn ${t.featured ? '' : 'btn--outline-ink'}`}>Join as {t.name}</a>
+                <a href="#join" className={`btn ${tier.featured ? '' : 'btn--outline-ink'}`}>{t('Join as {name}', { name: t(tier.name) })}</a>
               </li>
             ))}
           </ul>
@@ -50,13 +52,13 @@ export default function Membership() {
 
       <section className="section bg-bark">
         <div className="wrapper">
-          <div className="widget-header"><h2 className="widget-title">How to <span className="script">join</span></h2></div>
+          <div className="widget-header"><h2 className="widget-title">{ta('How to *join*')}</h2></div>
           <ol className="steps">
             {STEPS.map((s) => (
               <li key={s.n} className="step" data-reveal>
                 <span className="step__n display">{s.n}</span>
-                <span className="step__title display">{s.title}</span>
-                <span className="step__text">{s.text}</span>
+                <span className="step__title display">{t(s.title)}</span>
+                <span className="step__text">{t(s.text)}</span>
               </li>
             ))}
           </ol>
@@ -66,8 +68,8 @@ export default function Membership() {
       <section className="section bg-parchment">
         <div className="wrapper faq-wrap">
           <div>
-            <p className="kicker kicker--ink">Membership</p>
-            <h2 className="h2 display">Good <span className="script">to know</span></h2>
+            <p className="kicker kicker--ink">{t('Membership')}</p>
+            <h2 className="h2 display">{ta('Good *to know*')}</h2>
           </div>
           <FaqList items={MEMBER_FAQ} />
         </div>

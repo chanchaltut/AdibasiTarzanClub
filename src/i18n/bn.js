@@ -1,0 +1,598 @@
+// Bengali — keys are the English text used in the code and src/data/club.js.
+// "*word*" marks the script-font accent and "[words]" an inline link; keep both
+// markers but place them wherever reads naturally.
+
+export default {
+  // ─── Club identity & places ─────────────────────────────────
+  'Adibasi Tarzan Club': 'আদিবাসী টারজান ক্লাব',
+  ATC: 'ATC',
+  'Est. 1981 · S. Akhanagar': 'প্রতিষ্ঠা 1981 · এস. আখানগর',
+  'Adibasi Tarzan Club crest': 'আদিবাসী টারজান ক্লাবের প্রতীক',
+  'Rooted in the soil. United in spirit.': 'মাটির টানে, প্রাণের বাঁধনে।',
+  'S. Akhanagar': 'এস. আখানগর',
+  'S. Akhanagar Ground': 'এস. আখানগর মাঠ',
+  'S. Akhanagar, Kaliyaganj': 'এস. আখানগর, কালিয়াগঞ্জ',
+  'S. Akhanagar · Kaliyaganj · Uttar Dinajpur': 'এস. আখানগর · কালিয়াগঞ্জ · উত্তর দিনাজপুর',
+  'Kaliyaganj, Uttar Dinajpur': 'কালিয়াগঞ্জ, উত্তর দিনাজপুর',
+  'West Bengal 733129, India': 'পশ্চিমবঙ্গ 733129, ভারত',
+  'Map of S. Akhanagar, Kaliyaganj': 'এস. আখানগর, কালিয়াগঞ্জের মানচিত্র',
+  'Club Grounds': 'ক্লাব প্রাঙ্গণ',
+  'Club Hall': 'ক্লাব হল',
+  'Itahar Stadium': 'ইটাহার স্টেডিয়াম',
+  'Hemtabad Ground': 'হেমতাবাদ মাঠ',
+
+  // ─── SEO titles & descriptions ──────────────────────────────
+  'Adibasi Tarzan Club — Kaliyaganj Football Club Since 1981': 'আদিবাসী টারজান ক্লাব — কালিয়াগঞ্জের ফুটবল ক্লাব, 1981 থেকে',
+  'Official site of Adibasi Tarzan Club (ATC), the football and heritage club of S. Akhanagar, Kaliyaganj, Uttar Dinajpur since 1981. Fixtures, news, squad and membership.':
+    'আদিবাসী টারজান ক্লাবের (ATC) অফিশিয়াল ওয়েবসাইট — 1981 সাল থেকে এস. আখানগর, কালিয়াগঞ্জ, উত্তর দিনাজপুরের ফুটবল ও ঐতিহ্যের ক্লাব। ম্যাচ সূচি, খবর, দল ও সদস্যপদ।',
+  'About the Club — History, Ground & Honours': 'ক্লাব পরিচিতি — ইতিহাস, মাঠ ও সম্মাননা',
+  'The story of Adibasi Tarzan Club: founded in 1981 in S. Akhanagar, Kaliyaganj. Club history, home ground, honours, heritage wing, community work and FAQs.':
+    'আদিবাসী টারজান ক্লাবের গল্প: 1981 সালে এস. আখানগর, কালিয়াগঞ্জে প্রতিষ্ঠিত। ক্লাবের ইতিহাস, ঘরের মাঠ, সম্মাননা, ঐতিহ্য বিভাগ, সামাজিক কাজ ও প্রায়শই জিজ্ঞাসিত প্রশ্ন।',
+  'Fixtures, Results & Club Events': 'ম্যাচ সূচি, ফলাফল ও ক্লাবের অনুষ্ঠান',
+  'Upcoming Adibasi Tarzan Club fixtures, latest results and club events — District League, the ATC Annual Cup, Heritage Night and more at S. Akhanagar Ground.':
+    'আদিবাসী টারজান ক্লাবের আসন্ন ম্যাচ, সাম্প্রতিক ফলাফল ও ক্লাবের অনুষ্ঠান — জেলা লিগ, ATC বার্ষিক কাপ, ঐতিহ্য সন্ধ্যা এবং এস. আখানগর মাঠে আরও অনেক কিছু।',
+  'Latest News': 'সাম্প্রতিক খবর',
+  'Match reports, club announcements, youth football and heritage news from Adibasi Tarzan Club, S. Akhanagar, Kaliyaganj, Uttar Dinajpur.':
+    'আদিবাসী টারজান ক্লাব, এস. আখানগর, কালিয়াগঞ্জ, উত্তর দিনাজপুর থেকে ম্যাচ রিপোর্ট, ক্লাবের ঘোষণা, যুব ফুটবল ও ঐতিহ্যের খবর।',
+  'First Team Squad & Players': 'প্রথম দল ও খেলোয়াড়',
+  'Meet the Adibasi Tarzan Club first team — goalkeepers, defenders, midfielders and forwards wearing the brown and gold for S. Akhanagar, Kaliyaganj.':
+    'আদিবাসী টারজান ক্লাবের প্রথম দলের সঙ্গে পরিচিত হোন — এস. আখানগর, কালিয়াগঞ্জের হয়ে বাদামি-সোনালি জার্সি পরা গোলকিপার, ডিফেন্ডার, মিডফিল্ডার ও ফরোয়ার্ড।',
+  'Committee & Office-Bearers': 'কমিটি ও পদাধিকারী',
+  'The elected committee and office-bearers who run Adibasi Tarzan Club — president, secretary, treasurer, sports and cultural secretaries and head coach.':
+    'আদিবাসী টারজান ক্লাব পরিচালনাকারী নির্বাচিত কমিটি ও পদাধিকারীরা — সভাপতি, সম্পাদক, কোষাধ্যক্ষ, ক্রীড়া ও সাংস্কৃতিক সম্পাদক এবং প্রধান কোচ।',
+  'Photo Gallery': 'ছবির গ্যালারি',
+  'Photos from Adibasi Tarzan Club matchdays, youth sessions, floodlit training and club life at S. Akhanagar Ground, Kaliyaganj.':
+    'এস. আখানগর মাঠ, কালিয়াগঞ্জ থেকে আদিবাসী টারজান ক্লাবের ম্যাচের দিন, যুব অনুশীলন, ফ্লাডলাইটে প্রশিক্ষণ ও ক্লাব জীবনের ছবি।',
+  'Membership — Join the Club': 'সদস্যপদ — ক্লাবে যোগ দিন',
+  'Join Adibasi Tarzan Club as a Supporter, Member or Life Member. Vote at the AGM, get priority seats at the Annual Cup final and stand with S. Akhanagar.':
+    'সমর্থক, সদস্য বা আজীবন সদস্য হিসেবে আদিবাসী টারজান ক্লাবে যোগ দিন। বার্ষিক সাধারণ সভায় ভোট দিন, বার্ষিক কাপ ফাইনালে অগ্রাধিকার আসন পান এবং এস. আখানগরের পাশে দাঁড়ান।',
+  'Contact & Partnerships': 'যোগাযোগ ও পার্টনারশিপ',
+  'Contact Adibasi Tarzan Club in S. Akhanagar, Kaliyaganj, Uttar Dinajpur. Write to the club, register a team for the Annual Cup or become a club partner.':
+    'এস. আখানগর, কালিয়াগঞ্জ, উত্তর দিনাজপুরে আদিবাসী টারজান ক্লাবের সঙ্গে যোগাযোগ করুন। ক্লাবকে লিখুন, বার্ষিক কাপে দল নথিভুক্ত করুন বা ক্লাবের পার্টনার হোন।',
+  'Page not found': 'পেজটি পাওয়া যায়নি',
+  'This page could not be found. Head back to the Adibasi Tarzan Club home page for fixtures, news and club information.':
+    'এই পেজটি খুঁজে পাওয়া যায়নি। ম্যাচ সূচি, খবর ও ক্লাবের তথ্যের জন্য আদিবাসী টারজান ক্লাবের হোম পেজে ফিরে যান।',
+
+  // ─── Header, menus & navigation ─────────────────────────────
+  'ATC Annual Cup 2026 — team registration is open': 'ATC বার্ষিক কাপ 2026 — দলের নাম নথিভুক্তি চলছে',
+  Register: 'নাম লেখান',
+  'Member Area': 'সদস্য বিভাগ',
+  'Join the Club': 'ক্লাবে যোগ দিন',
+  Language: 'ভাষা',
+  Viewing: 'চালু',
+  Home: 'হোম',
+  'Club services': 'ক্লাবের পরিষেবা',
+  'Teams and club': 'দল ও ক্লাব',
+  Search: 'খুঁজুন',
+  Members: 'সদস্য',
+  'Open menu': 'মেনু খুলুন',
+  Menu: 'মেনু',
+  'Close menu': 'মেনু বন্ধ করুন',
+  Main: 'প্রধান',
+  'Quick links': 'দ্রুত লিংক',
+  'Search the club': 'ক্লাবে খুঁজুন',
+  'Become a Member': 'সদস্য হোন',
+  '*Since* 1981 · S. Akhanagar, Kaliyaganj': '*1981 থেকে* · এস. আখানগর, কালিয়াগঞ্জ',
+  Breadcrumb: 'পথনির্দেশ',
+  '{title} sections': '{title} — বিভাগসমূহ',
+
+  'Events & Tickets': 'অনুষ্ঠান ও টিকিট',
+  'First Team Fixtures': 'প্রথম দলের ম্যাচ',
+  'ATC Annual Cup': 'ATC বার্ষিক কাপ',
+  'Heritage Night': 'ঐতিহ্য সন্ধ্যা',
+  'Prize Distribution': 'পুরস্কার বিতরণী',
+  'Sports Day': 'ক্রীড়া দিবস',
+  Results: 'ফলাফল',
+  'Partner With Us': 'পার্টনার হোন',
+  'First Team': 'প্রথম দল',
+  Latest: 'সাম্প্রতিক',
+  Schedule: 'সূচি',
+  Players: 'খেলোয়াড়',
+  Honours: 'সম্মাননা',
+  Club: 'ক্লাব',
+  'About ATC': 'ATC পরিচিতি',
+  History: 'ইতিহাস',
+  Committee: 'কমিটি',
+  'Our Ground': 'আমাদের মাঠ',
+  FAQ: 'প্রশ্নোত্তর',
+  Membership: 'সদস্যপদ',
+  Contact: 'যোগাযোগ',
+  'ATC Teams': 'ATC দলসমূহ',
+  Our: 'আমাদের',
+  Football: 'ফুটবল',
+  'Youth (U-17)': 'যুব (অনূর্ধ্ব-17)',
+  Veterans: 'প্রবীণ',
+  Heritage: 'ঐতিহ্য',
+  'Cultural Troupe': 'সাংস্কৃতিক দল',
+  Community: 'সমাজ',
+  'Social Wing': 'সামাজিক বিভাগ',
+  Volunteer: 'স্বেচ্ছাসেবক হোন',
+  Fixtures: 'ম্যাচ',
+  Squad: 'দল',
+  Gallery: 'গ্যালারি',
+  News: 'খবর',
+
+  // ─── Search ─────────────────────────────────────────────────
+  'About the club': 'ক্লাব পরিচিতি',
+  'History since 1981': '1981 থেকে ইতিহাস',
+  'Schedule & results': 'সূচি ও ফলাফল',
+  'Contact & directions': 'যোগাযোগ ও পথনির্দেশ',
+  'Search players, news, events…': 'খেলোয়াড়, খবর, অনুষ্ঠান খুঁজুন…',
+  'Close search': 'খোঁজা বন্ধ করুন',
+  'Popular pages': 'জনপ্রিয় পেজ',
+  '{n} result': '{n}টি ফলাফল',
+  '{n} results': '{n}টি ফলাফল',
+  'Nothing found for “{q}”.': '“{q}”-এর জন্য কিছু পাওয়া যায়নি।',
+  Page: 'পেজ',
+  Player: 'খেলোয়াড়',
+  Event: 'অনুষ্ঠান',
+
+  // ─── Home: hero ─────────────────────────────────────────────
+  'Adibasi Tarzan Club — football and heritage club of S. Akhanagar, Kaliyaganj, Uttar Dinajpur, since 1981':
+    'আদিবাসী টারজান ক্লাব — 1981 থেকে এস. আখানগর, কালিয়াগঞ্জ, উত্তর দিনাজপুরের ফুটবল ও ঐতিহ্যের ক্লাব',
+  'Since 1981': '1981 থেকে',
+  'Read the story': 'পুরো খবর পড়ুন',
+  'Main Partners': 'প্রধান পার্টনার',
+  '*Your brand* could stand here': 'এখানে থাকতে পারে *আপনার ব্র্যান্ড*',
+  'Partner with ATC': 'ATC-র পার্টনার হোন',
+  'Matchday at S. Akhanagar, in pictures': 'ছবিতে এস. আখানগরের ম্যাচের দিন',
+  'Under the lights: inside a cup-week session': 'আলোর নিচে: কাপ সপ্তাহের অনুশীলনের ভেতরে',
+  'ATC Play': 'ATC প্লে',
+  'Just now': 'এইমাত্র',
+  '{n} hr ago': '{n} ঘণ্টা আগে',
+  '{n} hrs ago': '{n} ঘণ্টা আগে',
+
+  // ─── Home: events carousel ──────────────────────────────────
+  'Events *&* Tickets': 'অনুষ্ঠান *ও* টিকিট',
+  events: 'অনুষ্ঠান',
+  "Men's Football": 'পুরুষ ফুটবল',
+  'Annual Cup': 'বার্ষিক কাপ',
+  'Youth Football': 'যুব ফুটবল',
+  'Floodlit Cup': 'ফ্লাডলাইট কাপ',
+  'Prize Day': 'পুরস্কার দিবস',
+  'Partner With ATC': 'ATC-র পার্টনার হোন',
+  The: 'ATC-র',
+  '15 Nov · S. Akhanagar': '15 নভেম্বর · এস. আখানগর',
+  Night: 'সন্ধ্যা',
+  '22 Nov · Club Grounds': '22 নভেম্বর · ক্লাব প্রাঙ্গণ',
+  Prize: 'পুরস্কার',
+  Distribution: 'বিতরণী',
+  '20 Dec · Club Grounds': '20 ডিসেম্বর · ক্লাব প্রাঙ্গণ',
+  'Previous {label}': 'আগের {label}',
+  'Next {label}': 'পরের {label}',
+  'Wax seal': 'মোমের সিলমোহর',
+
+  // ─── Home: calendar ─────────────────────────────────────────
+  Calendar: 'ক্যালেন্ডার',
+  'Sync calendar': 'ক্যালেন্ডারে যোগ করুন',
+  matches: 'ম্যাচ',
+  'Next games': 'পরের ম্যাচগুলো',
+  'See the calendar': 'ক্যালেন্ডার দেখুন',
+  'Time until the next match': 'পরের ম্যাচ পর্যন্ত সময়',
+  'Next Match': 'পরের ম্যাচ',
+  'Match Countdown': 'ম্যাচের কাউন্টডাউন',
+  Days: 'দিন',
+  Hours: 'ঘণ্টা',
+  Mins: 'মিনিট',
+  Secs: 'সেকেন্ড',
+  IST: 'IST',
+  'Match Centre': 'ম্যাচ সেন্টার',
+  Tickets: 'টিকিট',
+  'Free entry': 'প্রবেশ অবাধ',
+  Add: 'যোগ করুন',
+
+  // ─── Teams & competitions ───────────────────────────────────
+  'District League': 'জেলা লিগ',
+  'Uttar Dinajpur Cup': 'উত্তর দিনাজপুর কাপ',
+  Friendly: 'প্রীতি ম্যাচ',
+  'Pre-cup friendly': 'কাপের আগে প্রীতি ম্যাচ',
+  'Opening match': 'উদ্বোধনী ম্যাচ',
+  'Matchday 5': 'ম্যাচডে 5',
+  'Matchday 6': 'ম্যাচডে 6',
+  'Matchday 7': 'ম্যাচডে 7',
+  'Matchday 8': 'ম্যাচডে 8',
+  'Matchday 9': 'ম্যাচডে 9',
+  'Raiganj Town FC': 'রায়গঞ্জ টাউন এফসি',
+  Raiganj: 'রায়গঞ্জ',
+  'Itahar United': 'ইটাহার ইউনাইটেড',
+  Itahar: 'ইটাহার',
+  'Kaliyaganj Youth Club': 'কালিয়াগঞ্জ ইয়ুথ ক্লাব',
+  'Kaliyaganj YC': 'কালিয়াগঞ্জ YC',
+  'Hemtabad SC': 'হেমতাবাদ এসসি',
+  Hemtabad: 'হেমতাবাদ',
+  'Bansihari FC': 'বংশীহারী এফসি',
+  Bansihari: 'বংশীহারী',
+  'Kunore Sporting': 'কুনোর স্পোর্টিং',
+  Kunore: 'কুনোর',
+
+  // ─── Home: stories ──────────────────────────────────────────
+  'ATC *Stories*': 'ATC-র *গল্প*',
+  stories: 'গল্প',
+  'Story: {title}': 'গল্প: {title}',
+  'Close story': 'গল্প বন্ধ করুন',
+  Previous: 'আগের',
+  Next: 'পরের',
+  Close: 'বন্ধ করুন',
+  Matchday: 'ম্যাচের দিন',
+  Training: 'অনুশীলন',
+  Youth: 'যুব',
+  'Under Lights': 'আলোর নিচে',
+  'Three points at home. 3–1 against Bansihari.': 'ঘরের মাঠে তিন পয়েন্ট। বংশীহারীর বিরুদ্ধে 3–1।',
+  'Every ball, every tackle, for S. Akhanagar.': 'প্রতিটি বল, প্রতিটি ট্যাকল — এস. আখানগরের জন্য।',
+  'Tuesday drills at 6 am — first touch, then everything else.': 'মঙ্গলবার সকাল 6টায় অনুশীলন — আগে ফার্স্ট টাচ, তারপর বাকি সব।',
+  'New balls arrived, thanks to our members.': 'আমাদের সদস্যদের সৌজন্যে নতুন বল এসে গেছে।',
+  'Registration for the 2026 Annual Cup is open.': '2026 বার্ষিক কাপের নাম নথিভুক্তি শুরু হয়েছে।',
+  'Sixteen teams. One trophy. See you on the 15th of November.': 'ষোলোটি দল। একটি ট্রফি। দেখা হবে 15 নভেম্বর।',
+  'The next generation of Tarzans.': 'টারজানদের পরের প্রজন্ম।',
+  'Late sessions before the cup.': 'কাপের আগে রাতের অনুশীলন।',
+  'The ground never really sleeps.': 'এই মাঠ কখনও সত্যিই ঘুমোয় না।',
+  'Fresh lines, fresh season.': 'নতুন দাগ, নতুন মরসুম।',
+  'In 1981 a handful of friends from S. Akhanagar started a club with one ball and a borrowed field.':
+    '1981 সালে এস. আখানগরের কয়েকজন বন্ধু একটি বল আর ধার করা মাঠ নিয়ে একটি ক্লাব শুরু করেছিলেন।',
+  'Forty-five years later the field is ours, and the family is bigger than ever.':
+    'পঁয়তাল্লিশ বছর পরে মাঠ আজ আমাদের, আর পরিবার আগের চেয়ে অনেক বড়।',
+
+  // ─── Home: explore ──────────────────────────────────────────
+  'Explore the *Club*': 'ঘুরে দেখুন *ক্লাব*',
+  'Fixtures, results and the squad wearing the brown and gold.': 'ম্যাচ, ফলাফল আর বাদামি-সোনালি জার্সির দল।',
+  'Meet the squad': 'দলের সঙ্গে পরিচয়',
+  'Heritage & Culture': 'ঐতিহ্য ও সংস্কৃতি',
+  'Dance, music and stories of our Adibasi roots, kept alive every season.': 'আমাদের আদিবাসী শিকড়ের নাচ, গান আর গল্প — প্রতি মরসুমে জীবন্ত।',
+  Discover: 'জানুন',
+  'Youth coaching, welfare drives and the bonds that hold S. Akhanagar together.': 'যুব প্রশিক্ষণ, কল্যাণমূলক উদ্যোগ আর সেই বন্ধন যা এস. আখানগরকে একসূত্রে বেঁধে রাখে।',
+  'Get involved': 'যুক্ত হোন',
+  'Shirt number {n}': 'জার্সি নম্বর {n}',
+  'Madal drum': 'মাদল',
+
+  // ─── Home: membership promo ─────────────────────────────────
+  'Membership 2026–27': 'সদস্যপদ 2026–27',
+  'Join the family': 'পরিবারে যোগ দিন',
+  'Become an ATC Member': 'ATC-র সদস্য হোন',
+  'Vote at the AGM, priority seats at the Annual Cup final, your member card and an invitation to Heritage Night — and a place in a family that has stood together since 1981.':
+    'বার্ষিক সাধারণ সভায় ভোট, বার্ষিক কাপ ফাইনালে অগ্রাধিকার আসন, আপনার সদস্য কার্ড আর ঐতিহ্য সন্ধ্যার আমন্ত্রণ — এবং এমন এক পরিবারে জায়গা, যারা 1981 থেকে একসঙ্গে আছে।',
+  'More Info': 'আরও জানুন',
+  'Talk to us': 'কথা বলুন',
+  'Dear friend,': 'প্রিয় বন্ধু,',
+  'Every Saturday the ground fills with our people — grandparents on the boundary, children on every wall. Join us, and keep the spirit of 1981 alive.':
+    'প্রতি শনিবার মাঠ ভরে ওঠে আমাদের মানুষে — মাঠের ধারে দাদু-ঠাকুমা, প্রতিটি দেওয়ালে ছোটরা। আমাদের সঙ্গে যোগ দিন, 1981-র সেই প্রাণ বাঁচিয়ে রাখুন।',
+  'The Committee': 'কমিটি',
+
+  // ─── Home: news ─────────────────────────────────────────────
+  'ATC *News*': 'ATC-র *খবর*',
+  'All news': 'সব খবর',
+  'More *news*': 'আরও *খবর*',
+  Share: 'শেয়ার',
+  'Share on WhatsApp': 'WhatsApp-এ শেয়ার করুন',
+  'Share on Facebook': 'Facebook-এ শেয়ার করুন',
+  'Filter news': 'খবর বাছুন',
+  All: 'সব',
+
+  // ─── Letter form ────────────────────────────────────────────
+  'Write to the club': 'ক্লাবকে লিখুন',
+  'A letter *to* ATC': 'ATC-কে *একটি* চিঠি',
+  'Want to enter a team in the Annual Cup, volunteer at Heritage Night, or just say thank you? Write it the old way — we read every letter.':
+    'বার্ষিক কাপে দল নামাতে চান, ঐতিহ্য সন্ধ্যায় স্বেচ্ছাসেবক হতে চান, নাকি শুধু ধন্যবাদ জানাতে চান? পুরোনো দিনের মতো চিঠি লিখুন — আমরা প্রতিটি চিঠি পড়ি।',
+  'Dear Tarzans,': 'প্রিয় টারজান বন্ধুরা,',
+  'Your message': 'আপনার বার্তা',
+  'I would like to…': 'আমি চাই…',
+  'Yours sincerely,': 'ইতি,',
+  'Your name': 'আপনার নাম',
+  From: 'ঠিকানা',
+  'Village / town': 'গ্রাম / শহর',
+  'Reach me at': 'যোগাযোগ',
+  'Phone or email': 'ফোন বা ইমেল',
+  'Sealing opens your email app with the letter written out.': 'সিলমোহর দিলেই লেখা চিঠি সমেত আপনার ইমেল অ্যাপ খুলে যাবে।',
+  'Your email app should open with the letter ready to send.': 'পাঠানোর জন্য তৈরি চিঠি সমেত আপনার ইমেল অ্যাপ খুলে যাওয়ার কথা।',
+  'Seal & send': 'সিলমোহর দিয়ে পাঠান',
+
+  // ─── Players ────────────────────────────────────────────────
+  players: 'খেলোয়াড়',
+  Captain: 'অধিনায়ক',
+  Goalkeeper: 'গোলকিপার',
+  Defender: 'ডিফেন্ডার',
+  Midfielder: 'মিডফিল্ডার',
+  Forward: 'ফরোয়ার্ড',
+  Goalkeepers: 'গোলকিপার',
+  Defenders: 'ডিফেন্ডার',
+  Midfielders: 'মিডফিল্ডার',
+  Forwards: 'ফরোয়ার্ড',
+  Sanjay: 'সঞ্জয়',
+  Hembram: 'হেমব্রম',
+  Bablu: 'বাবলু',
+  Kisku: 'কিস্কু',
+  Rohit: 'রোহিত',
+  Murmu: 'মুর্মু',
+  Manoj: 'মনোজ',
+  Besra: 'বেসরা',
+  Anil: 'অনিল',
+  Tudu: 'টুডু',
+  Suraj: 'সুরজ',
+  Soren: 'সোরেন',
+  Raju: 'রাজু',
+  Hansda: 'হাঁসদা',
+  Prakash: 'প্রকাশ',
+  Marandi: 'মারান্ডি',
+  Bikash: 'বিকাশ',
+  Baskey: 'বাস্কে',
+  Dilip: 'দিলীপ',
+  Ajit: 'অজিত',
+  Sunil: 'সুনীল',
+  Ramesh: 'রমেশ',
+  Sagar: 'সাগর',
+  Amit: 'অমিত',
+  Pintu: 'পিন্টু',
+
+  // ─── Footer ─────────────────────────────────────────────────
+  'Your name here': 'এখানে আপনার নাম',
+  'Stand beside a club that has served S. Akhanagar since 1981.': '1981 থেকে এস. আখানগরের পাশে থাকা ক্লাবের পাশে দাঁড়ান।',
+  'Become a Partner': 'পার্টনার হোন',
+  'Follow Adibasi Tarzan Club': 'আদিবাসী টারজান ক্লাবকে ফলো করুন',
+  Email: 'ইমেল',
+  Footer: 'ফুটার',
+  'The Club': 'ক্লাব',
+  '1981 — A club is born': '1981 — একটি ক্লাবের জন্ম',
+  'The first cup': 'প্রথম কাপ',
+  'Heritage wing': 'ঐতিহ্য বিভাগ',
+  'Contact Us': 'যোগাযোগ করুন',
+  Partners: 'পার্টনার',
+  'Adibasi Tarzan Club. Official website of the club.': 'আদিবাসী টারজান ক্লাব। ক্লাবের অফিশিয়াল ওয়েবসাইট।',
+  'Crafted by': 'নির্মাণে',
+  'since 1981': '1981 থেকে',
+
+  // ─── Honours ────────────────────────────────────────────────
+  Titles: 'খেতাব',
+  Trophies: 'ট্রফি',
+  Seasons: 'মরসুম',
+
+  // ─── FAQ ────────────────────────────────────────────────────
+  'What is Adibasi Tarzan Club?': 'আদিবাসী টারজান ক্লাব কী?',
+  'Adibasi Tarzan Club (ATC) is a community football and cultural club founded in 1981 in S. Akhanagar, Kaliyaganj, Uttar Dinajpur, West Bengal, India. It runs a first team, a youth football programme and the ATC Annual Cup, and keeps Adibasi heritage alive through its cultural wing.':
+    'আদিবাসী টারজান ক্লাব (ATC) একটি সামাজিক ফুটবল ও সাংস্কৃতিক ক্লাব, যা 1981 সালে পশ্চিমবঙ্গের উত্তর দিনাজপুর জেলার কালিয়াগঞ্জের এস. আখানগরে প্রতিষ্ঠিত হয়। ক্লাবটি একটি প্রথম দল, একটি যুব ফুটবল কর্মসূচি ও ATC বার্ষিক কাপ পরিচালনা করে, এবং সাংস্কৃতিক বিভাগের মাধ্যমে আদিবাসী ঐতিহ্যকে বাঁচিয়ে রাখে।',
+  'When was Adibasi Tarzan Club founded?': 'আদিবাসী টারজান ক্লাব কবে প্রতিষ্ঠিত হয়?',
+  'The club was founded in 1981 by a group of friends from S. Akhanagar, Kaliyaganj, who started it with one ball and a borrowed field.':
+    'ক্লাবটি 1981 সালে কালিয়াগঞ্জের এস. আখানগরের একদল বন্ধু প্রতিষ্ঠা করেন — শুরু হয়েছিল একটি বল আর ধার করা মাঠ নিয়ে।',
+  'Where is the club ground?': 'ক্লাবের মাঠ কোথায়?',
+  'Our home ground is S. Akhanagar Ground in Kaliyaganj, Uttar Dinajpur, West Bengal 733129. See the map on this page for directions.':
+    'আমাদের ঘরের মাঠ এস. আখানগর মাঠ — কালিয়াগঞ্জ, উত্তর দিনাজপুর, পশ্চিমবঙ্গ 733129। পথনির্দেশের জন্য এই পেজের মানচিত্র দেখুন।',
+  'How do I join the club?': 'কীভাবে ক্লাবে যোগ দেব?',
+  'Visit the club office in the evening or send us a letter through the contact page. Membership is open to everyone who shares our values, with Supporter, Member and Life Member options.':
+    'সন্ধ্যায় ক্লাব অফিসে আসুন বা যোগাযোগ পেজ থেকে আমাদের চিঠি পাঠান। আমাদের মূল্যবোধে বিশ্বাসী সবার জন্য সদস্যপদ খোলা — সমর্থক, সদস্য ও আজীবন সদস্যের বিকল্প রয়েছে।',
+  'What is the ATC Annual Cup?': 'ATC বার্ষিক কাপ কী?',
+  "The ATC Annual Cup is the club's flagship knockout football tournament, open to clubs across Uttar Dinajpur and played at S. Akhanagar Ground every season.":
+    'ATC বার্ষিক কাপ ক্লাবের প্রধান নকআউট ফুটবল টুর্নামেন্ট, যা গোটা উত্তর দিনাজপুরের ক্লাবগুলির জন্য খোলা এবং প্রতি মরসুমে এস. আখানগর মাঠে খেলা হয়।',
+  'Can my team play in the Annual Cup?': 'আমার দল কি বার্ষিক কাপে খেলতে পারে?',
+  'Yes. Registration opens each autumn. Write to us with your team name, manager and contact number.':
+    'হ্যাঁ। প্রতি বছর শরৎকালে নাম নথিভুক্তি শুরু হয়। আপনার দলের নাম, ম্যানেজার ও যোগাযোগ নম্বর লিখে আমাদের পাঠান।',
+  'Is entry free for spectators?': 'দর্শকদের জন্য কি প্রবেশ অবাধ?',
+  'Most home league matches and Annual Cup group games are free to watch. Any ticketed match is marked on the Schedule page.':
+    'ঘরের মাঠের বেশিরভাগ লিগ ম্যাচ ও বার্ষিক কাপের গ্রুপ পর্বের খেলা বিনামূল্যে দেখা যায়। টিকিটের ম্যাচগুলি সূচি পেজে চিহ্নিত থাকে।',
+  'Do you train young players?': 'আপনারা কি তরুণ খেলোয়াড়দের প্রশিক্ষণ দেন?',
+  'Yes. The youth programme runs three mornings a week for under-13 and under-17 players.':
+    'হ্যাঁ। অনূর্ধ্ব-13 ও অনূর্ধ্ব-17 খেলোয়াড়দের জন্য যুব কর্মসূচি সপ্তাহে তিন দিন সকালে চলে।',
+  'How can a business partner with ATC?': 'কোনো ব্যবসা কীভাবে ATC-র পার্টনার হতে পারে?',
+  'Write to the club through the contact page or email info@adibasitarzanclub.in. Partners are recognised on matchdays, at club events and on this website.':
+    'যোগাযোগ পেজ থেকে ক্লাবকে লিখুন বা info@adibasitarzanclub.in-এ ইমেল করুন। ম্যাচের দিনে, ক্লাবের অনুষ্ঠানে ও এই ওয়েবসাইটে পার্টনারদের স্বীকৃতি দেওয়া হয়।',
+  'Who can become a member?': 'কারা সদস্য হতে পারেন?',
+  'Anyone who shares the values of the club — players, supporters, families and friends of S. Akhanagar.':
+    'ক্লাবের মূল্যবোধে বিশ্বাসী যে কেউ — খেলোয়াড়, সমর্থক, পরিবার ও এস. আখানগরের বন্ধুরা।',
+  'How much does membership cost?': 'সদস্যপদের খরচ কত?',
+  'Annual and life membership fees are set at the AGM each year. Please ask the club office for the current rates.':
+    'বার্ষিক ও আজীবন সদস্যপদের ফি প্রতি বছর বার্ষিক সাধারণ সভায় ঠিক হয়। বর্তমান হারের জন্য অনুগ্রহ করে ক্লাব অফিসে জিজ্ঞেস করুন।',
+  'Can I vote at the AGM?': 'আমি কি বার্ষিক সাধারণ সভায় ভোট দিতে পারি?',
+  'Yes. Members and life members can vote at the Annual General Meeting and stand for the committee.':
+    'হ্যাঁ। সদস্য ও আজীবন সদস্যরা বার্ষিক সাধারণ সভায় ভোট দিতে এবং কমিটির নির্বাচনে দাঁড়াতে পারেন।',
+
+  // ─── History ────────────────────────────────────────────────
+  'A club is born': 'একটি ক্লাবের জন্ম',
+  'Friends from S. Akhanagar found the Adibasi Tarzan Club with one ball and a borrowed field.': 'এস. আখানগরের বন্ধুরা একটি বল আর ধার করা মাঠ নিয়ে আদিবাসী টারজান ক্লাব গড়ে তোলেন।',
+  'The club organises its first inter-village football tournament.': 'ক্লাব তার প্রথম আন্তঃগ্রাম ফুটবল টুর্নামেন্টের আয়োজন করে।',
+  'The cultural troupe is formed and the first Heritage Night is held.': 'সাংস্কৃতিক দল গঠিত হয় এবং প্রথম ঐতিহ্য সন্ধ্যা অনুষ্ঠিত হয়।',
+  'The youth': 'নতুন প্রজন্ম',
+  'Morning coaching for boys and girls of the village begins.': 'গ্রামের ছেলেমেয়েদের জন্য সকালের প্রশিক্ষণ শুরু হয়।',
+  'District champions': 'জেলা চ্যাম্পিয়ন',
+  'ATC lifts the District League title in front of a home crowd.': 'ঘরের দর্শকদের সামনে ATC জেলা লিগ খেতাব জেতে।',
+  'Standing together': 'একসঙ্গে পাশে',
+  'Through the pandemic the club turns its hall into a relief centre.': 'অতিমারির সময় ক্লাব তার হলকে ত্রাণ কেন্দ্রে পরিণত করে।',
+  'Forty-five years': 'পঁয়তাল্লিশ বছর',
+  'A new committee, a renovated ground and the same spirit.': 'নতুন কমিটি, সংস্কার করা মাঠ আর সেই একই প্রাণ।',
+
+  // ─── Club page ──────────────────────────────────────────────
+  'Football, heritage and community from S. Akhanagar, Kaliyaganj — one family for forty-five seasons.':
+    'এস. আখানগর, কালিয়াগঞ্জ থেকে ফুটবল, ঐতিহ্য আর সমাজ — পঁয়তাল্লিশ মরসুম ধরে এক পরিবার।',
+  About: 'পরিচিতি',
+  'Rooted in the soil. *United in spirit.*': 'মাটির টানে, *প্রাণের বাঁধনে।*',
+  'In 1981 a handful of friends from S. Akhanagar started a club with one ball, a borrowed field and a name that told everyone exactly who we were.':
+    '1981 সালে এস. আখানগরের কয়েকজন বন্ধু একটি বল, ধার করা মাঠ আর এমন এক নাম নিয়ে ক্লাব শুরু করেছিলেন, যা সবাইকে স্পষ্ট জানিয়ে দিত আমরা কারা।',
+  'Adibasi Tarzan Club has grown into a home for footballers, musicians, dancers, volunteers and families from across Kaliyaganj. We play hard on Saturdays, celebrate our heritage every season, and look after one another the rest of the week.':
+    'আদিবাসী টারজান ক্লাব আজ গোটা কালিয়াগঞ্জের ফুটবলার, শিল্পী, নৃত্যশিল্পী, স্বেচ্ছাসেবক আর পরিবারের ঘর। শনিবার আমরা প্রাণপণে খেলি, প্রতি মরসুমে ঐতিহ্য উদ্‌যাপন করি, আর সপ্তাহের বাকি দিনগুলো একে অপরের পাশে থাকি।',
+  Founded: 'প্রতিষ্ঠা',
+  Family: 'পরিবার',
+  'Est. 1981': 'প্রতিষ্ঠা 1981',
+  'Our *History*': 'আমাদের *ইতিহাস*',
+  'The drum *beats on*': 'মাদলের বোল *থামে না*',
+  'Our cultural troupe keeps the music, dance and stories of our Adibasi roots alive. Heritage Night brings the whole village to the club grounds every autumn — madal and dhamsa, lanterns and laughter.':
+    'আমাদের সাংস্কৃতিক দল আদিবাসী শিকড়ের গান, নাচ আর গল্পকে বাঁচিয়ে রাখে। প্রতি শরতে ঐতিহ্য সন্ধ্যা গোটা গ্রামকে ক্লাব প্রাঙ্গণে টেনে আনে — মাদল আর ধামসা, লণ্ঠন আর হাসি।',
+  'Heritage Night 2026': 'ঐতিহ্য সন্ধ্যা 2026',
+  'More than *a club*': '*শুধু ক্লাব* নয়',
+  'Morning coaching for the youngest players. Relief drives when times are hard. A hall that is always open. The club belongs to S. Akhanagar — and every member gives a little back.':
+    'সবচেয়ে ছোট খেলোয়াড়দের জন্য সকালের প্রশিক্ষণ। দুঃসময়ে ত্রাণ। একটি হল যার দরজা সবসময় খোলা। এই ক্লাব এস. আখানগরের — আর প্রত্যেক সদস্য কিছুটা হলেও ফিরিয়ে দেন।',
+  'Volunteer with us': 'স্বেচ্ছাসেবক হোন',
+  'Our *Ground*': 'আমাদের *মাঠ*',
+  'Find us': 'আমাদের খুঁজুন',
+  'Get directions': 'পথনির্দেশ',
+  Questions: 'প্রশ্ন',
+  'Frequently *asked*': 'প্রায়শই *জিজ্ঞাসিত*',
+  "Can't find what you need? [Write to the club].": 'যা খুঁজছেন পাননি? [ক্লাবকে লিখুন]।',
+
+  // ─── Schedule ───────────────────────────────────────────────
+  'Fixtures, results and club events. All times are Indian Standard Time.': 'ম্যাচ, ফলাফল ও ক্লাবের অনুষ্ঠান। সব সময় ভারতীয় সময় (IST) অনুযায়ী।',
+  'Club Events': 'ক্লাবের অনুষ্ঠান',
+  'Upcoming *fixtures*': 'আসন্ন *ম্যাচ*',
+  'Latest *results*': 'সাম্প্রতিক *ফলাফল*',
+  'Club *events*': 'ক্লাবের *অনুষ্ঠান*',
+  'Sync all': 'সব যোগ করুন',
+  "The season's fixtures will be published soon.": 'এই মরসুমের ম্যাচ সূচি শীঘ্রই প্রকাশিত হবে।',
+  Won: 'জয়',
+  Draw: 'ড্র',
+  Lost: 'হার',
+  'Add to calendar': 'ক্যালেন্ডারে যোগ করুন',
+  'ATC Annual Cup 2026': 'ATC বার্ষিক কাপ 2026',
+  'Our flagship knockout tournament, open to clubs across Uttar Dinajpur.': 'আমাদের প্রধান নকআউট টুর্নামেন্ট, গোটা উত্তর দিনাজপুরের ক্লাবগুলির জন্য খোলা।',
+  'An evening of traditional music, dance and stories under the lanterns.': 'লণ্ঠনের আলোয় ঐতিহ্যবাহী গান, নাচ আর গল্পের এক সন্ধ্যা।',
+  'Annual General Meeting': 'বার্ষিক সাধারণ সভা',
+  'Accounts, elections and the plan for the year ahead. All members welcome.': 'হিসাবনিকাশ, নির্বাচন আর আগামী বছরের পরিকল্পনা। সব সদস্যকে স্বাগত।',
+  'Prize Distribution Ceremony': 'পুরস্কার বিতরণী অনুষ্ঠান',
+  'Honouring the players, volunteers and families who carried the season.': 'যে খেলোয়াড়, স্বেচ্ছাসেবক ও পরিবারগুলি গোটা মরসুম বয়ে নিয়ে গেছেন, তাঁদের সম্মাননা।',
+  Culture: 'সংস্কৃতি',
+  Ceremony: 'অনুষ্ঠান',
+
+  // ─── News page ──────────────────────────────────────────────
+  'From the touchline': 'মাঠের ধার থেকে',
+  'Match reports, club announcements and stories from S. Akhanagar.': 'এস. আখানগর থেকে ম্যাচ রিপোর্ট, ক্লাবের ঘোষণা আর গল্প।',
+
+  // ─── Squad page ─────────────────────────────────────────────
+  'The first XI': 'প্রথম একাদশ',
+  'The squad wearing the brown and gold in the 2026–27 season.': '2026–27 মরসুমে বাদামি-সোনালি জার্সি পরা দল।',
+  'Youth & Veterans': 'যুব ও প্রবীণ',
+  'More squads *coming soon*': 'আরও দল *শীঘ্রই আসছে*',
+  'Our under-17 and veterans squads will be listed here soon. Parents and former players can register their interest with the club office.':
+    'আমাদের অনূর্ধ্ব-17 ও প্রবীণ দলের তালিকা শীঘ্রই এখানে থাকবে। অভিভাবক ও প্রাক্তন খেলোয়াড়রা ক্লাব অফিসে আগ্রহ জানাতে পারেন।',
+  'Get in touch': 'যোগাযোগ করুন',
+
+  // ─── Committee page ─────────────────────────────────────────
+  'The office-bearers who run the club on behalf of its members.': 'যে পদাধিকারীরা সদস্যদের হয়ে ক্লাব পরিচালনা করেন।',
+  President: 'সভাপতি',
+  'Vice President': 'সহ-সভাপতি',
+  Secretary: 'সম্পাদক',
+  'Joint Secretary': 'যুগ্ম সম্পাদক',
+  Treasurer: 'কোষাধ্যক্ষ',
+  'Sports Secretary': 'ক্রীড়া সম্পাদক',
+  'Cultural Secretary': 'সাংস্কৃতিক সম্পাদক',
+  'Head Coach': 'প্রধান কোচ',
+  'To be announced': 'শীঘ্রই ঘোষণা',
+  'Want to stand for the committee? Nominations open before every [Annual General Meeting].':
+    'কমিটির নির্বাচনে দাঁড়াতে চান? প্রতিটি [বার্ষিক সাধারণ সভার] আগে মনোনয়ন শুরু হয়।',
+
+  // ─── Gallery page ───────────────────────────────────────────
+  'In pictures': 'ছবিতে',
+  'Moments from the ground, the training pitch and the club grounds.': 'মাঠ, অনুশীলনের পিচ আর ক্লাব প্রাঙ্গণের মুহূর্ত।',
+  'Open photo: {cap}': 'ছবি খুলুন: {cap}',
+  'Previous photo': 'আগের ছবি',
+  'Next photo': 'পরের ছবি',
+  'Matchday, S. Akhanagar': 'ম্যাচের দিন, এস. আখানগর',
+  'Youth session': 'যুব অনুশীলন',
+  'Shooting practice': 'শুটিং অনুশীলন',
+  'Under the lights': 'আলোর নিচে',
+  'Every ball counts': 'প্রতিটি বলই জরুরি',
+  'Warm-up': 'ওয়ার্ম-আপ',
+  'Fresh lines': 'নতুন দাগ',
+  'New match balls': 'নতুন ম্যাচ বল',
+  'Boots on': 'বুট তৈরি',
+  'Back of the net': 'জালে বল',
+  'First touch': 'ফার্স্ট টাচ',
+  'Late session': 'রাতের অনুশীলন',
+  'Watch the club *on YouTube*': 'ক্লাবকে দেখুন *YouTube-এ*',
+  "Highlights, Heritage Night performances and behind-the-scenes from the club's channel.": 'ক্লাবের চ্যানেলে হাইলাইটস, ঐতিহ্য সন্ধ্যার পরিবেশনা আর নেপথ্যের মুহূর্ত।',
+  'Open channel': 'চ্যানেল খুলুন',
+
+  // ─── Membership page ────────────────────────────────────────
+  'Stand with the club that has stood for S. Akhanagar since 1981.': '1981 থেকে এস. আখানগরের পাশে থাকা ক্লাবের পাশে দাঁড়ান।',
+  Supporter: 'সমর্থক',
+  Member: 'সদস্য',
+  'Life Member': 'আজীবন সদস্য',
+  Free: 'বিনামূল্যে',
+  Annual: 'বার্ষিক',
+  'One-time': 'এককালীন',
+  'Club newsletter by WhatsApp': 'WhatsApp-এ ক্লাবের নিউজলেটার',
+  'Early notice of fixtures & events': 'ম্যাচ ও অনুষ্ঠানের আগাম খবর',
+  'Name in the supporters’ register': 'সমর্থক খাতায় আপনার নাম',
+  'Vote at the Annual General Meeting': 'বার্ষিক সাধারণ সভায় ভোট',
+  'Priority seating at the Annual Cup final': 'বার্ষিক কাপ ফাইনালে অগ্রাধিকার আসন',
+  'Member card & badge': 'সদস্য কার্ড ও ব্যাজ',
+  'Invitation to Heritage Night': 'ঐতিহ্য সন্ধ্যার আমন্ত্রণ',
+  'All Member benefits, for life': 'সদস্যপদের সব সুবিধা, আজীবন',
+  'Name on the founders’ board': 'প্রতিষ্ঠাতা বোর্ডে নাম',
+  'Seat at the Prize Distribution Ceremony': 'পুরস্কার বিতরণী অনুষ্ঠানে আসন',
+  'Join as {name}': '{name} হিসেবে যোগ দিন',
+  'How to *join*': 'কীভাবে *যোগ দেবেন*',
+  'Write or visit': 'লিখুন বা আসুন',
+  'Send us a letter below, or visit the club office any evening.': 'নিচে থেকে আমাদের চিঠি পাঠান, বা যেকোনো সন্ধ্যায় ক্লাব অফিসে আসুন।',
+  'Fill the form': 'ফর্ম পূরণ করুন',
+  'A short membership form with your name, village and contact number.': 'আপনার নাম, গ্রাম ও যোগাযোগ নম্বর সহ একটি ছোট সদস্যপদ ফর্ম।',
+  'Welcome home': 'ঘরে স্বাগত',
+  'Receive your member card and join us at the next home match.': 'আপনার সদস্য কার্ড নিন এবং পরের ঘরের ম্যাচে আমাদের সঙ্গে থাকুন।',
+  'Good *to know*': 'জেনে *রাখুন*',
+
+  // ─── Contact page ───────────────────────────────────────────
+  'Write to us': 'আমাদের লিখুন',
+  'The club office is open most evenings at the ground. Letters, calls and visits are all welcome.': 'ক্লাব অফিস বেশিরভাগ সন্ধ্যায় মাঠেই খোলা থাকে। চিঠি, ফোন বা সরাসরি আসা — সবই স্বাগত।',
+  Visit: 'ঠিকানা',
+  Write: 'লিখুন',
+  Follow: 'ফলো করুন',
+  'Stand beside *the club*': '*ক্লাবের* পাশে দাঁড়ান',
+  'Since 1981 the club has run on the generosity of local businesses and families. Partner with us and put your name in front of the whole of Kaliyaganj.':
+    '1981 থেকে এই ক্লাব চলেছে স্থানীয় ব্যবসায়ী ও পরিবারগুলির উদারতায়। আমাদের পার্টনার হোন, আর আপনার নাম পৌঁছে দিন গোটা কালিয়াগঞ্জের কাছে।',
+  'Main Partner': 'প্রধান পার্টনার',
+  'Your name on the shirt, the ground boards and every match poster for the season.': 'গোটা মরসুম জার্সি, মাঠের বোর্ড আর প্রতিটি ম্যাচের পোস্টারে আপনার নাম।',
+  'Annual Cup Partner': 'বার্ষিক কাপ পার্টনার',
+  'Title the ATC Annual Cup — the biggest football weekend in Kaliyaganj.': 'ATC বার্ষিক কাপের টাইটেল স্পনসর হোন — কালিয়াগঞ্জের সবচেয়ে বড় ফুটবল উইকেন্ড।',
+  'Community Supporter': 'সামাজিক সহযোগী',
+  'Back the youth programme, Heritage Night or a welfare drive.': 'যুব কর্মসূচি, ঐতিহ্য সন্ধ্যা বা কোনো কল্যাণমূলক উদ্যোগের পাশে দাঁড়ান।',
+  'Enquire about partnership': 'পার্টনারশিপ নিয়ে জানতে চান',
+
+  // ─── News stories ───────────────────────────────────────────
+  Ground: 'মাঠ',
+  'Registration opens for the 2026 ATC Annual Cup': '2026 ATC বার্ষিক কাপের নাম নথিভুক্তি শুরু',
+  'Clubs from across Uttar Dinajpur can now enter the 45th-anniversary edition of our flagship tournament.':
+    'গোটা উত্তর দিনাজপুরের ক্লাবগুলি এখন আমাদের প্রধান টুর্নামেন্টের 45তম বর্ষপূর্তি সংস্করণে নাম লেখাতে পারবে।',
+  'The Adibasi Tarzan Club is delighted to open registration for the 2026 ATC Annual Cup, which kicks off at S. Akhanagar Ground on Saturday 15 November.':
+    'আদিবাসী টারজান ক্লাব আনন্দের সঙ্গে 2026 ATC বার্ষিক কাপের নাম নথিভুক্তি শুরু করছে। টুর্নামেন্ট শুরু হবে শনিবার 15 নভেম্বর, এস. আখানগর মাঠে।',
+  'This year carries special meaning. Forty-five years after the club was founded in 1981, the cup returns as the centrepiece of our anniversary season — sixteen teams, one trophy, and a ground full of families from every village around Kaliyaganj.':
+    'এ বছরটা বিশেষ। 1981 সালে ক্লাব প্রতিষ্ঠার পঁয়তাল্লিশ বছর পরে, এই কাপ ফিরছে আমাদের বর্ষপূর্তি মরসুমের মধ্যমণি হয়ে — ষোলোটি দল, একটি ট্রফি, আর কালিয়াগঞ্জের আশপাশের প্রতিটি গ্রামের পরিবারে ভরা মাঠ।',
+  'Team managers can register by visiting the club office in the evenings or by writing to us through the contact page. Squad lists must be submitted by 1 November.':
+    'দলের ম্যানেজাররা সন্ধ্যায় ক্লাব অফিসে এসে অথবা যোগাযোগ পেজ থেকে আমাদের লিখে নাম নথিভুক্ত করতে পারেন। খেলোয়াড়দের তালিকা 1 নভেম্বরের মধ্যে জমা দিতে হবে।',
+  'As always, entry for spectators to the group matches is free. The final will be followed by the Prize Distribution Ceremony later in the season.':
+    'বরাবরের মতো, গ্রুপ পর্বের ম্যাচে দর্শকদের প্রবেশ অবাধ। ফাইনালের পরে, মরসুমের শেষ দিকে হবে পুরস্কার বিতরণী অনুষ্ঠান।',
+  'ATC 3–1 Bansihari: a statement at home': 'ATC 3–1 বংশীহারী: ঘরের মাঠে দাপুটে জয়',
+  'Two second-half goals turn a tight league game into a comfortable win in front of a packed S. Akhanagar crowd.':
+    'দ্বিতীয়ার্ধের দুটি গোলে হাড্ডাহাড্ডি লিগ ম্যাচ পরিণত হল সহজ জয়ে, এস. আখানগরের ভরা গ্যালারির সামনে।',
+  'A patient first half gave way to a commanding second as ATC moved up to second in the District League table.':
+    'ধৈর্যের প্রথমার্ধের পরে দ্বিতীয়ার্ধে দাপট দেখাল ATC, আর জেলা লিগ তালিকায় উঠে এল দ্বিতীয় স্থানে।',
+  'Captain Suraj Soren set the tone at the back, and the front line finally found its rhythm after the break.':
+    'অধিনায়ক সুরজ সোরেন রক্ষণে সুর বেঁধে দেন, আর বিরতির পরে আক্রমণভাগ অবশেষে ছন্দ খুঁজে পায়।',
+  'Heritage Night 2026 — programme announced': 'ঐতিহ্য সন্ধ্যা 2026 — অনুষ্ঠানসূচি ঘোষিত',
+  'Traditional music, dance and stories return to the club grounds on 22 November. Performers and volunteers, sign up now.':
+    '22 নভেম্বর ক্লাব প্রাঙ্গণে ফিরছে ঐতিহ্যবাহী গান, নাচ আর গল্প। শিল্পী ও স্বেচ্ছাসেবকরা, এখনই নাম লেখান।',
+  "The cultural wing of the club has confirmed the programme for this year's Heritage Night, the evening that reminds us where we come from.":
+    'ক্লাবের সাংস্কৃতিক বিভাগ এ বছরের ঐতিহ্য সন্ধ্যার অনুষ্ঠানসূচি চূড়ান্ত করেছে — সেই সন্ধ্যা, যা আমাদের মনে করিয়ে দেয় আমরা কোথা থেকে এসেছি।',
+  'Youth programme begins for the new season': 'নতুন মরসুমের যুব কর্মসূচি শুরু',
+  'Morning sessions for under-13 and under-17 players restart at the ground every Tuesday, Thursday and Saturday.':
+    'অনূর্ধ্ব-13 ও অনূর্ধ্ব-17 খেলোয়াড়দের সকালের অনুশীলন আবার শুরু হচ্ছে প্রতি মঙ্গল, বৃহস্পতি ও শনিবার মাঠে।',
+  "Coaches will be at the ground from 6:30 am. Bring water, boots if you have them, and a parent's signature on the registration form.":
+    'কোচরা সকাল 6:30 থেকে মাঠে থাকবেন। জল, থাকলে বুট, আর নাম নথিভুক্তির ফর্মে অভিভাবকের সই সঙ্গে আনবে।',
+  'Hemtabad 0–2 ATC: clean sheet on the road': 'হেমতাবাদ 0–2 ATC: প্রতিপক্ষের মাঠে ক্লিন শিট',
+  'A disciplined defensive display and two well-worked goals in a valuable friendly before the cup.':
+    'কাপের আগে গুরুত্বপূর্ণ প্রীতি ম্যাচে সুশৃঙ্খল রক্ষণ আর দুটি সাজানো গোল।',
+  'The back four held firm for ninety minutes as ATC kept their second clean sheet of the month.':
+    'নব্বই মিনিট অটল রইল রক্ষণভাগ, এ মাসে দ্বিতীয় ক্লিন শিট রাখল ATC।',
+  'Ground renovation complete': 'মাঠ সংস্কারের কাজ শেষ',
+  'New drainage, fresh lines and repaired goalposts — S. Akhanagar Ground is ready for the busiest month of the year.':
+    'নতুন নিকাশি, নতুন দাগ আর মেরামত করা গোলপোস্ট — বছরের সবচেয়ে ব্যস্ত মাসের জন্য তৈরি এস. আখানগর মাঠ।',
+  'Thank you to every member and volunteer who gave their weekends to the work.':
+    'যে সদস্য ও স্বেচ্ছাসেবকরা এই কাজে নিজেদের ছুটির দিন দিয়েছেন, সবাইকে ধন্যবাদ।',
+  'New committee inducted for 2026–27': '2026–27-এর নতুন কমিটির দায়িত্বভার গ্রহণ',
+  'The newly elected office-bearers took charge in a formal ceremony attended by senior members.':
+    'প্রবীণ সদস্যদের উপস্থিতিতে এক আনুষ্ঠানিক অনুষ্ঠানে নবনির্বাচিত পদাধিকারীরা দায়িত্ব নিলেন।',
+  'The committee thanked the outgoing office-bearers for their years of service.':
+    'বিদায়ী পদাধিকারীদের দীর্ঘ সেবার জন্য কমিটি ধন্যবাদ জানায়।',
+  'Under the lights: evening sessions return': 'আলোর নিচে: ফিরল সন্ধ্যার অনুশীলন',
+  'With the cup approaching, the first team moves to late training sessions twice a week.':
+    'কাপ এগিয়ে আসায় প্রথম দল এখন সপ্তাহে দুদিন রাতে অনুশীলন করবে।',
+  'Supporters are welcome to watch from the boundary.': 'সমর্থকরা মাঠের ধার থেকে দেখতে আমন্ত্রিত।',
+
+  // ─── 404 ────────────────────────────────────────────────────
+  'Dear visitor,': 'প্রিয় অতিথি,',
+  'This page seems to have wandered off into the forest. Let us walk you back to the ground.':
+    'মনে হচ্ছে পেজটি জঙ্গলে পথ হারিয়েছে। চলুন, আপনাকে মাঠে ফিরিয়ে নিয়ে যাই।',
+  'Back to home': 'হোমে ফিরুন',
+};

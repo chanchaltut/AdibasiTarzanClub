@@ -1,4 +1,49 @@
+# Adibasi Tarzan Club — https://www.adibasitarzanclub.in
+# Search engines and AI assistants are welcome to read and cite this site.
+
 User-agent: *
 Allow: /
 
-Sitemap: https://www.adibasitarzanclub.com/sitemap.xml
+# Search
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Applebot
+User-agent: DuckDuckBot
+User-agent: YandexBot
+Allow: /
+
+# OpenAI — ChatGPT search, browsing and training
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: GPTBot
+Allow: /
+
+# Anthropic — Claude
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+Allow: /
+
+# Google Gemini / AI Overviews, Apple Intelligence
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+Allow: /
+
+# Meta AI
+User-agent: meta-externalagent
+User-agent: Meta-ExternalFetcher
+User-agent: FacebookBot
+User-agent: facebookexternalhit
+Allow: /
+
+# Perplexity, Microsoft Copilot, others
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: MistralAI-User
+User-agent: DuckAssistBot
+User-agent: YouBot
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://www.adibasitarzanclub.in/sitemap.xml

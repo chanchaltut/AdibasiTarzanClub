@@ -303,3 +303,40 @@ a:hover .photo img, .photo-zoom:hover .photo img { transform: scale(1.045); }
 .tag--ink { background: var(--ink); color: var(--parchment-light); }
 .meta-time { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--on-dark-muted); }
 .bg-parchment .meta-time, .paper .meta-time { color: var(--ink-soft); }
+
+/* ─── Hindi & Bengali ──────────────────────────────────────── */
+/* Barlow, IM Fell and the script faces have no Devanagari or Bengali glyphs. Each
+   family gets a partner the browser falls back to per character, so Latin words
+   (ATC, numbers) keep the house fonts. Partner fonts load only on /hi and /bn. */
+html:lang(hi) {
+  --f-display: 'Barlow Condensed', 'Anek Devanagari', 'Arial Narrow', sans-serif;
+  --f-body: 'Barlow', 'Hind', system-ui, sans-serif;
+  --f-serif: 'IM Fell English', 'Tiro Devanagari Hindi', Georgia, serif;
+  --f-script: 'Mrs Saint Delafield', 'Kalam', cursive;
+  --f-hand: 'Homemade Apple', 'Kalam', cursive;
+}
+html:lang(bn) {
+  --f-display: 'Barlow Condensed', 'Anek Bangla', 'Arial Narrow', sans-serif;
+  --f-body: 'Barlow', 'Hind Siliguri', system-ui, sans-serif;
+  --f-serif: 'IM Fell English', 'Tiro Bangla', Georgia, serif;
+  --f-script: 'Mrs Saint Delafield', 'Galada', cursive;
+  --f-hand: 'Homemade Apple', 'Atma', cursive;
+}
+/* Condensed cut of Anek to sit beside Barlow Condensed; static faces ignore it */
+html:lang(hi) body, html:lang(bn) body { font-stretch: 82%; }
+/* Tracking breaks the headline stroke (shirorekha / matra) that joins letters */
+html:lang(hi) body *, html:lang(bn) body * { letter-spacing: 0 !important; }
+/* Vowel signs sit above and below the line — tight Latin leading clips them */
+html:lang(hi) :is(.display, .widget-title, .hero__title, .page-hero__title, .article-hero__title, .promo-card__title, .promo-card__big,
+  .explore-card__title, .player-card__name, .news-card__title, .hero-card__title, .match-card__team span, .member-promo__title,
+  .letter-section__title, .faq__q, .countdown__label-sm, .main-nav__wordmark),
+html:lang(bn) :is(.display, .widget-title, .hero__title, .page-hero__title, .article-hero__title, .promo-card__title, .promo-card__big,
+  .explore-card__title, .player-card__name, .news-card__title, .hero-card__title, .match-card__team span, .member-promo__title,
+  .letter-section__title, .faq__q, .countdown__label-sm, .main-nav__wordmark) {
+  line-height: 1.18;
+}
+html:lang(hi) .script, html:lang(bn) .script { line-height: 1.25; }
+/* A drop cap would split a conjunct cluster */
+html:lang(hi) .dropcap::first-letter, html:lang(bn) .dropcap::first-letter {
+  float: none; font: inherit; margin: 0; color: inherit;
+}

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLang } from '../i18n';
 import { PHOTO, SQUAD } from '../data/club';
 import PageHero from '../components/page/PageHero';
 import { PlayerCard } from '../components/home/PlayerSlider';
@@ -18,6 +18,7 @@ const TABS = [
 ];
 
 export default function Squad() {
+  const { t, ta } = useLang();
   return (
     <>
       <PageHero
@@ -34,7 +35,7 @@ export default function Squad() {
             const list = SQUAD.filter((p) => p.pos === pos);
             return (
               <div className="squad-group" key={pos}>
-                <h2 className="squad-group__title display">{label} <span>{list.length}</span></h2>
+                <h2 className="squad-group__title display">{t(label)} <span>{list.length}</span></h2>
                 <ul className="squad-grid">
                   {list.map((p, i) => <li key={p.no}><PlayerCard p={p} i={i} /></li>)}
                 </ul>
@@ -47,13 +48,12 @@ export default function Squad() {
       <section className="section bg-parchment" id="youth">
         <div className="wrapper squad-notes">
           <div className="squad-note paper" id="veterans">
-            <p className="kicker kicker--ink">Youth &amp; Veterans</p>
-            <h2 className="h2 display">More squads <span className="script">coming soon</span></h2>
+            <p className="kicker kicker--ink">{t('Youth & Veterans')}</p>
+            <h2 className="h2 display">{ta('More squads *coming soon*')}</h2>
             <p>
-              Our under-17 and veterans squads will be listed here soon. Parents and former players can register their
-              interest with the club office.
+              {t('Our under-17 and veterans squads will be listed here soon. Parents and former players can register their interest with the club office.')}
             </p>
-            <Link to="/contact" className="btn btn--ink">Get in touch</Link>
+            <Link to="/contact" className="btn btn--ink">{t('Get in touch')}</Link>
             <Sprig className="squad-note__sprig" />
           </div>
         </div>

@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import { SvgDefs } from '../ui/Art';
+import Seo from '../../seo/Seo';
 
 export default function Layout() {
   const { pathname, hash } = useLocation();
@@ -17,6 +18,7 @@ export default function Layout() {
 
   return (
     <>
+      <Seo />
       <a href="#main" className="skip-link">Skip to content</a>
       <SvgDefs />
       <Header />

@@ -1,4 +1,5 @@
 import Icon from './Icon';
+import { useLang } from '../../i18n';
 
 export function ScrollMeter({ s }) {
   return (
@@ -9,10 +10,11 @@ export function ScrollMeter({ s }) {
 }
 
 export function SliderControls({ s, label }) {
+  const { t } = useLang();
   return (
     <div className="slider-controls">
-      <button className="slider-btn" onClick={s.goPrev} disabled={!s.prev} aria-label={`Previous ${label}`}><Icon name="chevron-left" /></button>
-      <button className="slider-btn" onClick={s.goNext} disabled={!s.next} aria-label={`Next ${label}`}><Icon name="chevron-right" /></button>
+      <button className="slider-btn" onClick={s.goPrev} disabled={!s.prev} aria-label={t('Previous {label}', { label })}><Icon name="chevron-left" /></button>
+      <button className="slider-btn" onClick={s.goNext} disabled={!s.next} aria-label={t('Next {label}', { label })}><Icon name="chevron-right" /></button>
     </div>
   );
 }

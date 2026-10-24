@@ -3,29 +3,17 @@ import { CLUB, TEAMS } from '../data/club';
 
 const TZ = 'Asia/Kolkata';
 
-export function timeAgo(iso) {
-  const diff = Date.now() - new Date(iso).getTime();
-  const hrs = Math.floor(diff / 36e5);
-  if (diff >= 0 && hrs < 1) return 'Just now';
-  if (diff >= 0 && hrs < 24) return `${hrs} hr${hrs === 1 ? '' : 's'} ago`;
-  return shortDate(iso);
-}
-
-export const shortDate = (iso) =>
-  new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: '2-digit', timeZone: TZ });
-
-export const longDate = (iso) =>
-  new Date(iso).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', timeZone: TZ });
+// Language-aware dates (longDate, timeAgo…) live in useLang() — see src/i18n.
 
 export const kickoff = (iso) =>
   new Date(iso).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: TZ });
 
-export const dayMonth = (iso) => {
+export const dayMonth = (iso, locale = 'en-GB') => {
   const d = new Date(iso);
   return {
-    day: d.toLocaleDateString('en-GB', { day: '2-digit', timeZone: TZ }),
-    month: d.toLocaleDateString('en-GB', { month: 'short', timeZone: TZ }),
-    weekday: d.toLocaleDateString('en-GB', { weekday: 'short', timeZone: TZ }),
+    day: d.toLocaleDateString(locale, { day: '2-digit', timeZone: TZ }),
+    month: d.toLocaleDateString(locale, { month: 'short', timeZone: TZ }),
+    weekday: d.toLocaleDateString(locale, { weekday: 'short', timeZone: TZ }),
   };
 };
 
@@ -146,7 +134,7 @@ export function downloadIcs(matches) {
     const end = new Date(start.getTime() + 2 * 36e5);
     lines.push(
       'BEGIN:VEVENT',
-      `UID:${m.id}@adibasitarzanclub.com`,
+      `UID:${m.id}@adibasitarzanclub.in`,
       `DTSTAMP:${stamp(new Date().toISOString())}`,
       `DTSTART:${stamp(start.toISOString())}`,
       `DTEND:${stamp(end.toISOString())}`,

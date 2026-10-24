@@ -14,7 +14,7 @@ export const CLUB = {
   motto: 'Rooted in the soil. United in spirit.',
   address: ['S. Akhanagar', 'Kaliyaganj, Uttar Dinajpur', 'West Bengal 733129, India'],
   ground: 'S. Akhanagar Ground',
-  email: 'info@adibasitarzanclub.com',
+  email: 'info@adibasitarzanclub.in',
   phone: '',
   coords: { lat: 25.6293, lng: 88.2028 },
   socials: {
@@ -325,11 +325,15 @@ export const TIMELINE = [
 ];
 
 export const FAQ = [
-  { q: 'What is Adibasi Tarzan Club?', a: 'Adibasi Tarzan Club (ATC) is a community football and cultural club founded in 1981 in S. Akhanagar, Kaliyaganj, Uttar Dinajpur, West Bengal.' },
-  { q: 'Where is the club ground?', a: 'Our home ground is in S. Akhanagar, Kaliyaganj, Uttar Dinajpur. See the map on this page for directions.' },
-  { q: 'How do I join the club?', a: 'Visit the club office in the evening or send us a letter through the contact page. Membership is open to everyone who shares our values.' },
+  { q: 'What is Adibasi Tarzan Club?', a: 'Adibasi Tarzan Club (ATC) is a community football and cultural club founded in 1981 in S. Akhanagar, Kaliyaganj, Uttar Dinajpur, West Bengal, India. It runs a first team, a youth football programme and the ATC Annual Cup, and keeps Adibasi heritage alive through its cultural wing.' },
+  { q: 'When was Adibasi Tarzan Club founded?', a: 'The club was founded in 1981 by a group of friends from S. Akhanagar, Kaliyaganj, who started it with one ball and a borrowed field.' },
+  { q: 'Where is the club ground?', a: 'Our home ground is S. Akhanagar Ground in Kaliyaganj, Uttar Dinajpur, West Bengal 733129. See the map on this page for directions.' },
+  { q: 'How do I join the club?', a: 'Visit the club office in the evening or send us a letter through the contact page. Membership is open to everyone who shares our values, with Supporter, Member and Life Member options.' },
+  { q: 'What is the ATC Annual Cup?', a: 'The ATC Annual Cup is the club\'s flagship knockout football tournament, open to clubs across Uttar Dinajpur and played at S. Akhanagar Ground every season.' },
   { q: 'Can my team play in the Annual Cup?', a: 'Yes. Registration opens each autumn. Write to us with your team name, manager and contact number.' },
+  { q: 'Is entry free for spectators?', a: 'Most home league matches and Annual Cup group games are free to watch. Any ticketed match is marked on the Schedule page.' },
   { q: 'Do you train young players?', a: 'Yes. The youth programme runs three mornings a week for under-13 and under-17 players.' },
+  { q: 'How can a business partner with ATC?', a: 'Write to the club through the contact page or email info@adibasitarzanclub.in. Partners are recognised on matchdays, at club events and on this website.' },
 ];
 
 export const MEMBERSHIP_TIERS = [

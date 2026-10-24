@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link, useLang } from '../../i18n';
 import { CLUB, NEWS, PHOTO } from '../../data/club';
-import { timeAgo, tornClip } from '../../utils/helpers';
+import { tornClip } from '../../utils/helpers';
 import Icon from '../ui/Icon';
 import { Photo } from '../ui/Art';
 
@@ -13,6 +13,7 @@ const LIST = [
 ];
 
 function HeroCard({ entry, i }) {
+  const { t, timeAgo } = useLang();
   const isNews = entry.kind === 'news';
   const href = isNews ? `/news/${entry.item.slug}` : entry.href;
   const title = isNews ? entry.item.title : entry.title;
@@ -30,9 +31,9 @@ function HeroCard({ entry, i }) {
         {entry.kind === 'gallery' && <span className="count-badge"><Icon name="camera" size={14} /> {entry.count}</span>}
       </span>
       <span className="hero-card__body">
-        <span className="hero-card__title">{title}</span>
+        <span className="hero-card__title">{t(title)}</span>
         <span className="hero-card__meta">
-          <span className="hero-card__tag">{tag}</span>
+          <span className="hero-card__tag">{t(tag)}</span>
           {date && <span className="meta-time"><Icon name="clock" size={13} />{timeAgo(date)}</span>}
           {entry.external && <span className="meta-time"><Icon name="external" size={13} />YouTube</span>}
         </span>
@@ -42,21 +43,23 @@ function HeroCard({ entry, i }) {
 }
 
 export default function HeroFeatured() {
+  const { t, ta, timeAgo } = useLang();
   return (
     <header className="hero">
+      <h1 className="visually-hidden">{t('Adibasi Tarzan Club — football and heritage club of S. Akhanagar, Kaliyaganj, Uttar Dinajpur, since 1981')}</h1>
       <Link to={`/news/${lead.slug}`} className="hero__primary">
         <Photo src={lead.photo} className="hero__photo" eager position="50% 62%" />
         <span className="hero__shade" aria-hidden="true" />
         <span className="wrapper hero__content">
           <span className="hero__kicker">
-            <span className="script">Since 1981</span>
-            <span className="tag">{lead.tag}</span>
+            <span className="script">{t('Since 1981')}</span>
+            <span className="tag">{t(lead.tag)}</span>
           </span>
-          <span className="hero__title">{lead.title}</span>
-          <span className="hero__desc">{lead.desc}</span>
+          <span className="hero__title">{t(lead.title)}</span>
+          <span className="hero__desc">{t(lead.desc)}</span>
           <span className="hero__meta">
             <span className="meta-time"><Icon name="clock" size={14} />{timeAgo(lead.date)}</span>
-            <span className="link-arrow">Read the story <Icon name="arrow" size={18} /></span>
+            <span className="link-arrow">{t('Read the story')} <Icon name="arrow" size={18} /></span>
           </span>
         </span>
       </Link>
@@ -67,9 +70,9 @@ export default function HeroFeatured() {
             {LIST.map((e, i) => <HeroCard entry={e} i={i} key={i} />)}
           </div>
           <Link to="/contact#partners" className="hero__partners">
-            <span className="hero__partners-label">Main Partners</span>
-            <span className="hero__partners-slot"><span className="script">Your brand</span> could stand here</span>
-            <span className="link-arrow">Partner with ATC <Icon name="arrow" size={16} /></span>
+            <span className="hero__partners-label">{t('Main Partners')}</span>
+            <span className="hero__partners-slot">{ta('*Your brand* could stand here')}</span>
+            <span className="link-arrow">{t('Partner with ATC')} <Icon name="arrow" size={16} /></span>
           </Link>
         </div>
       </div>

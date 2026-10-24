@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLang } from '../../i18n';
 import { PHOTO } from '../../data/club';
 import { Photo, Sprig, WaxSeal } from '../ui/Art';
 
@@ -13,37 +13,36 @@ export function Twine() {
 }
 
 export default function MembershipPromo() {
+  const { t } = useLang();
   return (
     <section className="member-promo" aria-labelledby="member-title">
       <Photo src={PHOTO.tunnel} className="member-promo__bg" />
       <span className="member-promo__shade" aria-hidden="true" />
       <div className="wrapper member-promo__inner">
         <div className="member-promo__copy" data-reveal>
-          <p className="kicker">Membership 2026–27</p>
+          <p className="kicker">{t('Membership 2026–27')}</p>
           <h2 className="member-promo__title display" id="member-title">
-            <span className="script">Join the family</span>
-            Become an ATC Member
+            <span className="script">{t('Join the family')}</span>
+            {t('Become an ATC Member')}
           </h2>
           <p className="member-promo__desc">
-            Vote at the AGM, priority seats at the Annual Cup final, your member card and an invitation to Heritage Night —
-            and a place in a family that has stood together since 1981.
+            {t('Vote at the AGM, priority seats at the Annual Cup final, your member card and an invitation to Heritage Night — and a place in a family that has stood together since 1981.')}
           </p>
           <div className="member-promo__ctas">
-            <Link to="/membership" className="btn btn--lg">More Info</Link>
-            <Link to="/contact" className="btn btn--ghost btn--lg">Talk to us</Link>
+            <Link to="/membership" className="btn btn--lg">{t('More Info')}</Link>
+            <Link to="/contact" className="btn btn--ghost btn--lg">{t('Talk to us')}</Link>
           </div>
         </div>
 
         <div className="member-letter" data-reveal>
           <Twine />
           <div className="member-letter__sheet paper">
-            <p className="member-letter__date serif">S. Akhanagar, Kaliyaganj</p>
-            <p className="member-letter__hi script">Dear friend,</p>
+            <p className="member-letter__date serif">{t('S. Akhanagar, Kaliyaganj')}</p>
+            <p className="member-letter__hi script">{t('Dear friend,')}</p>
             <p className="member-letter__text hand">
-              Every Saturday the ground fills with our people — grandparents on the boundary, children on every wall.
-              Join us, and keep the spirit of 1981 alive.
+              {t('Every Saturday the ground fills with our people — grandparents on the boundary, children on every wall. Join us, and keep the spirit of 1981 alive.')}
             </p>
-            <p className="member-letter__sign script">The Committee</p>
+            <p className="member-letter__sign script">{t('The Committee')}</p>
             <WaxSeal size={92} className="member-letter__seal" />
             <Sprig className="member-letter__sprig" />
           </div>

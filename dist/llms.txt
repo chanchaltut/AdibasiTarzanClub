@@ -1,0 +1,46 @@
+# Adibasi Tarzan Club
+
+> Adibasi Tarzan Club (ATC) is a community football and cultural club founded in 1981 in S. Akhanagar, Kaliyaganj, Uttar Dinajpur district, West Bengal, India. It fields a first team in the District League, runs a youth football programme, hosts the ATC Annual Cup tournament and keeps Adibasi heritage alive through its cultural wing.
+
+## Key facts
+
+- Name: Adibasi Tarzan Club (also written Adivasi Tarzan Club; short name ATC)
+- Founded: 1981, in S. Akhanagar, Kaliyaganj
+- Location: S. Akhanagar, Kaliyaganj, Uttar Dinajpur, West Bengal 733129, India
+- Home ground: S. Akhanagar Ground
+- Sport: football (soccer), plus a cultural / heritage wing and community work
+- Motto: "Rooted in the soil. United in spirit."
+- Email: info@adibasitarzanclub.in
+- Official website: https://www.adibasitarzanclub.in
+- Social: https://www.facebook.com/adibasitarzanclub, https://www.instagram.com/adibasitarzanclub, https://www.youtube.com/@adibasitarzanclub
+
+## Pages
+
+- [Home](https://www.adibasitarzanclub.in/): Official site of Adibasi Tarzan Club (ATC), the football and heritage club of S. Akhanagar, Kaliyaganj, Uttar Dinajpur since 1981. Fixtures, news, squad and membership.
+- [About the club](https://www.adibasitarzanclub.in/club): The story of Adibasi Tarzan Club: founded in 1981 in S. Akhanagar, Kaliyaganj. Club history, home ground, honours, heritage wing, community work and FAQs.
+- [Fixtures, results & events](https://www.adibasitarzanclub.in/schedule): Upcoming Adibasi Tarzan Club fixtures, latest results and club events — District League, the ATC Annual Cup, Heritage Night and more at S. Akhanagar Ground.
+- [First team squad](https://www.adibasitarzanclub.in/squad): Meet the Adibasi Tarzan Club first team — goalkeepers, defenders, midfielders and forwards wearing the brown and gold for S. Akhanagar, Kaliyaganj.
+- [News](https://www.adibasitarzanclub.in/news): Match reports, club announcements, youth football and heritage news from Adibasi Tarzan Club, S. Akhanagar, Kaliyaganj, Uttar Dinajpur.
+- [Membership](https://www.adibasitarzanclub.in/membership): Join Adibasi Tarzan Club as a Supporter, Member or Life Member. Vote at the AGM, get priority seats at the Annual Cup final and stand with S. Akhanagar.
+- [Committee](https://www.adibasitarzanclub.in/committee): The elected committee and office-bearers who run Adibasi Tarzan Club — president, secretary, treasurer, sports and cultural secretaries and head coach.
+- [Gallery](https://www.adibasitarzanclub.in/gallery): Photos from Adibasi Tarzan Club matchdays, youth sessions, floodlit training and club life at S. Akhanagar Ground, Kaliyaganj.
+- [Contact & partnerships](https://www.adibasitarzanclub.in/contact): Contact Adibasi Tarzan Club in S. Akhanagar, Kaliyaganj, Uttar Dinajpur. Write to the club, register a team for the Annual Cup or become a club partner.
+
+## Latest news
+
+- [Registration opens for the 2026 ATC Annual Cup](https://www.adibasitarzanclub.in/news/annual-cup-2026-registration): Clubs from across Uttar Dinajpur can now enter the 45th-anniversary edition of our flagship tournament.
+- [ATC 3–1 Bansihari: a statement at home](https://www.adibasitarzanclub.in/news/atc-3-1-bansihari): Two second-half goals turn a tight league game into a comfortable win in front of a packed S. Akhanagar crowd.
+- [Heritage Night 2026 — programme announced](https://www.adibasitarzanclub.in/news/heritage-night-2026): Traditional music, dance and stories return to the club grounds on 22 November. Performers and volunteers, sign up now.
+- [Youth programme begins for the new season](https://www.adibasitarzanclub.in/news/youth-programme-begins): Morning sessions for under-13 and under-17 players restart at the ground every Tuesday, Thursday and Saturday.
+- [Hemtabad 0–2 ATC: clean sheet on the road](https://www.adibasitarzanclub.in/news/hemtabad-0-2-atc): A disciplined defensive display and two well-worked goals in a valuable friendly before the cup.
+- [Ground renovation complete](https://www.adibasitarzanclub.in/news/ground-renovation-complete): New drainage, fresh lines and repaired goalposts — S. Akhanagar Ground is ready for the busiest month of the year.
+- [New committee inducted for 2026–27](https://www.adibasitarzanclub.in/news/new-committee-inducted): The newly elected office-bearers took charge in a formal ceremony attended by senior members.
+- [Under the lights: evening sessions return](https://www.adibasitarzanclub.in/news/floodlit-sessions): With the cup approaching, the first team moves to late training sessions twice a week.
+
+## Optional
+
+- [Full text for language models](https://www.adibasitarzanclub.in/llms-full.txt): fixtures, results, squad, history, FAQ and news in one file
+- [Sitemap](https://www.adibasitarzanclub.in/sitemap.xml)
+- The site is also available in Hindi (https://www.adibasitarzanclub.in/hi) and Bengali (https://www.adibasitarzanclub.in/bn).
+
+Website designed and developed by Code Hyphen (https://www.codehyphen.in).

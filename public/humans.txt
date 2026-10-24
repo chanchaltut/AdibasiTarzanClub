@@ -1,0 +1,10 @@
+/* SITE */
+Club: Adibasi Tarzan Club, S. Akhanagar, Kaliyaganj, Uttar Dinajpur, West Bengal
+Site: https://www.adibasitarzanclub.in
+
+/* TEAM */
+Design & development: Code Hyphen
+Site: https://www.codehyphen.in
+
+/* TECHNOLOGY */
+React, React Router, Vite
