@@ -4,14 +4,12 @@ import { NEWS } from '../data/club';
 import { NewsCard } from '../components/home/NewsGrid';
 import { Photo, Sprig, TornEdge } from '../components/ui/Art';
 import Icon from '../components/ui/Icon';
-import { useReveal } from '../utils/helpers';
 import { abs } from '../seo/meta';
 import NotFound from './NotFound';
 
 export default function Article() {
   const { slug } = useParams();
   const n = NEWS.find((x) => x.slug === slug);
-  useReveal([slug]);
   const { t, ta, to, longDate } = useLang();
   if (!n) return <NotFound />;
 

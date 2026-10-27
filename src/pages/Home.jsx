@@ -8,10 +8,8 @@ import NewsGrid from '../components/home/NewsGrid';
 import LetterForm from '../components/home/LetterForm';
 import PlayerSlider from '../components/home/PlayerSlider';
 import { TornEdge } from '../components/ui/Art';
-import { useReveal } from '../utils/helpers';
 
 export default function Home() {
-  useReveal();
 
   return (
     <>

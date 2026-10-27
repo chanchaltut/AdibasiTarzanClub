@@ -23,7 +23,7 @@ export function SvgDefs() {
 
 export function Crest({ size = 56, className = '', alt }) {
   const { t } = useLang();
-  return <img className={`crest ${className}`} src="/brand/crest.webp" width={size} height={size} alt={alt ?? t('Adibasi Tarzan Club crest')} />;
+  return <img className={`crest ${className}`} src="/brand/crest.webp?v=2" width={size} height={size} alt={alt ?? t('Adibasi Tarzan Club crest')} />;
 }
 
 export function TeamBadge({ code, size = 64 }) {

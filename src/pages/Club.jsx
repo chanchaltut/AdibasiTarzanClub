@@ -5,7 +5,7 @@ import PageHero from '../components/page/PageHero';
 import Trophies from '../components/ui/Trophies';
 import { Crest, Drum, Photo, Sprig, TornEdge, WaxSeal } from '../components/ui/Art';
 import Icon from '../components/ui/Icon';
-import { tornClip, useReveal } from '../utils/helpers';
+import { tornClip } from '../utils/helpers';
 
 const TABS = [
   { id: 'about', label: 'About' },
@@ -74,7 +74,6 @@ export function MapCard() {
 }
 
 export default function Club() {
-  useReveal();
   const { t, ta } = useLang();
   return (
     <>

@@ -16,8 +16,8 @@ export const SITE = {
   url: 'https://www.adibasitarzanclub.in',
   name: CLUB.name,
   lang: 'en-IN',
-  image: { src: '/brand/og-image.jpg', width: 1200, height: 630, alt: 'Adibasi Tarzan Club crest — S. Akhanagar, Kaliyaganj, since 1981' },
-  logo: '/brand/icon-512.png',
+  image: { src: '/brand/og-image.jpg?v=2', width: 1200, height: 630, alt: 'Adibasi Tarzan Club crest between the club motto, Rooted in the soil. United in spirit. — S. Akhanagar, Kaliyaganj, since 1981' },
+  logo: '/brand/icon-512.png?v=2',
   // Names people actually type, including the common "Adivasi" spelling and Bengali.
   altNames: ['ATC', 'Adivasi Tarzan Club', 'Tarzan Club Kaliyaganj', 'ATC Kaliyaganj', 'আদিবাসী টারজান ক্লাব'],
   agency: { name: 'Code Hyphen', url: 'https://www.codehyphen.in' },

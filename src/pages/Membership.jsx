@@ -4,7 +4,6 @@ import LetterForm from '../components/home/LetterForm';
 import { FaqList } from './Club';
 import { WaxSeal } from '../components/ui/Art';
 import Icon from '../components/ui/Icon';
-import { useReveal } from '../utils/helpers';
 import { useLang } from '../i18n';
 
 const STEPS = [
@@ -20,7 +19,6 @@ const MEMBER_FAQ = [
 ];
 
 export default function Membership() {
-  useReveal();
   const { t, ta } = useLang();
   return (
     <>

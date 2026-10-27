@@ -2,10 +2,8 @@ import { Link, useLang } from '../i18n';
 import { COMMITTEE, PHOTO } from '../data/club';
 import PageHero from '../components/page/PageHero';
 import { Crest } from '../components/ui/Art';
-import { useReveal } from '../utils/helpers';
 
 export default function Committee() {
-  useReveal();
   const { t, ta } = useLang();
   return (
     <>

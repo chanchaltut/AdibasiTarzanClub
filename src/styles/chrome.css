@@ -45,8 +45,11 @@
   box-shadow: 0 1px 0 rgba(43, 22, 9, .18);
 }
 .main-nav__inner { height: 100%; display: flex; align-items: center; }
-.main-nav__crest { display: flex; align-items: center; gap: 14px; flex: none; }
-.main-nav__crest .crest { width: 64px; height: 64px; transition: transform .4s var(--ease); }
+/* The crest is taller than the band and spills evenly into the top bar
+   and the brand bar; once the top bar scrolls away it shrinks to fit. */
+.main-nav__crest { position: relative; z-index: 4; display: flex; align-items: center; gap: 14px; flex: none; height: 100%; }
+.main-nav__crest .crest { width: 88px; height: 88px; max-width: none; transition: transform .4s var(--ease), width .35s var(--ease), height .35s var(--ease); }
+.is-scrolled .main-nav__crest .crest { width: 58px; height: 58px; }
 .main-nav__crest:hover .crest { transform: rotate(-6deg); }
 .main-nav__wordmark { display: none; flex-direction: column; line-height: 1; }
 .main-nav__name { font-family: var(--f-display); font-weight: 800; font-size: 20px; text-transform: uppercase; letter-spacing: .02em; }
@@ -125,7 +128,8 @@
     display: flex; justify-content: center; height: var(--header-top); padding: 0 16px;
     background: var(--bark-950); font-size: 13px; border-bottom: 1px solid var(--line-dark);
   }
-  .main-nav__crest .crest { width: 42px; height: 42px; }
+  .main-nav__crest .crest { width: 68px; height: 68px; }
+  .is-scrolled .main-nav__crest .crest { width: 48px; height: 48px; }
   .m-controls { display: flex; align-items: center; gap: 6px; margin-left: auto; }
   .m-controls__members {
     display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px;

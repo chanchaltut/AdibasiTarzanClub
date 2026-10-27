@@ -80,7 +80,7 @@
 .history { --edge: var(--kraft-light); }
 .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 28px; }
 .timeline__item { display: flex; flex-direction: column; gap: 6px; padding: 34px 26px 30px; transform: rotate(var(--tilt, 0deg)); }
-.timeline__item[data-reveal]:not(.is-in) { transform: translateY(22px) rotate(var(--tilt, 0deg)); }
+.js .timeline__item[data-reveal]:not(.is-in) { transform: translateY(22px) rotate(var(--tilt, 0deg)); }
 .timeline__year { font-size: 58px; color: var(--sienna); }
 .timeline__title { font-family: var(--f-display); font-weight: 700; font-size: 22px; text-transform: uppercase; letter-spacing: .02em; }
 .timeline__text { font-family: var(--f-serif); font-size: 16px; line-height: 1.5; color: #4A3020; }
@@ -238,7 +238,7 @@
 /* ═══ Committee ══════════════════════════════════════════════ */
 .committee-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 28px; }
 .member-card { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 36px 20px 34px; transform: rotate(var(--tilt, 0deg)); }
-.member-card[data-reveal]:not(.is-in) { transform: translateY(22px) rotate(var(--tilt, 0deg)); }
+.js .member-card[data-reveal]:not(.is-in) { transform: translateY(22px) rotate(var(--tilt, 0deg)); }
 .member-card__photo { width: 120px; height: 120px; border-radius: 50%; display: grid; place-items: center; background: var(--grain), var(--kraft-light); box-shadow: inset 0 0 0 3px var(--parchment-light), inset 0 0 0 4px rgba(43, 22, 9, .25), inset 0 0 18px rgba(80, 40, 10, .4); margin-bottom: 8px; }
 .member-card__role { font-size: 24px; }
 .member-card__name { font-size: 15px; color: var(--ink-soft); }

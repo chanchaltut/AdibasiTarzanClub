@@ -4,9 +4,11 @@ import Header from './Header';
 import Footer from './Footer';
 import { SvgDefs } from '../ui/Art';
 import Seo from '../../seo/Seo';
+import { useReveal } from '../../utils/helpers';
 
 export default function Layout() {
   const { pathname, hash } = useLocation();
+  useReveal();
 
   useEffect(() => {
     if (hash) {

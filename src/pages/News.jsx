@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { NEWS, PHOTO } from '../data/club';
 import PageHero from '../components/page/PageHero';
 import { NewsCard } from '../components/home/NewsGrid';
-import { useReveal } from '../utils/helpers';
 import { useLang } from '../i18n';
 
 const TAGS = ['All', ...new Set(NEWS.map((n) => n.tag))];
@@ -11,7 +10,6 @@ export default function News() {
   const [tag, setTag] = useState('All');
   const { t } = useLang();
   const list = tag === 'All' ? NEWS : NEWS.filter((n) => n.tag === tag);
-  useReveal([tag]);
 
   return (
     <>

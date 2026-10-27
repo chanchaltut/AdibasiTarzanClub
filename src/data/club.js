@@ -135,7 +135,7 @@ export const PHOTO = {
 
 // ─── Teams (SAMPLE opponents) ─────────────────────────────────
 export const TEAMS = {
-  ATC: { name: 'Adibasi Tarzan Club', short: 'ATC', crest: '/brand/crest.webp' },
+  ATC: { name: 'Adibasi Tarzan Club', short: 'ATC', crest: '/brand/crest.webp?v=2' },
   RTF: { name: 'Raiganj Town FC', short: 'Raiganj', colors: ['#2F4A3A', '#D8C9A3'] },
   ITU: { name: 'Itahar United', short: 'Itahar', colors: ['#6B2A1D', '#E5CF9C'] },
   KYC: { name: 'Kaliyaganj Youth Club', short: 'Kaliyaganj YC', colors: ['#1F3550', '#E8D7B0'] },
