@@ -17,6 +17,10 @@ export const CLUB = {
   email: 'info@adibasitarzanclub.in',
   phone: '',
   coords: { lat: 25.6293, lng: 88.2028 },
+  maps: {
+    club: 'https://maps.app.goo.gl/22gLQ3kt5HcPtH14A',
+    ground: 'https://maps.app.goo.gl/CvZEAjx4qfLwv3Sg6',
+  },
   socials: {
     facebook: 'https://www.facebook.com/adibasitarzanclub',
     instagram: 'https://www.instagram.com/adibasitarzanclub',

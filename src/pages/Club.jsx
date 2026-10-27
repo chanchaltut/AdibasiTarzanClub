@@ -38,23 +38,36 @@ export function FaqList({ items = FAQ }) {
 export function MapCard() {
   const { lat, lng } = CLUB.coords;
   const { t } = useLang();
+  const [layer, setLayer] = useState('h');
   return (
     <div className="map-card">
       <div className="map-card__frame" style={{ clipPath: tornClip(77, 6) }}>
         <iframe
           title={t('Map of S. Akhanagar, Kaliyaganj')}
-          src={`https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`}
+          src={`https://maps.google.com/maps?q=${lat},${lng}&z=16&t=${layer}&output=embed`}
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
         />
+        <div className="map-card__layers" role="group" aria-label={t('Map view')}>
+          {[['h', 'Satellite'], ['m', 'Map']].map(([id, label]) => (
+            <button key={id} type="button" aria-pressed={layer === id} onClick={() => setLayer(id)}>
+              {t(label)}
+            </button>
+          ))}
+        </div>
       </div>
       <div className="map-card__note paper paper--sm">
         <p className="kicker">{t('Find us')}</p>
         <p className="map-card__name display">{t(CLUB.ground)}</p>
         <address>{CLUB.address.map((l) => <span key={l}>{t(l)}</span>)}</address>
-        <a className="link-arrow" href={`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`} target="_blank" rel="noopener noreferrer">
-          {t('Get directions')} <Icon name="external" size={16} />
-        </a>
+        <div className="map-card__links">
+          <a className="link-arrow" href={CLUB.maps.club} target="_blank" rel="noopener noreferrer">
+            {t('Club location')} <Icon name="external" size={16} />
+          </a>
+          <a className="link-arrow" href={CLUB.maps.ground} target="_blank" rel="noopener noreferrer">
+            {t('Ground location')} <Icon name="external" size={16} />
+          </a>
+        </div>
       </div>
     </div>
   );

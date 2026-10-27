@@ -124,7 +124,7 @@ const organization = () => ({
   email: CLUB.email,
   address: ADDRESS,
   geo: GEO,
-  hasMap: `https://www.google.com/maps?q=${CLUB.coords.lat},${CLUB.coords.lng}`,
+  hasMap: CLUB.maps.club,
   location: { '@id': ID.ground },
   areaServed: [
     { '@type': 'City', name: 'Kaliyaganj' },
@@ -144,7 +144,7 @@ const ground = () => ({
   name: CLUB.ground,
   address: ADDRESS,
   geo: GEO,
-  hasMap: `https://www.google.com/maps?q=${CLUB.coords.lat},${CLUB.coords.lng}`,
+  hasMap: CLUB.maps.ground,
 });
 
 const website = () => ({
