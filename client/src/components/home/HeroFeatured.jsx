@@ -1,16 +1,9 @@
 import { Link, useLang } from '../../i18n';
-import { CLUB, NEWS, PHOTO } from '../../data/club';
+import { useContent } from '../../content/store';
+import { imgUrl } from '../../content/image';
 import { tornClip } from '../../utils/helpers';
 import Icon from '../ui/Icon';
 import { Photo } from '../ui/Art';
-
-const lead = NEWS[0];
-
-const LIST = [
-  { kind: 'news', item: NEWS[1] },
-  { kind: 'gallery', title: 'Matchday at S. Akhanagar, in pictures', href: '/gallery', photo: PHOTO.tackle, count: 24, tag: 'Gallery', date: NEWS[1].date },
-  { kind: 'video', title: 'Under the lights: inside a cup-week session', href: CLUB.socials.youtube, photo: PHOTO.goalNight, tag: 'ATC Play', external: true },
-];
 
 function HeroCard({ entry, i }) {
   const { t, timeAgo } = useLang();
@@ -26,7 +19,7 @@ function HeroCard({ entry, i }) {
   return (
     <Tag {...linkProps} className={`hero-card hero-card--${entry.kind}`}>
       <span className="hero-card__media" style={{ clipPath: tornClip(11 + i * 7, 5) }}>
-        <Photo src={photo} />
+        <Photo src={photo} sizes="(max-width: 840px) 40vw, 200px" />
         {entry.kind === 'video' && <span className="play-badge"><Icon name="play" size={18} /></span>}
         {entry.kind === 'gallery' && <span className="count-badge"><Icon name="camera" size={14} /> {entry.count}</span>}
       </span>
@@ -42,13 +35,46 @@ function HeroCard({ entry, i }) {
   );
 }
 
+function Partners() {
+  const { t, ta } = useLang();
+  const { PARTNERS } = useContent();
+  const main = PARTNERS.filter((p) => p.level === 'main').slice(0, 4);
+  return (
+    <Link to="/contact#partners" className="hero__partners">
+      <span className="hero__partners-label">{t('Main Partners')}</span>
+      {main.length ? (
+        <span className="hero__partners-logos">
+          {main.map((p) => <img key={p.id} src={imgUrl(p.logo, 320)} alt={p.name} loading="lazy" decoding="async" />)}
+        </span>
+      ) : (
+        <span className="hero__partners-slot">{ta('*Your brand* could stand here')}</span>
+      )}
+      <span className="link-arrow">{t('Partner with ATC')} <Icon name="arrow" size={16} /></span>
+    </Link>
+  );
+}
+
 export default function HeroFeatured() {
-  const { t, ta, timeAgo } = useLang();
+  const { t, timeAgo } = useLang();
+  const { NEWS, GALLERY, VIDEOS, SLOTS, CLUB } = useContent();
+  const lead = NEWS.find((n) => n.featured) || NEWS[0];
+  if (!lead) return null;
+  const second = NEWS.find((n) => n !== lead);
+  const video = VIDEOS[0];
+
+  const list = [
+    second && { kind: 'news', item: second },
+    { kind: 'gallery', title: 'Matchday at S. Akhanagar, in pictures', href: '/gallery', photo: SLOTS.homeGallery || GALLERY[0]?.photo, count: GALLERY.length, tag: 'Gallery', date: second?.date },
+    video
+      ? { kind: 'video', title: video.title, href: '/gallery#videos', photo: video.thumb, tag: 'ATC Play', date: video.date }
+      : CLUB.socials.youtube && { kind: 'video', title: 'Under the lights: inside a cup-week session', href: CLUB.socials.youtube, photo: SLOTS.homeVideo, tag: 'ATC Play', external: true },
+  ].filter(Boolean);
+
   return (
     <header className="hero">
       <h1 className="visually-hidden">{t('Adibasi Tarzan Club — football and heritage club of S. Akhanagar, Kaliyaganj, Uttar Dinajpur, since 1981')}</h1>
       <Link to={`/news/${lead.slug}`} className="hero__primary">
-        <Photo src={lead.photo} className="hero__photo" eager position="50% 62%" />
+        <Photo src={lead.photo} className="hero__photo" eager position={lead.photo?.pos || '50% 62%'} />
         <span className="hero__shade" aria-hidden="true" />
         <span className="wrapper hero__content">
           <span className="hero__kicker">
@@ -67,13 +93,9 @@ export default function HeroFeatured() {
       <div className="hero__below">
         <div className="wrapper hero__below-inner">
           <div className="hero__list">
-            {LIST.map((e, i) => <HeroCard entry={e} i={i} key={i} />)}
+            {list.map((e, i) => <HeroCard entry={e} i={i} key={e.kind + i} />)}
           </div>
-          <Link to="/contact#partners" className="hero__partners">
-            <span className="hero__partners-label">{t('Main Partners')}</span>
-            <span className="hero__partners-slot">{ta('*Your brand* could stand here')}</span>
-            <span className="link-arrow">{t('Partner with ATC')} <Icon name="arrow" size={16} /></span>
-          </Link>
+          <Partners />
         </div>
       </div>
     </header>

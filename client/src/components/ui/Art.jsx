@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { TEAMS } from '../../data/club';
+import { useContent } from '../../content/store';
+import { imgUrl, srcSet, toImg } from '../../content/image';
 import { tornStripPath } from '../../utils/helpers';
 import { useLang } from '../../i18n';
 
@@ -28,10 +29,11 @@ export function Crest({ size = 56, className = '', alt }) {
 
 export function TeamBadge({ code, size = 64 }) {
   const { t: tr } = useLang();
+  const { TEAMS } = useContent();
   const t = TEAMS[code];
   if (!t) return null;
-  if (t.crest) return <img className="team-badge" src={t.crest} width={size} height={size} alt={tr(t.name)} />;
-  const [a, b] = t.colors;
+  if (t.crest) return <img className="team-badge" src={imgUrl(t.crest, size * 2 > 160 ? 320 : 160)} width={size} height={size} alt={tr(t.name)} style={{ objectFit: 'contain' }} />;
+  const [a, b] = t.colors || ['#2F4A3A', '#D8C9A3'];
   const initials = t.name.split(' ').filter((w) => !/^(FC|SC|Club)$/.test(w)).map((w) => w[0]).join('').slice(0, 2);
   return (
     <svg className="team-badge" width={size} height={size} viewBox="0 0 64 64" role="img" aria-label={tr(t.name)}>
@@ -214,10 +216,29 @@ export function TornEdge({ position = 'top', seed = 7, className = '' }) {
   );
 }
 
-export function Photo({ src, alt = '', className = '', eager = false, position }) {
+/**
+ * A photo that fills its frame. Uploaded photos come with a focus point (kept in view
+ * however the frame is shaped), several sizes for different screens, and a blurred
+ * preview / main colour shown while loading.
+ */
+export function Photo({ src, alt = '', className = '', eager = false, position, sizes = '100vw' }) {
+  const img = toImg(src);
+  if (!img) return <span className={`photo ${className}`} />;
+  const bg = img.lqip ? { backgroundImage: `url(${img.lqip})`, backgroundSize: 'cover', backgroundPosition: img.pos || 'center' } : null;
   return (
-    <span className={`photo ${className}`}>
-      <img src={src} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async" style={position ? { objectPosition: position } : undefined} />
+    <span className={`photo ${className}`} style={img.color || bg ? { backgroundColor: img.color, ...bg } : undefined}>
+      <img
+        src={imgUrl(img, 1280)}
+        srcSet={srcSet(img)}
+        sizes={img.url.includes('{w}') ? sizes : undefined}
+        alt={alt || img.alt || ''}
+        width={img.w}
+        height={img.h}
+        loading={eager ? 'eager' : 'lazy'}
+        fetchpriority={eager ? 'high' : undefined}
+        decoding="async"
+        style={position || img.pos ? { objectPosition: position || img.pos } : undefined}
+      />
     </span>
   );
 }

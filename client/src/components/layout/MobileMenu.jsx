@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLang } from '../../i18n';
-import { CLUB, NAV_LEFT, NAV_RIGHT } from '../../data/club';
+import { NAV_LEFT, NAV_RIGHT } from '../../data/nav';
+import { useContent } from '../../content/store';
 import Icon from '../ui/Icon';
 import { Crest } from '../ui/Art';
 import LangSwitch from './LangSwitch';
@@ -13,6 +14,7 @@ const SECTIONS = [...NAV_RIGHT, ...NAV_LEFT].map((s) => ({
 export default function MobileMenu({ open, onClose, onSearch }) {
   const [expanded, setExpanded] = useState(null);
   const { t, ta } = useLang();
+  const { CLUB } = useContent();
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';

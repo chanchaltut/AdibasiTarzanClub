@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLang } from '../../i18n';
-import { NEWS, SQUAD, EVENTS } from '../../data/club';
+import { useContent } from '../../content/store';
 import Icon from '../ui/Icon';
 
 const PAGES = [
@@ -18,6 +18,7 @@ export default function Search({ open, onClose }) {
   const [q, setQ] = useState('');
   const input = useRef(null);
   const { t, name, lang } = useLang();
+  const { NEWS, SQUAD, EVENTS, VIDEOS } = useContent();
 
   useEffect(() => {
     if (!open) return;
@@ -34,7 +35,8 @@ export default function Search({ open, onClose }) {
     ...NEWS.map((n) => ({ title: t(n.title), en: n.title, href: `/news/${n.slug}`, type: 'News' })),
     ...SQUAD.map((p) => ({ title: `${name(p)} — #${p.no} ${t(p.pos)}`, en: `${p.first} ${p.last} ${p.pos}`, href: '/squad', type: 'Player' })),
     ...EVENTS.map((e) => ({ title: t(e.title), en: e.title, href: '/schedule?tab=events', type: 'Event' })),
-  ], [lang]); // eslint-disable-line react-hooks/exhaustive-deps
+    ...VIDEOS.map((v) => ({ title: t(v.title), en: v.title, href: '/gallery#videos', type: 'Video' })),
+  ], [lang, NEWS, SQUAD, EVENTS, VIDEOS]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const results = useMemo(() => {
     const s = q.trim().toLowerCase();

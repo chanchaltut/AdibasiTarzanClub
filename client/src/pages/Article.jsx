@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { Link, useLang } from '../i18n';
-import { NEWS } from '../data/club';
+import { useContent } from '../content/store';
 import { NewsCard } from '../components/home/NewsGrid';
 import { Photo, Sprig, TornEdge } from '../components/ui/Art';
 import Icon from '../components/ui/Icon';
@@ -9,6 +9,7 @@ import NotFound from './NotFound';
 
 export default function Article() {
   const { slug } = useParams();
+  const { NEWS } = useContent();
   const n = NEWS.find((x) => x.slug === slug);
   const { t, ta, to, longDate } = useLang();
   if (!n) return <NotFound />;
@@ -43,7 +44,7 @@ export default function Article() {
           </aside>
           <div className="article-sheet paper">
             <p className="article-sheet__lead serif">{t(n.desc)}</p>
-            {n.body.map((para, i) => <p key={i} className={i === 0 ? 'dropcap' : ''}>{t(para)}</p>)}
+            {(n.body || []).map((para, i) => <p key={i} className={i === 0 ? 'dropcap' : ''}>{t(para)}</p>)}
             <p className="article-sheet__sign script">{t('Adibasi Tarzan Club')}</p>
             <Sprig className="article-sheet__sprig" />
           </div>

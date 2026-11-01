@@ -12,9 +12,12 @@ import Membership from './pages/Membership';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 import { LANGS } from './i18n';
+import { useContent } from './content/store';
 
 // The same pages under "/", "/hi" and "/bn"; useLang() reads the prefix.
 export function AppRoutes() {
+  // Subscribing here re-renders every page when fresher content arrives.
+  useContent();
   return (
     <Routes>
       {Object.values(LANGS).map(({ code, prefix }) => (

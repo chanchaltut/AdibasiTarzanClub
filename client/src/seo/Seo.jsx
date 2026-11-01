@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { LANGS } from '../i18n';
 import { getPageMeta, headTags } from './meta';
+import { useContent } from '../content/store';
 
 /**
  * Keeps <head> in step with the route. Prerendered pages already ship these tags;
@@ -10,6 +11,7 @@ import { getPageMeta, headTags } from './meta';
  */
 export default function Seo() {
   const { pathname } = useLocation();
+  const { version } = useContent();
 
   useEffect(() => {
     const meta = getPageMeta(pathname);
@@ -33,7 +35,7 @@ export default function Seo() {
     });
     const anchor = head.querySelector('meta[name="viewport"]')?.nextSibling || null;
     next.forEach((el) => el && head.insertBefore(el, anchor));
-  }, [pathname]);
+  }, [pathname, version]);
 
   return null;
 }

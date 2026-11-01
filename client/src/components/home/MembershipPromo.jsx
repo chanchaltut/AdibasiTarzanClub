@@ -1,5 +1,5 @@
 import { Link, useLang } from '../../i18n';
-import { PHOTO } from '../../data/club';
+import { useContent } from '../../content/store';
 import { Photo, Sprig, WaxSeal } from '../ui/Art';
 
 export function Twine() {
@@ -14,9 +14,10 @@ export function Twine() {
 
 export default function MembershipPromo() {
   const { t } = useLang();
+  const { SLOTS } = useContent();
   return (
     <section className="member-promo" aria-labelledby="member-title">
-      <Photo src={PHOTO.tunnel} className="member-promo__bg" />
+      <Photo src={SLOTS.homeMembership} className="member-promo__bg" />
       <span className="member-promo__shade" aria-hidden="true" />
       <div className="wrapper member-promo__inner">
         <div className="member-promo__copy" data-reveal>

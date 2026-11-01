@@ -1,4 +1,5 @@
-import { CLUB, PHOTO } from '../data/club';
+import { useContent } from '../content/store';
+import { imgUrl } from '../content/image';
 import PageHero from '../components/page/PageHero';
 import LetterForm from '../components/home/LetterForm';
 import { MapCard } from './Club';
@@ -14,13 +15,14 @@ const PARTNER_TIERS = [
 
 export default function Contact() {
   const { t, ta } = useLang();
+  const { CLUB, PAGES, PARTNERS } = useContent();
   return (
     <>
       <PageHero
         title="Contact"
-        script="Write to us"
-        intro="The club office is open most evenings at the ground. Letters, calls and visits are all welcome."
-        photo={PHOTO.ball}
+        script={PAGES.contact?.script}
+        intro={PAGES.contact?.intro}
+        photo={PAGES.contact?.photo}
         crumbs={[{ label: 'Contact' }]}
       />
 
@@ -36,6 +38,7 @@ export default function Contact() {
               <Icon name="mail" size={26} />
               <span className="contact-card__label">{t('Write')}</span>
               <a href={`mailto:${CLUB.email}`}>{CLUB.email}</a>
+              {CLUB.phone && <a href={`tel:${CLUB.phone.replace(/[^\d+]/g, '')}`}>{CLUB.phone}</a>}
             </li>
             <li className="contact-card paper paper--sm">
               <Icon name="globe" size={26} />
@@ -68,6 +71,17 @@ export default function Contact() {
               </li>
             ))}
           </ul>
+          {PARTNERS.length > 0 && (
+            <div className="partners__list">
+              <p className="kicker">{t('Our partners')}</p>
+              <ul>
+                {PARTNERS.map((p) => {
+                  const logo = <img src={imgUrl(p.logo, 400)} alt={p.name} loading="lazy" decoding="async" />;
+                  return <li key={p.id}>{p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" title={p.name}>{logo}</a> : logo}</li>;
+                })}
+              </ul>
+            </div>
+          )}
           <div className="partners__cta">
             <WaxSeal size={64} />
             <a className="btn btn--lg" href={`mailto:${CLUB.email}?subject=${encodeURIComponent('Partnership enquiry')}`}>{t('Enquire about partnership')}</a>

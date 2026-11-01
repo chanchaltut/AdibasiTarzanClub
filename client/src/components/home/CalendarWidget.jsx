@@ -1,5 +1,5 @@
 import { Link, useLang } from '../../i18n';
-import { FIXTURES, PHOTO } from '../../data/club';
+import { useContent } from '../../content/store';
 import { downloadIcs, kickoff, team, useCountdown, useScroller } from '../../utils/helpers';
 import Icon from '../ui/Icon';
 import { Photo, TeamBadge } from '../ui/Art';
@@ -29,9 +29,9 @@ export function Countdown({ target, compact = false }) {
 
 export function MatchCard({ m, featured }) {
   const { t, longDate } = useLang();
-  const home = team(m.home);
-  const away = team(m.away);
-  const isHome = m.home === 'ATC';
+  const home = team(m.home) || {};
+  const away = team(m.away) || {};
+  const isHome = Boolean(home?.isClub);
   return (
     <article className={`match-card ${featured ? 'match-card--featured paper paper--flat' : ''}`}>
       {featured && <p className="match-card__flag">{t('Next Match')}</p>}
@@ -67,6 +67,7 @@ export function MatchCard({ m, featured }) {
 export default function CalendarWidget() {
   const s = useScroller();
   const { t } = useLang();
+  const { FIXTURES, SLOTS } = useContent();
   const upcoming = FIXTURES.filter((f) => new Date(f.date) > Date.now());
   const next = upcoming[0];
 
@@ -85,7 +86,7 @@ export default function CalendarWidget() {
         <div className="h-scroll calendar__row" ref={s.ref}>
           {upcoming.slice(0, 3).map((m, i) => <MatchCard key={m.id} m={m} featured={i === 0} />)}
           <Link to="/schedule" className="calendar__more">
-            <Photo src={PHOTO.ballPitch} />
+            <Photo src={SLOTS.homeCalendar} sizes="(max-width: 640px) 80vw, 320px" />
             <span className="calendar__more-body">
               <span className="script">{t('Next games')}</span>
               <span className="link-arrow">{t('See the calendar')} <Icon name="arrow" size={18} /></span>

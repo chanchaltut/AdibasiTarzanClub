@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLang } from '../i18n';
-import { CLUB, FAQ, PHOTO, TIMELINE } from '../data/club';
+import { useContent } from '../content/store';
 import PageHero from '../components/page/PageHero';
 import Trophies from '../components/ui/Trophies';
 import { Crest, Drum, Photo, Sprig, TornEdge, WaxSeal } from '../components/ui/Art';
@@ -17,9 +17,11 @@ const TABS = [
   { id: 'faq', label: 'FAQ' },
 ];
 
-export function FaqList({ items = FAQ }) {
+export function FaqList({ items: given }) {
   const [open, setOpen] = useState(0);
   const { t } = useLang();
+  const { FAQ } = useContent();
+  const items = given || FAQ;
   return (
     <ul className="faq">
       {items.map((f, i) => (
@@ -36,6 +38,7 @@ export function FaqList({ items = FAQ }) {
 }
 
 export function MapCard() {
+  const { CLUB } = useContent();
   const { lat, lng } = CLUB.coords;
   const { t } = useLang();
   const [layer, setLayer] = useState('h');
@@ -61,12 +64,16 @@ export function MapCard() {
         <p className="map-card__name display">{t(CLUB.ground)}</p>
         <address>{CLUB.address.map((l) => <span key={l}>{t(l)}</span>)}</address>
         <div className="map-card__links">
-          <a className="link-arrow" href={CLUB.maps.club} target="_blank" rel="noopener noreferrer">
-            {t('Club location')} <Icon name="external" size={16} />
-          </a>
-          <a className="link-arrow" href={CLUB.maps.ground} target="_blank" rel="noopener noreferrer">
-            {t('Ground location')} <Icon name="external" size={16} />
-          </a>
+          {CLUB.maps.club && (
+            <a className="link-arrow" href={CLUB.maps.club} target="_blank" rel="noopener noreferrer">
+              {t('Club location')} <Icon name="external" size={16} />
+            </a>
+          )}
+          {CLUB.maps.ground && (
+            <a className="link-arrow" href={CLUB.maps.ground} target="_blank" rel="noopener noreferrer">
+              {t('Ground location')} <Icon name="external" size={16} />
+            </a>
+          )}
         </div>
       </div>
     </div>
@@ -75,13 +82,15 @@ export function MapCard() {
 
 export default function Club() {
   const { t, ta } = useLang();
+  const { CLUB, PAGES, SLOTS, TIMELINE } = useContent();
+  const seasons = new Date().getFullYear() - (CLUB.founded || 1981);
   return (
     <>
       <PageHero
         title="The Club"
-        script="Since 1981"
-        intro="Football, heritage and community from S. Akhanagar, Kaliyaganj — one family for forty-five seasons."
-        photo={PHOTO.pitch}
+        script={PAGES.club?.script}
+        intro={PAGES.club?.intro}
+        photo={PAGES.club?.photo}
         crumbs={[{ label: 'Club' }]}
         tabs={TABS}
       />
@@ -98,8 +107,8 @@ export default function Club() {
               {t('Adibasi Tarzan Club has grown into a home for footballers, musicians, dancers, volunteers and families from across Kaliyaganj. We play hard on Saturdays, celebrate our heritage every season, and look after one another the rest of the week.')}
             </p>
             <ul className="facts">
-              <li><span className="display">1981</span>{t('Founded')}</li>
-              <li><span className="display">45</span>{t('Seasons')}</li>
+              <li><span className="display">{CLUB.founded || 1981}</span>{t('Founded')}</li>
+              <li><span className="display">{seasons}</span>{t('Seasons')}</li>
               <li><span className="display">1</span>{t('Family')}</li>
             </ul>
           </div>
@@ -123,7 +132,7 @@ export default function Club() {
           </div>
           <ol className="timeline">
             {TIMELINE.map((item, i) => (
-              <li key={item.year} className="timeline__item paper paper--sm" data-reveal style={{ '--tilt': `${(i % 3 - 1) * 1.4}deg` }}>
+              <li key={`${item.year}-${item.title}`} className="timeline__item paper paper--sm" data-reveal style={{ '--tilt': `${(i % 3 - 1) * 1.4}deg` }}>
                 <span className="tape" style={{ top: -11, left: '32%', transform: `rotate(${i % 2 ? 3 : -3}deg)` }} />
                 <span className="timeline__year display">{item.year}</span>
                 <span className="timeline__title">{t(item.title)}</span>
@@ -146,7 +155,7 @@ export default function Club() {
       <section className="section bg-bark feature" id="heritage">
         <div className="wrapper split split--rev">
           <div className="split__media" data-reveal>
-            <span className="feature__photo" style={{ clipPath: tornClip(91, 7) }}><Photo src={PHOTO.night} /></span>
+            <span className="feature__photo" style={{ clipPath: tornClip(91, 7) }}><Photo src={SLOTS.clubHeritage} sizes="(max-width: 840px) 100vw, 50vw" /></span>
             <Drum className="feature__drum" />
           </div>
           <div className="split__text" data-reveal>
@@ -171,7 +180,7 @@ export default function Club() {
             <Link to="/contact" className="btn btn--ghost">{t('Volunteer with us')}</Link>
           </div>
           <div className="split__media" data-reveal>
-            <span className="feature__photo" style={{ clipPath: tornClip(93, 7) }}><Photo src={PHOTO.youth} /></span>
+            <span className="feature__photo" style={{ clipPath: tornClip(93, 7) }}><Photo src={SLOTS.clubCommunity} sizes="(max-width: 840px) 100vw, 50vw" /></span>
             <Sprig className="feature__sprig" />
           </div>
         </div>

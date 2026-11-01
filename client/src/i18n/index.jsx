@@ -3,8 +3,9 @@
 //
 // Text is translated with t('English text'). The English is the key,
 // so anything without a translation simply shows in English. When you
-// add or change English copy, add the same key to hi.js and bn.js —
-// `npm run build` lists every key still missing.
+// add or change English copy in code, add the same key to hi.js and bn.js —
+// `npm run build` lists every key still missing. Content edited in the
+// admin panel is translated there, on the Translations screen.
 // ─────────────────────────────────────────────────────────────
 
 import { Fragment, forwardRef, useMemo } from 'react';
@@ -28,6 +29,12 @@ export const LANG_CODES = Object.keys(LANGS);
 
 const DICT = { hi, bn };
 
+// Translations typed in the admin panel (Translations screen). They win over the built-in ones.
+let RUNTIME = { hi: {}, bn: {} };
+export function setRuntimeTranslations(maps) {
+  RUNTIME = { hi: maps?.hi || {}, bn: maps?.bn || {} };
+}
+
 /** Keys asked for but not translated, per language — reported by the prerender build. */
 export const missing = { hi: new Set(), bn: new Set() };
 
@@ -35,7 +42,7 @@ export function translate(lang, text, vars) {
   if (text == null || text === '') return text;
   let out = text;
   if (lang !== 'en') {
-    const hit = DICT[lang][text];
+    const hit = RUNTIME[lang][text] || DICT[lang][text];
     if (hit) out = hit;
     else if (/[A-Za-z]/.test(text)) missing[lang].add(text);
   }

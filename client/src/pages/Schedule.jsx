@@ -1,7 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
-import { EVENTS, FIXTURES, PHOTO, RESULTS } from '../data/club';
+import { useContent } from '../content/store';
 import PageHero from '../components/page/PageHero';
-import { TeamBadge, WaxSeal } from '../components/ui/Art';
+import { Photo, TeamBadge, WaxSeal } from '../components/ui/Art';
 import Icon from '../components/ui/Icon';
 import { dayMonth, downloadIcs, kickoff, team } from '../utils/helpers';
 import { useLang } from '../i18n';
@@ -26,7 +26,9 @@ function DateStamp({ iso }) {
 
 function MatchRow({ m, result }) {
   const [hs, as] = m.score || [];
-  const won = result && ((m.home === 'ATC' && hs > as) || (m.away === 'ATC' && as > hs));
+  const home = team(m.home) || {};
+  const away = team(m.away) || {};
+  const won = result && ((home.isClub && hs > as) || (away.isClub && as > hs));
   const drew = result && hs === as;
   const { t } = useLang();
   return (
@@ -37,13 +39,13 @@ function MatchRow({ m, result }) {
         <span>{t(m.round)}</span>
       </div>
       <div className="match-row__teams">
-        <span className="match-row__team match-row__team--home">{t(team(m.home).short)}<TeamBadge code={m.home} size={40} /></span>
+        <span className="match-row__team match-row__team--home">{t(home.short)}<TeamBadge code={m.home} size={40} /></span>
         {result ? (
           <span className="match-row__score display">{hs}<i>–</i>{as}</span>
         ) : (
           <span className="match-row__time display">{kickoff(m.date)}</span>
         )}
-        <span className="match-row__team"><TeamBadge code={m.away} size={40} />{t(team(m.away).short)}</span>
+        <span className="match-row__team"><TeamBadge code={m.away} size={40} />{t(away.short)}</span>
       </div>
       <div className="match-row__venue"><Icon name="pin" size={14} />{t(m.venue)}</div>
       <div className="match-row__action">
@@ -60,16 +62,19 @@ function MatchRow({ m, result }) {
 export default function Schedule() {
   const [params, setParams] = useSearchParams();
   const { t, ta } = useLang();
+  const { EVENTS, FIXTURES, RESULTS, PAGES } = useContent();
   const tab = TABS.some((t) => t.id === params.get('tab')) ? params.get('tab') : 'fixtures';
   const upcoming = FIXTURES.filter((f) => new Date(f.date) > Date.now());
+  // Events stay listed until the end of the day they happen.
+  const events = EVENTS.filter((e) => new Date(e.date).getTime() > Date.now() - 18 * 36e5);
 
   return (
     <>
       <PageHero
         title="Schedule"
-        script="Matchday"
-        intro="Fixtures, results and club events. All times are Indian Standard Time."
-        photo={PHOTO.night}
+        script={PAGES.schedule?.script}
+        intro={PAGES.schedule?.intro}
+        photo={PAGES.schedule?.photo}
         crumbs={[{ label: 'First Team', href: '/squad' }, { label: 'Schedule' }]}
         tabs={TABS}
         active={tab}
@@ -93,6 +98,7 @@ export default function Schedule() {
             <>
               <div className="widget-header"><h2 className="widget-title">{ta('Latest *results*')}</h2></div>
               <ul className="match-list">{RESULTS.map((m) => <MatchRow key={m.id} m={m} result />)}</ul>
+              {!RESULTS.length && <p className="empty">{t('Results will appear here after our first match.')}</p>}
             </>
           )}
 
@@ -100,11 +106,12 @@ export default function Schedule() {
             <>
               <div className="widget-header">
                 <h2 className="widget-title">{ta('Club *events*')}</h2>
-                <button className="btn btn--ghost btn--sm" onClick={() => downloadIcs(EVENTS)}><Icon name="sync" size={16} /> {t('Sync all')}</button>
+                <button className="btn btn--ghost btn--sm" onClick={() => downloadIcs(events)} disabled={!events.length}><Icon name="sync" size={16} /> {t('Sync all')}</button>
               </div>
               <ul className="event-grid">
-                {EVENTS.map((e, i) => (
+                {events.map((e, i) => (
                   <li key={e.id} className="event-card paper" style={{ '--tilt': `${(i % 2 ? 1 : -1) * 0.8}deg` }}>
+                    {e.photo && <Photo src={e.photo} className="event-card__photo" sizes="(max-width: 840px) 100vw, 50vw" />}
                     <div className="event-card__top">
                       <DateStamp iso={e.date} />
                       <span className="tag tag--ink">{t(e.kind)}</span>
@@ -117,6 +124,7 @@ export default function Schedule() {
                   </li>
                 ))}
               </ul>
+              {!events.length && <p className="empty">{t('New club events will be announced here soon.')}</p>}
             </>
           )}
         </div>

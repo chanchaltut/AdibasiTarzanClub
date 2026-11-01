@@ -1,7 +1,7 @@
 import { Link, useLang } from '../../i18n';
-import { FEATURED_PLAYERS, SQUAD } from '../../data/club';
+import { useContent } from '../../content/store';
 import { useScroller } from '../../utils/helpers';
-import { Jersey } from '../ui/Art';
+import { Jersey, Photo } from '../ui/Art';
 import { ScrollMeter, SliderControls } from '../ui/Slider';
 
 export function PlayerCard({ p, i = 0 }) {
@@ -10,7 +10,7 @@ export function PlayerCard({ p, i = 0 }) {
     <Link to="/squad" className={`player-card player-card--${i % 2 ? 'b' : 'a'}`}>
       <span className="player-card__art">
         <span className="player-card__bignum" aria-hidden="true">{p.no}</span>
-        <Jersey name={p.last} number={p.no} />
+        {p.photo ? <Photo src={p.photo} className="player-card__photo" sizes="280px" alt={`${t(p.first)} ${t(p.last)}`} /> : <Jersey name={p.last} number={p.no} />}
       </span>
       <span className="player-card__text">
         <span className="player-card__no">{p.no}</span>
@@ -27,7 +27,9 @@ export function PlayerCard({ p, i = 0 }) {
 export default function PlayerSlider() {
   const s = useScroller();
   const { t } = useLang();
-  const players = FEATURED_PLAYERS.map((n) => SQUAD.find((p) => p.no === n)).filter(Boolean);
+  const { SQUAD } = useContent();
+  const players = SQUAD.filter((p) => p.featured);
+  if (!players.length) return null;
   return (
     <section className="section players bg-bark" aria-labelledby="players-title">
       <div className="wrapper">
@@ -36,7 +38,7 @@ export default function PlayerSlider() {
           <SliderControls s={s} label={t('players')} />
         </div>
         <ul className="h-scroll players__row" ref={s.ref}>
-          {players.map((p, i) => <li key={p.no}><PlayerCard p={p} i={i} /></li>)}
+          {players.map((p, i) => <li key={p.id || p.no}><PlayerCard p={p} i={i} /></li>)}
         </ul>
         <ScrollMeter s={s} />
       </div>

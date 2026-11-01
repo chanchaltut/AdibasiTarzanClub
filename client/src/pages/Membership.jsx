@@ -1,4 +1,4 @@
-import { MEMBERSHIP_TIERS, PHOTO } from '../data/club';
+import { useContent } from '../content/store';
 import PageHero from '../components/page/PageHero';
 import LetterForm from '../components/home/LetterForm';
 import { FaqList } from './Club';
@@ -12,21 +12,16 @@ const STEPS = [
   { n: '03', title: 'Welcome home', text: 'Receive your member card and join us at the next home match.' },
 ];
 
-const MEMBER_FAQ = [
-  { q: 'Who can become a member?', a: 'Anyone who shares the values of the club — players, supporters, families and friends of S. Akhanagar.' },
-  { q: 'How much does membership cost?', a: 'Annual and life membership fees are set at the AGM each year. Please ask the club office for the current rates.' },
-  { q: 'Can I vote at the AGM?', a: 'Yes. Members and life members can vote at the Annual General Meeting and stand for the committee.' },
-];
-
 export default function Membership() {
   const { t, ta } = useLang();
+  const { MEMBERSHIP_TIERS, MEMBER_FAQ, PAGES } = useContent();
   return (
     <>
       <PageHero
         title="Membership"
-        script="Join the family"
-        intro="Stand with the club that has stood for S. Akhanagar since 1981."
-        photo={PHOTO.tunnel}
+        script={PAGES.membership?.script}
+        intro={PAGES.membership?.intro}
+        photo={PAGES.membership?.photo}
         crumbs={[{ label: 'Membership' }]}
       />
 
@@ -63,15 +58,17 @@ export default function Membership() {
         </div>
       </section>
 
-      <section className="section bg-parchment">
-        <div className="wrapper faq-wrap">
-          <div>
-            <p className="kicker kicker--ink">{t('Membership')}</p>
-            <h2 className="h2 display">{ta('Good *to know*')}</h2>
+      {MEMBER_FAQ.length > 0 && (
+        <section className="section bg-parchment">
+          <div className="wrapper faq-wrap">
+            <div>
+              <p className="kicker kicker--ink">{t('Membership')}</p>
+              <h2 className="h2 display">{ta('Good *to know*')}</h2>
+            </div>
+            <FaqList items={MEMBER_FAQ} />
           </div>
-          <FaqList items={MEMBER_FAQ} />
-        </div>
-      </section>
+        </section>
+      )}
 
       <LetterForm id="join" />
     </>

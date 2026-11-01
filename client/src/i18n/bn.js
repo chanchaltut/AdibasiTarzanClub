@@ -1,4 +1,4 @@
-// Bengali — keys are the English text used in the code and src/data/club.js.
+// Bengali — keys are the English text used in the code and src/data/defaults.js (and the admin panel’s Translations screen).
 // "*word*" marks the script-font accent and "[words]" an inline link; keep both
 // markers but place them wherever reads naturally.
 
@@ -599,4 +599,13 @@ export default {
   'This page seems to have wandered off into the forest. Let us walk you back to the ground.':
     'মনে হচ্ছে পেজটি জঙ্গলে পথ হারিয়েছে। চলুন, আপনাকে মাঠে ফিরিয়ে নিয়ে যাই।',
   'Back to home': 'হোমে ফিরুন',
+
+  // ─── Added with the website management panel ────────────────
+  Albums: 'অ্যালবাম',
+  'Our partners': 'আমাদের অংশীদার',
+  'Results will appear here after our first match.': 'আমাদের প্রথম ম্যাচের পরে ফলাফল এখানে দেখা যাবে।',
+  'New club events will be announced here soon.': 'ক্লাবের নতুন অনুষ্ঠানের ঘোষণা শীঘ্রই এখানে হবে।',
+  'Photos will be added soon.': 'ছবি শীঘ্রই যোগ করা হবে।',
+  'Play video: {title}': 'ভিডিও চালান: {title}',
+  Video: 'ভিডিও',
 };

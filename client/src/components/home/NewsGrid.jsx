@@ -1,5 +1,5 @@
 import { Link, useLang } from '../../i18n';
-import { NEWS } from '../../data/club';
+import { useContent } from '../../content/store';
 import { tornClip } from '../../utils/helpers';
 import Icon from '../ui/Icon';
 import { Photo } from '../ui/Art';
@@ -9,7 +9,7 @@ export function NewsCard({ n, i = 0 }) {
   return (
     <Link to={`/news/${n.slug}`} className="news-card" data-reveal style={{ transitionDelay: `${(i % 4) * 70}ms` }}>
       <span className="news-card__media" style={{ clipPath: tornClip(50 + i * 3, 4.5) }}>
-        <Photo src={n.photo} />
+        <Photo src={n.photo} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" />
       </span>
       <span className="news-card__body">
         <span className="news-card__title">{t(n.title)}</span>
@@ -25,6 +25,7 @@ export function NewsCard({ n, i = 0 }) {
 
 export default function NewsGrid() {
   const { t, ta } = useLang();
+  const { NEWS } = useContent();
   return (
     <section className="section news" aria-labelledby="news-title">
       <div className="wrapper">

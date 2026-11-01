@@ -7,14 +7,25 @@
 // engines quote it word for word.
 // ─────────────────────────────────────────────────────────────
 
-import {
-  CLUB, EVENTS, FAQ, FIXTURES, HONOURS, MEMBERSHIP_TIERS, NEWS, PHOTO, RESULTS, SQUAD, TEAMS, TIMELINE,
-} from '../data/club';
+import { getContent } from '../content/store';
+import { imgUrl } from '../content/image';
 import { LANG_CODES, LANGS, langFromPath, localePath, stripLang, translate } from '../i18n';
+
+// The content these functions describe. Every exported function calls sync() first, so it
+// always works from whatever the site currently shows (server content, saved copy or defaults).
+let CLUB; let EVENTS; let FAQ; let FIXTURES; let HONOURS; let MEMBERSHIP_TIERS; let NEWS; let RESULTS; let SQUAD; let TEAMS; let TIMELINE; let GALLERY;
+function sync() {
+  ({
+    CLUB, EVENTS, FAQ, FIXTURES, HONOURS, MEMBERSHIP_TIERS, NEWS, RESULTS, SQUAD, TEAMS, TIMELINE, GALLERY,
+  } = getContent());
+}
+
+const xml = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const photoUrl = (p) => (p ? abs(imgUrl(p, 1600)) : null);
 
 export const SITE = {
   url: 'https://www.adibasitarzanclub.in',
-  name: CLUB.name,
+  name: 'Adibasi Tarzan Club',
   lang: 'en-IN',
   image: { src: '/brand/og-image.jpg?v=2', width: 1200, height: 630, alt: 'Adibasi Tarzan Club crest between the club motto, Rooted in the soil. United in spirit. — S. Akhanagar, Kaliyaganj, since 1981' },
   logo: '/brand/icon-512.png?v=2',
@@ -42,9 +53,9 @@ const ADDRESS = {
   addressCountry: 'IN',
 };
 
-const GEO = { '@type': 'GeoCoordinates', latitude: CLUB.coords.lat, longitude: CLUB.coords.lng };
+const geo = () => ({ '@type': 'GeoCoordinates', latitude: CLUB.coords.lat, longitude: CLUB.coords.lng });
 
-const SUMMARY = `${CLUB.name} (ATC) is a community football and cultural club founded in ${CLUB.founded} in S. Akhanagar, Kaliyaganj, Uttar Dinajpur district, West Bengal, India. It fields a first team in the District League, runs a youth football programme, hosts the ATC Annual Cup tournament and keeps Adibasi heritage alive through its cultural wing.`;
+const summary = () => `${CLUB.name} (ATC) is a community football and cultural club founded in ${CLUB.founded} in S. Akhanagar, Kaliyaganj, Uttar Dinajpur district, West Bengal, India. It fields a first team in the District League, runs a youth football programme, hosts the ATC Annual Cup tournament and keeps Adibasi heritage alive through its cultural wing.`;
 
 // ─── Pages ────────────────────────────────────────────────────
 // `crumb` is the breadcrumb label; `type` the schema.org page type.
@@ -105,7 +116,10 @@ const PAGES = {
 };
 
 export const STATIC_PATHS = Object.keys(PAGES);
-export const ARTICLE_PATHS = NEWS.map((n) => `/news/${n.slug}`);
+export function articlePaths() {
+  sync();
+  return NEWS.map((n) => `/news/${n.slug}`);
+}
 
 // ─── Schema.org nodes ─────────────────────────────────────────
 const organization = () => ({
@@ -116,15 +130,16 @@ const organization = () => ({
   url: abs('/'),
   logo: { '@type': 'ImageObject', url: abs(SITE.logo), width: 512, height: 512 },
   image: abs(SITE.image.src),
-  description: SUMMARY,
+  description: summary(),
   slogan: CLUB.motto,
   foundingDate: String(CLUB.founded),
   foundingLocation: { '@type': 'Place', name: 'S. Akhanagar, Kaliyaganj, West Bengal' },
   sport: 'Football',
-  email: CLUB.email,
+  ...(CLUB.email && { email: CLUB.email }),
+  ...(CLUB.phone && { telephone: CLUB.phone }),
   address: ADDRESS,
-  geo: GEO,
-  hasMap: CLUB.maps.club,
+  geo: geo(),
+  ...(CLUB.maps.club && { hasMap: CLUB.maps.club }),
   location: { '@id': ID.ground },
   areaServed: [
     { '@type': 'City', name: 'Kaliyaganj' },
@@ -143,8 +158,8 @@ const ground = () => ({
   '@id': ID.ground,
   name: CLUB.ground,
   address: ADDRESS,
-  geo: GEO,
-  hasMap: CLUB.maps.ground,
+  geo: geo(),
+  ...(CLUB.maps.ground && { hasMap: CLUB.maps.ground }),
 });
 
 const website = () => ({
@@ -153,7 +168,7 @@ const website = () => ({
   url: abs('/'),
   name: CLUB.name,
   alternateName: SITE.altNames,
-  description: SUMMARY,
+  description: summary(),
   inLanguage: SITE.lang,
   publisher: { '@id': ID.org },
   creator: { '@id': ID.agency },
@@ -178,7 +193,7 @@ const team = (withPlayers) => ({
   location: { '@id': ID.ground },
   logo: abs(SITE.logo),
   ...(withPlayers && {
-    athlete: SQUAD.map((p) => ({
+    athlete: SQUAD.filter((p) => (p.squad || 'first-team') === 'first-team').map((p) => ({
       '@type': 'Person',
       name: `${p.first} ${p.last}`,
       jobTitle: p.captain ? `${p.pos} (Captain)` : p.pos,
@@ -187,9 +202,9 @@ const team = (withPlayers) => ({
   }),
 });
 
-const teamRef = (code) => (code === 'ATC'
+const teamRef = (code) => (TEAMS[code]?.isClub
   ? { '@id': ID.team }
-  : { '@type': 'SportsTeam', name: TEAMS[code].name, sport: 'Football' });
+  : { '@type': 'SportsTeam', name: TEAMS[code]?.name || 'Opponent', sport: 'Football' });
 
 const place = (venue, tr) => (venue === CLUB.ground
   ? { '@id': ID.ground }
@@ -198,12 +213,12 @@ const place = (venue, tr) => (venue === CLUB.ground
 const plus2h = (iso) => new Date(new Date(iso).getTime() + 2 * 36e5).toISOString();
 
 const matchEvent = (m, tr, url) => {
-  const home = tr(TEAMS[m.home].name);
-  const away = tr(TEAMS[m.away].name);
+  const home = tr(TEAMS[m.home]?.name || '');
+  const away = tr(TEAMS[m.away]?.name || '');
   return {
     '@type': 'SportsEvent',
     name: `${home} vs ${away} — ${tr(m.comp)}`,
-    description: `${tr(m.comp)}, ${tr(m.round)}${m.score ? `. ${m.score[0]}–${m.score[1]}.` : '.'}`,
+    description: `${tr(m.comp)}${m.round ? `, ${tr(m.round)}` : ''}${m.score ? `. ${m.score[0]}–${m.score[1]}.` : '.'}`,
     sport: 'Football',
     startDate: m.date,
     endDate: plus2h(m.date),
@@ -226,13 +241,13 @@ const matchEvent = (m, tr, url) => {
 const clubEvent = (e, tr, url) => ({
   '@type': e.kind === 'Football' ? 'SportsEvent' : 'Event',
   name: tr(e.title),
-  description: tr(e.desc),
+  description: tr(e.desc || e.title),
   startDate: e.date,
   eventStatus: 'https://schema.org/EventScheduled',
   eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
   location: e.venue === CLUB.ground ? { '@id': ID.ground } : { '@type': 'Place', name: `${tr(e.venue)}, ${tr('S. Akhanagar')}`, address: ADDRESS },
   organizer: { '@id': ID.org },
-  image: abs(SITE.image.src),
+  image: photoUrl(e.photo) || abs(SITE.image.src),
   url: `${url}?tab=events`,
 });
 
@@ -289,7 +304,7 @@ function pageExtras(path, lang) {
     case '/gallery':
       return {
         page: {
-          image: Object.values(PHOTO).map((src) => ({ '@type': 'ImageObject', contentUrl: abs(src), creditText: CLUB.name, copyrightNotice: `© ${CLUB.name}` })),
+          image: GALLERY.slice(0, 60).map((g) => ({ '@type': 'ImageObject', contentUrl: photoUrl(g.photo), caption: tr(g.cap), creditText: CLUB.name, copyrightNotice: `© ${CLUB.name}` })),
         },
       };
     case '/membership':
@@ -324,6 +339,7 @@ const alternates = (base) => LANG_CODES.map((code) => ({ hreflang: LANGS[code].h
 
 /** Everything <head> needs for a pathname, in the language its prefix names. Unknown paths return 404 meta. */
 export function getPageMeta(pathname) {
+  sync();
   const lang = langFromPath(pathname);
   const tr = (text, vars) => translate(lang, text, vars);
   const clean = pathname.length > 1 ? pathname.replace(/\/+$/, '') : '/';
@@ -396,9 +412,9 @@ function articleMeta(n, path, lang) {
       headline,
       description: tr(n.desc),
       articleSection: tr(n.tag),
-      articleBody: n.body.map(tr).join('\n\n'),
-      wordCount: n.body.map(tr).join(' ').split(/\s+/).length,
-      image: [abs(n.photo), abs(SITE.image.src)],
+      articleBody: (n.body || []).map(tr).join('\n\n'),
+      wordCount: (n.body || []).map(tr).join(' ').split(/\s+/).filter(Boolean).length,
+      image: [n.ogImage, photoUrl(n.photo), abs(SITE.image.src)].filter(Boolean),
       datePublished: n.date,
       dateModified: n.date,
       inLanguage: LANGS[lang].hreflang,
@@ -418,14 +434,17 @@ function articleMeta(n, path, lang) {
     alternates: alternates(path),
     type: 'article',
     article: { published: n.date, section: tr(n.tag) },
+    ...(n.ogImage && { image: { src: n.ogImage, width: 1200, height: 630, alt: headline, type: 'image/jpeg' } }),
     jsonLd: graph(nodes),
   };
 }
 
 /** The <head> tags for a page, as plain data both the browser and the build can render. */
 export function headTags(meta) {
+  sync();
   const url = meta.path ? abs(meta.path) : null;
-  const img = abs(SITE.image.src);
+  const image = meta.image || { ...SITE.image, type: 'image/jpeg' };
+  const img = abs(image.src);
   const lang = LANGS[meta.lang || 'en'];
   const tags = [
     ['title', {}, meta.title],
@@ -450,23 +469,23 @@ export function headTags(meta) {
     ['meta', { property: 'og:description', content: meta.description }],
     ['meta', { property: 'og:image', content: img }],
     ['meta', { property: 'og:image:secure_url', content: img }],
-    ['meta', { property: 'og:image:type', content: 'image/jpeg' }],
-    ['meta', { property: 'og:image:width', content: String(SITE.image.width) }],
-    ['meta', { property: 'og:image:height', content: String(SITE.image.height) }],
-    ['meta', { property: 'og:image:alt', content: SITE.image.alt }],
+    ['meta', { property: 'og:image:type', content: image.type }],
+    ['meta', { property: 'og:image:width', content: String(image.width) }],
+    ['meta', { property: 'og:image:height', content: String(image.height) }],
+    ['meta', { property: 'og:image:alt', content: image.alt }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:title', content: meta.title }],
     ['meta', { name: 'twitter:description', content: meta.description }],
     ['meta', { name: 'twitter:image', content: img }],
-    ['meta', { name: 'twitter:image:alt', content: SITE.image.alt }],
+    ['meta', { name: 'twitter:image:alt', content: image.alt }],
   );
   if (meta.article) {
     tags.push(
       ['meta', { property: 'article:published_time', content: meta.article.published }],
       ['meta', { property: 'article:modified_time', content: meta.article.published }],
       ['meta', { property: 'article:section', content: meta.article.section }],
-      ['meta', { property: 'article:publisher', content: CLUB.socials.facebook }],
     );
+    if (CLUB.socials.facebook) tags.push(['meta', { property: 'article:publisher', content: CLUB.socials.facebook }]);
   }
   if (meta.jsonLd) tags.push(['script', { type: 'application/ld+json' }, JSON.stringify(meta.jsonLd)]);
   return tags;
@@ -474,10 +493,11 @@ export function headTags(meta) {
 
 // ─── Build-time files ─────────────────────────────────────────
 export function sitemapXml(buildDate) {
+  sync();
   const today = buildDate.slice(0, 10);
   const pages = [
     ...STATIC_PATHS.map((p) => ({ path: p, lastmod: today, images: p === '/' ? [SITE.image.src] : [] })),
-    ...NEWS.map((n) => ({ path: `/news/${n.slug}`, lastmod: n.date.slice(0, 10), images: [n.photo] })),
+    ...NEWS.map((n) => ({ path: `/news/${n.slug}`, lastmod: (n.updatedAt || n.date).slice(0, 10), images: [imgUrl(n.photo, 1600)].filter(Boolean) })),
   ];
   const body = pages.flatMap((pg) => LANG_CODES.map((code) => [
     '  <url>',
@@ -485,7 +505,7 @@ export function sitemapXml(buildDate) {
     `    <lastmod>${pg.lastmod}</lastmod>`,
     ...alternates(pg.path).map((a) => `    <xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${a.href}"/>`),
     `    <xhtml:link rel="alternate" hreflang="x-default" href="${abs(pg.path)}"/>`,
-    ...pg.images.map((src) => `    <image:image><image:loc>${abs(src)}</image:loc></image:image>`),
+    ...pg.images.map((src) => `    <image:image><image:loc>${xml(abs(src))}</image:loc></image:image>`),
     '  </url>',
   ].join('\n'))).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -499,10 +519,10 @@ const IST = { timeZone: 'Asia/Kolkata' };
 const fmtDate = (iso) => new Date(iso).toLocaleDateString('en-GB', { ...IST, weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
 const fmtTime = (iso) => new Date(iso).toLocaleTimeString('en-GB', { ...IST, hour: '2-digit', minute: '2-digit', hour12: false });
 const matchLine = (m) => {
-  const h = TEAMS[m.home].name;
-  const a = TEAMS[m.away].name;
+  const h = TEAMS[m.home]?.name || '?';
+  const a = TEAMS[m.away]?.name || '?';
   const vs = m.score ? `${h} ${m.score[0]}–${m.score[1]} ${a}` : `${h} vs ${a}`;
-  return `- ${fmtDate(m.date)}${m.score ? '' : `, ${fmtTime(m.date)} IST`}: ${vs} — ${m.comp}, ${m.round}, ${m.venue}${m.entry ? ` (${m.entry})` : ''}`;
+  return `- ${fmtDate(m.date)}${m.score ? '' : `, ${fmtTime(m.date)} IST`}: ${vs} — ${[m.comp, m.round, m.venue].filter(Boolean).join(', ')}${m.entry ? ` (${m.entry})` : ''}`;
 };
 
 const KEY_FACTS = () => [
@@ -512,16 +532,18 @@ const KEY_FACTS = () => [
   `- Home ground: ${CLUB.ground}`,
   '- Sport: football (soccer), plus a cultural / heritage wing and community work',
   `- Motto: "${CLUB.motto}"`,
-  `- Email: ${CLUB.email}`,
+  ...(CLUB.email ? [`- Email: ${CLUB.email}`] : []),
+  ...(CLUB.phone ? [`- Phone: ${CLUB.phone}`] : []),
   `- Official website: ${SITE.url}`,
   `- Social: ${Object.values(CLUB.socials).join(', ')}`,
 ];
 
 export function llmsTxt() {
+  sync();
   const page = (p, label) => `- [${label}](${abs(p)}): ${PAGES[p].description}`;
   return `# ${CLUB.name}
 
-> ${SUMMARY}
+> ${summary()}
 
 ## Key facts
 
@@ -554,9 +576,10 @@ Website designed and developed by ${SITE.agency.name} (${SITE.agency.url}).
 }
 
 export function llmsFullTxt(buildDate) {
+  sync();
   return `# ${CLUB.name} — full reference
 
-> ${SUMMARY}
+> ${summary()}
 
 Source: ${SITE.url} · Updated ${buildDate.slice(0, 10)}
 
@@ -582,11 +605,11 @@ ${RESULTS.map(matchLine).join('\n')}
 
 ## Club events
 
-${EVENTS.map((e) => `- ${fmtDate(e.date)}, ${fmtTime(e.date)} IST — ${e.title} (${e.venue}): ${e.desc}`).join('\n')}
+${EVENTS.map((e) => `- ${fmtDate(e.date)}, ${fmtTime(e.date)} IST — ${e.title} (${e.venue})${e.desc ? `: ${e.desc}` : ''}`).join('\n')}
 
 ## First team squad
 
-${['Goalkeeper', 'Defender', 'Midfielder', 'Forward'].map((pos) => `- ${pos}s: ${SQUAD.filter((p) => p.pos === pos).map((p) => `${p.first} ${p.last} (#${p.no}${p.captain ? ', captain' : ''})`).join(', ')}`).join('\n')}
+${['Goalkeeper', 'Defender', 'Midfielder', 'Forward'].map((pos) => `- ${pos}s: ${SQUAD.filter((p) => p.pos === pos && (p.squad || 'first-team') === 'first-team').sort((a, b) => a.no - b.no).map((p) => `${p.first} ${p.last} (#${p.no}${p.captain ? ', captain' : ''})`).join(', ')}`).join('\n')}
 
 ## Membership
 
@@ -598,7 +621,7 @@ ${FAQ.map((f) => `### ${f.q}\n\n${f.a}`).join('\n\n')}
 
 ## News
 
-${NEWS.map((n) => `### ${n.title}\n\n${fmtDate(n.date)} · ${n.tag} · ${abs(`/news/${n.slug}`)}\n\n${n.desc}\n\n${n.body.join('\n\n')}`).join('\n\n')}
+${NEWS.map((n) => `### ${n.title}\n\n${fmtDate(n.date)} · ${n.tag} · ${abs(`/news/${n.slug}`)}\n\n${n.desc}\n\n${(n.body || []).join('\n\n')}`).join('\n\n')}
 
 ---
 

@@ -1,18 +1,15 @@
 import { useState } from 'react';
 import { Link, useLang } from '../../i18n';
-import { CLUB, SQUAD } from '../../data/club';
+import { useContent } from '../../content/store';
+import { imgUrl } from '../../content/image';
 import Icon from '../ui/Icon';
 import { Crest } from '../ui/Art';
 import Trophies from '../ui/Trophies';
 import { SITE } from '../../seo/meta';
 
-const byPos = (pos) => SQUAD.filter((p) => p.pos === pos).map((p) => ({ player: p, href: '/squad' }));
+const POSITIONS = [['Goalkeepers', 'Goalkeeper'], ['Defenders', 'Defender'], ['Midfielders', 'Midfielder'], ['Forwards', 'Forward']];
 
-const SITEMAP = [
-  { title: 'Goalkeepers', links: byPos('Goalkeeper') },
-  { title: 'Defenders', links: byPos('Defender') },
-  { title: 'Midfielders', links: byPos('Midfielder') },
-  { title: 'Forwards', links: byPos('Forward') },
+const CLUB_LINKS = [
   { title: 'The Club', links: [
     { label: 'About ATC', href: '/club' },
     { label: 'Committee', href: '/committee' },
@@ -33,6 +30,14 @@ const SITEMAP = [
 export default function Footer() {
   const [open, setOpen] = useState(null);
   const { t, name } = useLang();
+  const { CLUB, SQUAD, PARTNERS } = useContent();
+  const firstTeam = SQUAD.filter((p) => (p.squad || 'first-team') === 'first-team').sort((a, b) => a.no - b.no);
+  const SITEMAP = [
+    ...POSITIONS.map(([title, pos]) => ({ title, links: firstTeam.filter((p) => p.pos === pos).map((p) => ({ player: p, href: '/squad' })) }))
+      .filter((g) => g.links.length),
+    ...CLUB_LINKS,
+  ];
+  const partners = PARTNERS.filter((p) => p.level === 'main');
   return (
     <footer className="footer">
       <div className="wrapper">
@@ -40,10 +45,20 @@ export default function Footer() {
 
         <div className="footer__partners">
           <div className="footer__partners-head"><span>{t('Main Partners')}</span></div>
-          <p className="footer__partners-copy">
-            <span className="script">{t('Your name here')}</span>
-            {t('Stand beside a club that has served S. Akhanagar since 1981.')}
-          </p>
+          {partners.length ? (
+            <ul className="footer__partners-logos">
+              {partners.map((p) => (
+                <li key={p.id}>
+                  {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer"><img src={imgUrl(p.logo, 320)} alt={p.name} loading="lazy" /></a> : <img src={imgUrl(p.logo, 320)} alt={p.name} loading="lazy" />}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="footer__partners-copy">
+              <span className="script">{t('Your name here')}</span>
+              {t('Stand beside a club that has served S. Akhanagar since 1981.')}
+            </p>
+          )}
           <Link to="/contact#partners" className="btn btn--ghost">{t('Become a Partner')}</Link>
         </div>
 
@@ -57,9 +72,11 @@ export default function Footer() {
                 </a>
               </li>
             ))}
-            <li>
-              <a href={`mailto:${CLUB.email}`} className="social" aria-label={t('Email')}><Icon name="mail" size={22} /></a>
-            </li>
+            {CLUB.email && (
+              <li>
+                <a href={`mailto:${CLUB.email}`} className="social" aria-label={t('Email')}><Icon name="mail" size={22} /></a>
+              </li>
+            )}
           </ul>
         </div>
 

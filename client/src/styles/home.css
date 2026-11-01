@@ -434,3 +434,15 @@ a:hover .play-badge { transform: translate(-50%, -50%) scale(1.08); }
   .players__row > li { width: 76%; }
   .player-card__last { font-size: 24px; }
 }
+
+/* ─── Content from the website management panel ───────────── */
+/* Player photo in place of the drawn shirt */
+.player-card__photo { position: absolute; inset: 0; background: transparent; }
+.player-card__photo img { object-position: 50% 15%; }
+.player-card__photo::after { background: linear-gradient(180deg, transparent 45%, rgba(30, 12, 4, .78) 100%); mix-blend-mode: normal; }
+.player-card:has(.player-card__photo) .player-card__bignum { opacity: .35; }
+
+/* Main partners' logos beside the hero */
+.hero__partners-logos { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+.hero__partners-logos img { height: 40px; width: auto; max-width: 132px; object-fit: contain; filter: grayscale(1) sepia(.35) brightness(1.6) contrast(.9); opacity: .9; transition: filter .3s, opacity .3s; }
+.hero__partners:hover .hero__partners-logos img { filter: none; opacity: 1; }

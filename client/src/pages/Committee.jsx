@@ -1,25 +1,26 @@
 import { Link, useLang } from '../i18n';
-import { COMMITTEE, PHOTO } from '../data/club';
+import { useContent } from '../content/store';
 import PageHero from '../components/page/PageHero';
-import { Crest } from '../components/ui/Art';
+import { Crest, Photo } from '../components/ui/Art';
 
 export default function Committee() {
   const { t, ta } = useLang();
+  const { COMMITTEE, PAGES } = useContent();
   return (
     <>
       <PageHero
         title="Committee"
-        script="2026–27"
-        intro="The office-bearers who run the club on behalf of its members."
-        photo={PHOTO.ballShadow}
+        script={PAGES.committee?.script}
+        intro={PAGES.committee?.intro}
+        photo={PAGES.committee?.photo}
         crumbs={[{ label: 'Club', href: '/club' }, { label: 'Committee' }]}
       />
       <section className="section bg-parchment">
         <div className="wrapper">
           <ul className="committee-grid">
             {COMMITTEE.map((c, i) => (
-              <li key={c.role} className="member-card paper paper--sm" data-reveal style={{ '--tilt': `${(i % 3 - 1) * 0.9}deg`, transitionDelay: `${(i % 4) * 70}ms` }}>
-                <span className="member-card__photo"><Crest size={84} alt="" /></span>
+              <li key={c.id || c.role} className="member-card paper paper--sm" data-reveal style={{ '--tilt': `${(i % 3 - 1) * 0.9}deg`, transitionDelay: `${(i % 4) * 70}ms` }}>
+                <span className={`member-card__photo ${c.photo ? 'member-card__photo--img' : ''}`}>{c.photo ? <Photo src={c.photo} sizes="120px" alt={t(c.name)} /> : <Crest size={84} alt="" />}</span>
                 <span className="member-card__role display">{t(c.role)}</span>
                 <span className="member-card__name hand">{t(c.name)}</span>
               </li>

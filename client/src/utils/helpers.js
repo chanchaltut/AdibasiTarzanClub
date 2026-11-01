@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { CLUB, TEAMS } from '../data/club';
+import { getContent } from '../content/store';
 
 const TZ = 'Asia/Kolkata';
 
@@ -17,7 +17,7 @@ export const dayMonth = (iso, locale = 'en-GB') => {
   };
 };
 
-export const team = (code) => TEAMS[code];
+export const team = (code) => getContent().TEAMS[code];
 
 // Deterministic pseudo-random so torn edges are stable between renders.
 function rng(seed) {
@@ -132,6 +132,9 @@ export function useReveal() {
 }
 
 // ─── Calendar export ──────────────────────────────────────────
+// Text in .ics files must escape commas, semicolons, backslashes and new lines.
+const icsText = (s) => String(s || '').replace(/[\\;,]/g, (c) => `\\${c}`).replace(/\r?\n/g, '\\n');
+
 export function downloadIcs(matches) {
   const stamp = (iso) => new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
   const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Adibasi Tarzan Club//Fixtures//EN', 'CALSCALE:GREGORIAN'];
@@ -144,9 +147,9 @@ export function downloadIcs(matches) {
       `DTSTAMP:${stamp(new Date().toISOString())}`,
       `DTSTART:${stamp(start.toISOString())}`,
       `DTEND:${stamp(end.toISOString())}`,
-      `SUMMARY:${m.title || `${TEAMS[m.home].name} vs ${TEAMS[m.away].name}`}`,
-      `LOCATION:${m.venue}`,
-      `DESCRIPTION:${m.comp ? `${m.comp} — ${m.round}` : m.desc || ''}`,
+      `SUMMARY:${icsText(m.title || `${team(m.home)?.name || ''} vs ${team(m.away)?.name || ''}`)}`,
+      `LOCATION:${icsText(m.venue)}`,
+      `DESCRIPTION:${icsText(m.comp ? `${m.comp}${m.round ? ` — ${m.round}` : ''}` : m.desc || '')}`,
       'END:VEVENT',
     );
   });
@@ -160,6 +163,7 @@ export function downloadIcs(matches) {
 }
 
 export function mailtoLetter({ name, place, contact, message }) {
+  const { CLUB } = getContent();
   const body = `Dear ATC,\n\n${message}\n\nWith regards,\n${name}${place ? `\n${place}` : ''}${contact ? `\n${contact}` : ''}`;
   return `mailto:${CLUB.email}?subject=${encodeURIComponent(`A letter from ${name || 'a friend of the club'}`)}&body=${encodeURIComponent(body)}`;
 }

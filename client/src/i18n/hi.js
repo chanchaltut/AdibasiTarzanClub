@@ -1,4 +1,4 @@
-// Hindi — keys are the English text used in the code and src/data/club.js.
+// Hindi — keys are the English text used in the code and src/data/defaults.js (and the admin panel’s Translations screen).
 // "*word*" marks the script-font accent and "[words]" an inline link; keep both
 // markers but place them wherever reads naturally.
 
@@ -599,4 +599,13 @@ export default {
   'This page seems to have wandered off into the forest. Let us walk you back to the ground.':
     'लगता है यह पेज जंगल में भटक गया है। चलिए, आपको वापस मैदान तक ले चलते हैं।',
   'Back to home': 'होम पर लौटें',
+
+  // ─── Added with the website management panel ────────────────
+  Albums: 'एल्बम',
+  'Our partners': 'हमारे साझेदार',
+  'Results will appear here after our first match.': 'हमारे पहले मैच के बाद नतीजे यहाँ दिखेंगे।',
+  'New club events will be announced here soon.': 'क्लब के नए आयोजनों की घोषणा जल्द ही यहाँ होगी।',
+  'Photos will be added soon.': 'तस्वीरें जल्द ही जोड़ी जाएँगी।',
+  'Play video: {title}': 'वीडियो चलाएँ: {title}',
+  Video: 'वीडियो',
 };

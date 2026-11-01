@@ -1,5 +1,5 @@
 import { Link, useLang } from '../../i18n';
-import { PROMOS } from '../../data/club';
+import { useContent } from '../../content/store';
 import { useScroller } from '../../utils/helpers';
 import Icon from '../ui/Icon';
 import { Photo, WaxSeal } from '../ui/Art';
@@ -21,6 +21,8 @@ function PaperArt({ paper }) {
 export default function PromoCarousel() {
   const s = useScroller();
   const { t, ta } = useLang();
+  const { PROMOS } = useContent();
+  if (!PROMOS.length) return null;
   return (
     <section className="section promos bg-bark" aria-labelledby="promos-title">
       <div className="wrapper">
@@ -30,9 +32,9 @@ export default function PromoCarousel() {
         </div>
         <ul className="h-scroll promos__row" ref={s.ref}>
           {PROMOS.map((p) => (
-            <li key={p.title} className="promo-card">
+            <li key={p.id || p.title} className="promo-card">
               <Link to={p.href} className="promo-card__link">
-                {p.photo ? <Photo src={p.photo} /> : <PaperArt paper={p.paper} />}
+                {p.photo ? <Photo src={p.photo} sizes="(max-width: 640px) 70vw, 280px" /> : <PaperArt paper={p.paper} />}
                 <span className="promo-card__info">
                   <span className="promo-card__title">{t(p.title)}</span>
                   <Icon name="chevron-right" size={20} />

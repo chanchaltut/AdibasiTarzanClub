@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link, NavLink, useLang } from '../../i18n';
-import { NAV_LEFT, NAV_RIGHT, QUICK_NAV, RIBBON } from '../../data/club';
+import { NAV_LEFT, NAV_RIGHT, QUICK_NAV } from '../../data/nav';
+import { useContent } from '../../content/store';
 import Icon from '../ui/Icon';
 import { Crest } from '../ui/Art';
 import MobileMenu from './MobileMenu';
@@ -10,11 +11,23 @@ import LangSwitch from './LangSwitch';
 
 function Ribbon({ className = '' }) {
   const { t } = useLang();
+  const { RIBBON } = useContent();
+  if (!RIBBON.enabled || !RIBBON.text) return <span className={`ribbon ribbon--empty ${className}`} />;
+  const external = /^https?:/.test(RIBBON.href);
+  if (external) {
+    return (
+      <a href={RIBBON.href} className={`ribbon ${className}`} target="_blank" rel="noopener noreferrer">
+        <span className="ribbon__ball" aria-hidden="true"><Icon name="ball" size={15} /></span>
+        <span className="ribbon__text">{t(RIBBON.text)}</span>
+        {RIBBON.cta && <span className="ribbon__cta">{t(RIBBON.cta)}</span>}
+      </a>
+    );
+  }
   return (
     <Link to={RIBBON.href} className={`ribbon ${className}`}>
       <span className="ribbon__ball" aria-hidden="true"><Icon name="ball" size={15} /></span>
       <span className="ribbon__text">{t(RIBBON.text)}</span>
-      <span className="ribbon__cta">{t(RIBBON.cta)}</span>
+      {RIBBON.cta && <span className="ribbon__cta">{t(RIBBON.cta)}</span>}
     </Link>
   );
 }

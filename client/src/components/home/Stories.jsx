@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { STORIES } from '../../data/club';
+import { useContent } from '../../content/store';
 import { useScroller } from '../../utils/helpers';
 import Icon from '../ui/Icon';
 import { Crest, Photo, Sprig } from '../ui/Art';
@@ -14,17 +14,18 @@ const writeSeen = (ids) => { try { localStorage.setItem(SEEN_KEY, JSON.stringify
 const SLIDE_MS = 5200;
 
 function Viewer({ start, onClose, onSeen }) {
+  const { STORIES } = useContent();
   const [si, setSi] = useState(start);
   const [i, setI] = useState(0);
   const { t } = useLang();
-  const story = STORIES[si];
-  const slide = story.slides[i];
+  const story = STORIES[si] || STORIES[0];
+  const slide = story.slides[i] || story.slides[0];
 
   const next = useCallback(() => {
     if (i < story.slides.length - 1) setI(i + 1);
     else if (si < STORIES.length - 1) { setSi(si + 1); setI(0); }
     else onClose();
-  }, [i, si, story, onClose]);
+  }, [i, si, story, onClose, STORIES.length]);
 
   const prev = () => {
     if (i > 0) setI(i - 1);
@@ -69,7 +70,7 @@ function Viewer({ start, onClose, onSeen }) {
 
         {slide.photo ? (
           <>
-            <Photo src={slide.photo} className="story-viewer__photo" />
+            <Photo src={slide.photo} className="story-viewer__photo" sizes="(max-width: 640px) 100vw, 480px" />
             <p className="story-viewer__caption">{t(slide.text)}</p>
           </>
         ) : (
@@ -95,6 +96,7 @@ export default function Stories() {
   const [open, setOpen] = useState(null);
   const [seen, setSeen] = useState(readSeen);
   const { t, ta } = useLang();
+  const { STORIES } = useContent();
 
   const markSeen = useCallback((id) => {
     setSeen((prev) => {
@@ -105,6 +107,7 @@ export default function Stories() {
     });
   }, []);
 
+  if (!STORIES.length) return null;
   return (
     <section className="section stories" aria-labelledby="stories-title">
       <div className="wrapper">
@@ -117,7 +120,7 @@ export default function Stories() {
             <li key={st.id}>
               <button className={`story-tile ${seen.includes(st.id) ? 'is-seen' : ''}`} onClick={() => setOpen(idx)}>
                 <span className="story-tile__ring">
-                  <Photo src={st.cover} />
+                  <Photo src={st.cover} sizes="120px" />
                 </span>
                 <span className="story-tile__title">{t(st.title)}</span>
               </button>

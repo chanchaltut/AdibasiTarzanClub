@@ -1,9 +1,11 @@
 import { Link, useLang } from '../../i18n';
-import { HONOURS } from '../../data/club';
+import { useContent } from '../../content/store';
 import { TrophyIcon } from './Art';
 
 export default function Trophies() {
   const { t } = useLang();
+  const { HONOURS } = useContent();
+  if (!HONOURS.length) return null;
   return (
     <div className="trophies">
       {HONOURS.map((h, i) => (
