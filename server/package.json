@@ -6,11 +6,12 @@
   "type": "module",
   "main": "src/index.js",
   "engines": {
-    "node": ">=20.11"
+    "node": "22.x"
   },
   "scripts": {
     "dev": "node --watch src/index.js",
     "start": "NODE_ENV=production node src/index.js",
+    "build": "echo \"API has no build step\"",
     "seed": "node src/scripts/seed.js",
     "create-admin": "node src/scripts/create-admin.js",
     "reset-password": "node src/scripts/reset-password.js",
