@@ -11,7 +11,8 @@
 //   text, textarea, longtext (paragraphs), number, boolean, datetime,
 //   select, combo (pick or type), color, link (site page or web
 //   address), url, email, image, file (an uploaded PDF), ref (another
-//   item), list, youtube, slug, heading (a sub-title in long forms; stores nothing)
+//   item), list, youtube, slug, font (pick one of `options`, shown as
+//   samples written in each font), heading (a sub-title in long forms; stores nothing)
 //
 // Common options
 //   required, help, placeholder, max (characters / value), min,
@@ -19,6 +20,8 @@
 //   the Translations screen), aspect (image shape), when (only show
 //   when another field has a value), half (half-width in the form)
 // ─────────────────────────────────────────────────────────────
+
+import { HAND_FONTS, NAME_SIZES, NAME_STYLES, SCRIPT_FONTS } from './fonts.js';
 
 /** Pages of the website, offered as suggestions in every link field. */
 export const SITE_LINKS = [
@@ -479,8 +482,11 @@ export const SINGLES = [
       { name: 'h2', type: 'heading', label: 'Address & ground' },
       { name: 'address', label: 'Address lines', type: 'list', of: 'text', required: true, max: 5, itemMax: 100, t: true, itemLabel: 'Line' },
       { name: 'ground', label: 'Home ground name', type: 'text', required: true, max: 80, t: true },
-      { name: 'lat', label: 'Map latitude', type: 'number', min: -90, max: 90, half: true, help: 'In Google Maps, right-click the ground and click the numbers to copy them.' },
-      { name: 'lng', label: 'Map longitude', type: 'number', min: -180, max: 180, half: true },
+      { name: 'hMap', type: 'heading', label: 'Map pins', help: 'Where the map on the Club and Contact pages points. In Google Maps, right-click the exact spot and click the numbers at the top of the menu to copy them, then paste them into a latitude box — both boxes fill in.' },
+      { name: 'lat', label: 'Ground — latitude', type: 'number', min: -90, max: 90, half: true, pair: 'lng', placeholder: 'e.g. 25.6293' },
+      { name: 'lng', label: 'Ground — longitude', type: 'number', min: -180, max: 180, half: true, pair: 'lat', placeholder: 'e.g. 88.2028' },
+      { name: 'clubLat', label: 'Club office — latitude', type: 'number', min: -90, max: 90, half: true, pair: 'clubLng', help: 'Leave both club office boxes empty if the office is at the ground.' },
+      { name: 'clubLng', label: 'Club office — longitude', type: 'number', min: -180, max: 180, half: true, pair: 'clubLat' },
       { name: 'mapsClub', label: 'Google Maps link — club', type: 'url', half: true },
       { name: 'mapsGround', label: 'Google Maps link — ground', type: 'url', half: true },
       { name: 'h3', type: 'heading', label: 'Contact' },
@@ -518,6 +524,25 @@ export const SINGLES = [
       { name: 'clubHeading', type: 'heading', label: 'Club page photos' },
       { name: 'clubHeritage', label: 'Heritage & culture photo', type: 'image', aspect: 'photo', required: true },
       { name: 'clubCommunity', label: 'Community photo', type: 'image', aspect: 'photo', required: true },
+    ],
+  },
+  {
+    key: 'lettering',
+    label: 'Fonts & lettering',
+    icon: 'type',
+    group: 'Settings',
+    description: 'Choose the hand-written and joined-up fonts used across the website, and how committee members’ names are written. Every font offered here suits the look of the site, and each is resized automatically to fit where the original font was.',
+    fields: [
+      { name: 'h1', type: 'heading', label: 'Joined-up script', help: 'The flowing accent lettering: the line on each page banner (“Since 1981”), the highlighted word in headings, and “Est. 1981”.' },
+      { name: 'scriptFont', label: 'Font', type: 'font', required: true, options: SCRIPT_FONTS, default: SCRIPT_FONTS[0].value, sample: 'Since 1981 · Our History', boldField: 'scriptBold' },
+      { name: 'scriptBold', label: 'Make it bolder', type: 'boolean', default: false },
+      { name: 'h2', type: 'heading', label: 'Handwriting', help: 'The hand-written lettering: committee names, photo captions in the gallery, letters and the “Write to us” form.' },
+      { name: 'handFont', label: 'Font', type: 'font', required: true, options: HAND_FONTS, default: HAND_FONTS[0].value, sample: 'Sukumar Hembram — with best wishes', boldField: 'handBold' },
+      { name: 'handBold', label: 'Make it bolder', type: 'boolean', default: false },
+      { name: 'h3', type: 'heading', label: 'Committee members’ names', help: 'How each name is written under the role on the Committee page.' },
+      { name: 'nameStyle', label: 'Lettering', type: 'select', required: true, options: NAME_STYLES, default: 'hand', half: true },
+      { name: 'nameSize', label: 'Size', type: 'select', required: true, options: NAME_SIZES, default: 'normal', half: true },
+      { name: 'nameBold', label: 'Make names bolder', type: 'boolean', default: false },
     ],
   },
   {

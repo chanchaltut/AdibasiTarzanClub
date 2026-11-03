@@ -6,6 +6,7 @@ import { useSchema } from '../schema';
 import { fromLocalInput, toLocalInput } from '../format';
 import { FieldFrame, Icon, IconButton, Toggle } from '../ui';
 import FileField from './FileField';
+import FontField from './FontField';
 import ImageField from './ImageField';
 import YouTubeField from './YouTubeField';
 
@@ -147,6 +148,20 @@ function ObjectList({ f, value, onChange, errors, prefix, media, onMedia }) {
 }
 
 /**
+ * Google Maps copies a spot as "25.6293, 88.2028". Pasting that into either
+ * box of a latitude/longitude pair fills both (the first number is always latitude).
+ */
+function pastePair(e, f, onChange, onAlso) {
+  const m = e.clipboardData.getData('text').match(/^\s*\(?\s*(-?\d+(?:\.\d+)?)\s*[,;\s]\s*(-?\d+(?:\.\d+)?)\s*\)?\s*$/);
+  if (!m || !onAlso) return;
+  e.preventDefault();
+  const [lat, lng] = [Number(m[1]), Number(m[2])];
+  const isLat = /lat/i.test(f.name);
+  onChange(isLat ? lat : lng);
+  onAlso({ [f.pair]: isLat ? lng : lat });
+}
+
+/**
  * One field. `path` is its key in server error messages (e.g. "slides.2.text").
  * `media` holds details of photos used on the page; `onMedia` adds to it.
  */
@@ -178,7 +193,7 @@ export function Field({ f, value, onChange, data, errors = {}, path = f.name, me
     case 'number':
       return (
         <FieldFrame {...common}>
-          <input id={id} className="a-input a-input--num" type="number" inputMode={f.integer ? 'numeric' : 'decimal'} step={f.integer ? 1 : 'any'} min={f.min} max={f.max} value={value ?? ''} onChange={(e) => onChange(e.target.value === '' ? '' : Number(e.target.value))} onWheel={(e) => e.currentTarget.blur()} />
+          <input id={id} className="a-input a-input--num" type="number" inputMode={f.integer ? 'numeric' : 'decimal'} step={f.integer ? 1 : 'any'} min={f.min} max={f.max} value={value ?? ''} placeholder={f.placeholder} onChange={(e) => onChange(e.target.value === '' ? '' : Number(e.target.value))} onWheel={(e) => e.currentTarget.blur()} onPaste={f.pair ? (e) => pastePair(e, f, onChange, onAlso) : undefined} />
         </FieldFrame>
       );
     case 'boolean':
@@ -213,6 +228,8 @@ export function Field({ f, value, onChange, data, errors = {}, path = f.name, me
           </div>
         </FieldFrame>
       );
+    case 'font':
+      return <FieldFrame {...common} htmlFor={undefined}><FontField f={f} id={id} value={value} onChange={onChange} bold={Boolean(data?.[f.boldField])} /></FieldFrame>;
     case 'ref':
       return <FieldFrame {...common}><RefSelect f={f} id={id} value={value} onChange={onChange} /></FieldFrame>;
     case 'youtube':

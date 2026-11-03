@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 
 // ─── Icons (simple line drawings, 24×24) ─────────────────────
 const P = {
+  type: <><path d="M4 7V5h11v2" /><path d="M9.5 5v14M7.5 19h4" /><path d="M14 12v-1.5h7V12M17.5 10.5V19M16 19h3" /></>,
   home: <><path d="M3 11 12 4l9 7" /><path d="M5 10v10h14V10" /><path d="M10 20v-6h4v6" /></>,
   newspaper: <><path d="M4 5h13v14a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2Z" /><path d="M17 9h3v10a2 2 0 0 1-2 2" /><path d="M7 9h7M7 13h7M7 17h4" /></>,
   ball: <><circle cx="12" cy="12" r="9" /><path d="m12 7.5 4 2.9-1.5 4.7h-5L8 10.4z" /><path d="M12 3v4.5M16 10.4l4.3-1.4M14.5 15.1l2.7 3.7M9.5 15.1l-2.7 3.7M8 10.4 3.7 9" /></>,

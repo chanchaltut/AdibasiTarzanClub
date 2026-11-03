@@ -4,6 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 import { SvgDefs } from '../ui/Art';
 import Seo from '../../seo/Seo';
+import Lettering from './Lettering';
 import { useReveal } from '../../utils/helpers';
 
 export default function Layout() {
@@ -21,6 +22,7 @@ export default function Layout() {
   return (
     <>
       <Seo />
+      <Lettering />
       <a href="#main" className="skip-link">Skip to content</a>
       <SvgDefs />
       <Header />

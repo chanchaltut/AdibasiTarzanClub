@@ -7,6 +7,7 @@ import './styles/base.css';
 import './styles/chrome.css';
 import './styles/home.css';
 import './styles/pages.css';
+import './styles/lettering.css';
 
 // Pages arrive prerendered for crawlers and stay on screen while the latest content loads.
 // The live app then renders fresh over that markup rather than hydrating it, since

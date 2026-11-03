@@ -424,6 +424,8 @@ export default {
   'Satellite': 'सैटेलाइट',
   'Map': 'नक्शा',
   'Map view': 'नक्शा दृश्य',
+  'Club office': 'क्लब कार्यालय',
+  'Show on the map': 'नक्शे पर दिखाएँ',
   Questions: 'सवाल',
   'Frequently *asked*': 'अक्सर *पूछे जाने वाले*',
   "Can't find what you need? [Write to the club].": 'जो चाहिए वह नहीं मिला? [क्लब को लिखें]।',

@@ -40,11 +40,19 @@ export function FaqList({ items: given }) {
   );
 }
 
-export function MapCard() {
+const mapsHref = ({ lat, lng }) => `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+
+/** `start` picks which pin the map opens on when the club office and ground are in different places. */
+export function MapCard({ start = 'ground' }) {
   const { CLUB } = useContent();
-  const { lat, lng } = CLUB.coords;
   const { t } = useLang();
+  const ground = CLUB.coords;
+  const office = CLUB.clubCoords && (CLUB.clubCoords.lat !== ground.lat || CLUB.clubCoords.lng !== ground.lng) ? CLUB.clubCoords : null;
   const [layer, setLayer] = useState('h');
+  const [place, setPlace] = useState(start);
+  const { lat, lng } = place === 'club' && office ? office : ground;
+  const clubHref = CLUB.maps.club || (office && mapsHref(office));
+  const groundHref = CLUB.maps.ground || mapsHref(ground);
   return (
     <div className="map-card">
       <div className="map-card__frame" style={{ clipPath: tornClip(77, 6) }}>
@@ -61,19 +69,28 @@ export function MapCard() {
             </button>
           ))}
         </div>
+        {office && (
+          <div className="map-card__layers map-card__places" role="group" aria-label={t('Show on the map')}>
+            {[['ground', 'Ground'], ['club', 'Club office']].map(([id, label]) => (
+              <button key={id} type="button" aria-pressed={place === id} onClick={() => setPlace(id)}>
+                {t(label)}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
       <div className="map-card__note paper paper--sm">
         <p className="kicker">{t('Find us')}</p>
         <p className="map-card__name display">{t(CLUB.ground)}</p>
         <address>{CLUB.address.map((l) => <span key={l}>{t(l)}</span>)}</address>
         <div className="map-card__links">
-          {CLUB.maps.club && (
-            <a className="link-arrow" href={CLUB.maps.club} target="_blank" rel="noopener noreferrer">
+          {clubHref && (
+            <a className="link-arrow" href={clubHref} target="_blank" rel="noopener noreferrer">
               {t('Club location')} <Icon name="external" size={16} />
             </a>
           )}
-          {CLUB.maps.ground && (
-            <a className="link-arrow" href={CLUB.maps.ground} target="_blank" rel="noopener noreferrer">
+          {groundHref && (
+            <a className="link-arrow" href={groundHref} target="_blank" rel="noopener noreferrer">
               {t('Ground location')} <Icon name="external" size={16} />
             </a>
           )}

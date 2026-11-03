@@ -50,7 +50,7 @@ export default function Contact() {
               </span>
             </li>
           </ul>
-          <MapCard />
+          <MapCard start="club" />
         </div>
       </section>
 

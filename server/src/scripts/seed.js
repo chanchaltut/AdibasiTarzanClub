@@ -13,7 +13,7 @@ import { connectDb } from '../db.js';
 import { contentModel } from '../models/content.js';
 import Single from '../models/Single.js';
 import { COLLECTION_MAP, SINGLE_MAP } from '../content/schemas.js';
-import { validateFields } from '../content/validate.js';
+import { defaultsFor, validateFields } from '../content/validate.js';
 import { args } from './_cli.js';
 
 const { default: D } = await import('../../../client/src/data/defaults.js');
@@ -67,7 +67,7 @@ console.log('\nAdding the starting content…');
 const C = D.CLUB;
 const settings = {
   name: C.name, short: C.short, founded: C.founded, motto: C.motto, address: C.address, ground: C.ground,
-  lat: C.coords.lat, lng: C.coords.lng, mapsClub: C.maps.club, mapsGround: C.maps.ground,
+  lat: C.coords.lat, lng: C.coords.lng, clubLat: C.clubCoords?.lat, clubLng: C.clubCoords?.lng, mapsClub: C.maps.club, mapsGround: C.maps.ground,
   email: C.email, phone: C.phone || undefined,
   facebook: C.socials.facebook, instagram: C.socials.instagram, youtube: C.socials.youtube,
   ribbonOn: D.RIBBON.enabled !== false, ribbonText: D.RIBBON.text, ribbonCta: D.RIBBON.cta, ribbonLink: D.RIBBON.href,
@@ -94,6 +94,7 @@ const legacy = {
 };
 check('legacy', legacy, SINGLE_MAP.legacy.fields);
 await Single.create({ key: 'legacy', data: validateFields(SINGLE_MAP.legacy.fields, legacy).data });
+await Single.create({ key: 'lettering', data: defaultsFor(SINGLE_MAP.lettering.fields) });
 console.log('  ✓ Club details, page banners and Our Legacy');
 
 // Teams first: matches point at them.

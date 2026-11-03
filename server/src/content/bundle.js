@@ -9,6 +9,7 @@ import { createHash } from 'node:crypto';
 import FileAsset from '../models/FileAsset.js';
 import Media from '../models/Media.js';
 import Single from '../models/Single.js';
+import { buildLettering } from './fonts.js';
 import Translation from '../models/Translation.js';
 import { contentModel } from '../models/content.js';
 import { COLLECTIONS, SINGLES } from './schemas.js';
@@ -150,6 +151,7 @@ export async function buildBundle() {
       email: s.email || '',
       phone: s.phone || '',
       coords: { lat: s.lat ?? 25.6293, lng: s.lng ?? 88.2028 },
+      ...(Number.isFinite(s.clubLat) && Number.isFinite(s.clubLng) && { clubCoords: { lat: s.clubLat, lng: s.clubLng } }),
       maps: compact({ club: s.mapsClub, ground: s.mapsGround }),
       socials: compact({ facebook: s.facebook, instagram: s.instagram, youtube: s.youtube }),
     },
@@ -220,6 +222,7 @@ export async function buildBundle() {
       photo: d.format === 'photo' ? img(d.photo) : undefined,
     })).filter((d) => d.pdf || d.photo),
     LEGACY: buildLegacy(singles.legacy, img),
+    LETTERING: buildLettering(singles.lettering),
     PARTNERS: lists.partners.map((x) => compact({ id: id(x), name: x.name, logo: img(x.logo), url: x.url, level: x.level })).filter((x) => x.logo),
     I18N: await translationMaps(),
     updatedAt: iso(updatedAt),

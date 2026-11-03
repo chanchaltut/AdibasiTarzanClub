@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import Single from '../../models/Single.js';
 import { SINGLE_MAP } from '../../content/schemas.js';
-import { validateFields } from '../../content/validate.js';
+import { defaultsFor, validateFields } from '../../content/validate.js';
 import { contentUpdated } from '../../content/bundle.js';
 import { assertMediaExist, mediaFor } from '../../content/helpers.js';
 import { record } from '../../services/audit.js';
@@ -18,7 +18,7 @@ const defFor = (req) => {
 router.get('/:key', async (req, res) => {
   const def = defFor(req);
   const doc = await Single.findOne({ key: def.key }).lean();
-  const data = doc?.data || {};
+  const data = doc?.data || defaultsFor(def.fields);
   res.json({ item: { ...data, _updatedAt: doc?.updatedAt || null }, media: await mediaFor(data) });
 });
 

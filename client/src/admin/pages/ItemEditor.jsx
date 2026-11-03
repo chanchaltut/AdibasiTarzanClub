@@ -175,7 +175,8 @@ export default function ItemEditor({ single = false }) {
             errors={errors}
             media={media}
             onMedia={(m) => setMedia((prev) => ({ ...prev, ...m }))}
-            onAlso={f.type === 'youtube' ? (info) => { if (info?.title) setItem((prev) => (prev.title ? prev : { ...prev, title: info.title })); } : undefined}
+            onAlso={f.type === 'youtube' ? (info) => { if (info?.title) setItem((prev) => (prev.title ? prev : { ...prev, title: info.title })); }
+              : f.pair ? (patch) => Object.entries(patch).forEach(([k, v]) => set(k, v)) : undefined}
           />
         ))}
       </form>

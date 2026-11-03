@@ -424,6 +424,8 @@ export default {
   'Satellite': 'স্যাটেলাইট',
   'Map': 'মানচিত্র',
   'Map view': 'মানচিত্রের দৃশ্য',
+  'Club office': 'ক্লাব অফিস',
+  'Show on the map': 'মানচিত্রে দেখান',
   Questions: 'প্রশ্ন',
   'Frequently *asked*': 'প্রায়শই *জিজ্ঞাসিত*',
   "Can't find what you need? [Write to the club].": 'যা খুঁজছেন পাননি? [ক্লাবকে লিখুন]।',

@@ -53,7 +53,7 @@ const ADDRESS = {
   addressCountry: 'IN',
 };
 
-const geo = () => ({ '@type': 'GeoCoordinates', latitude: CLUB.coords.lat, longitude: CLUB.coords.lng });
+const geo = (c = CLUB.coords) => ({ '@type': 'GeoCoordinates', latitude: c.lat, longitude: c.lng });
 
 const summary = () => `${CLUB.name} (ATC) is a community football and cultural club founded in ${CLUB.founded} in S. Akhanagar, Kaliyaganj, Uttar Dinajpur district, West Bengal, India. It fields a first team in the District League, runs a youth football programme, hosts the ATC Annual Cup tournament and keeps Adibasi heritage alive through its cultural wing.`;
 
@@ -138,7 +138,7 @@ const organization = () => ({
   ...(CLUB.email && { email: CLUB.email }),
   ...(CLUB.phone && { telephone: CLUB.phone }),
   address: ADDRESS,
-  geo: geo(),
+  geo: geo(CLUB.clubCoords || CLUB.coords),
   ...(CLUB.maps.club && { hasMap: CLUB.maps.club }),
   location: { '@id': ID.ground },
   areaServed: [

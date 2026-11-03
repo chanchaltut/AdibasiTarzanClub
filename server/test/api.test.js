@@ -377,6 +377,39 @@ describe('content editing', () => {
     assert.equal(pub.body.RIBBON.text, 'New message on top');
   });
 
+  test('club office and ground each get their own map pin', async () => {
+    const { body } = await c.get('/api/admin/s/settings');
+    const half = await c.put('/api/admin/s/settings', { ...body.item, clubLat: 25.61 });
+    assert.equal(half.status, 400);
+    assert.ok(half.body.details.clubLng);
+    const ok = await c.put('/api/admin/s/settings', { ...body.item, lat: 25.6293, lng: 88.2028, clubLat: 25.611, clubLng: 88.199 });
+    assert.equal(ok.status, 200, JSON.stringify(ok.body));
+    let pub = await client().get('/api/public/content');
+    assert.deepEqual(pub.body.CLUB.coords, { lat: 25.6293, lng: 88.2028 });
+    assert.deepEqual(pub.body.CLUB.clubCoords, { lat: 25.611, lng: 88.199 });
+    const { clubLat, clubLng, ...rest } = ok.body.item;
+    const cleared = await c.put('/api/admin/s/settings', rest);
+    assert.equal(cleared.status, 200, JSON.stringify(cleared.body));
+    pub = await client().get('/api/public/content');
+    assert.equal(pub.body.CLUB.clubCoords, undefined);
+  });
+
+  test('fonts & lettering: only offered fonts, sent to the website', async () => {
+    const { body } = await c.get('/api/admin/s/lettering');
+    assert.equal(body.item.handFont, 'homemade-apple');
+    const bad = await c.put('/api/admin/s/lettering', { ...body.item, handFont: 'comic-sans' });
+    assert.equal(bad.status, 400);
+    assert.ok(bad.body.details.handFont);
+    const ok = await c.put('/api/admin/s/lettering', { ...body.item, handFont: 'caveat', handBold: true, scriptFont: 'great-vibes', nameStyle: 'serif', nameSize: 'large', nameBold: true });
+    assert.equal(ok.status, 200, JSON.stringify(ok.body));
+    const pub = await client().get('/api/public/content');
+    assert.deepEqual(pub.body.LETTERING, {
+      script: { family: 'ATC Great Vibes', boldWeight: 400, bold: false },
+      hand: { family: 'ATC Caveat', boldWeight: 700, bold: true },
+      names: { style: 'serif', size: 'large', bold: true },
+    });
+  });
+
   test('translations appear on the website', async () => {
     const list = await c.get('/api/admin/translations');
     assert.ok(list.body.items.some((i) => i.en === 'New message on top'));

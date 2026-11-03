@@ -200,6 +200,15 @@ select.a-input { appearance: none; padding-right: 36px; background: #fff url("da
 .a-textarea { resize: vertical; min-height: 84px; line-height: 1.55; }
 .a-textarea--long { min-height: 280px; font-size: 16.5px; }
 .a-field--toggle { padding: 4px 0; }
+.a-fonts { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.a-font { position: relative; display: grid; gap: 8px; padding: 14px 14px 12px; border: 1px solid var(--a-line-strong); border-radius: var(--a-radius); background: #FBF4E4; color: #2B1609; cursor: pointer; transition: border-color .15s, box-shadow .15s; }
+.a-font:hover { border-color: var(--a-gold); }
+.a-font.is-on { border-color: var(--a-primary); box-shadow: 0 0 0 2px var(--a-primary); }
+.a-font input { position: absolute; opacity: 0; pointer-events: none; }
+.a-font:has(input:focus-visible) { box-shadow: var(--a-focus); }
+.a-font__sample { font-size: 26px; line-height: 1.5; min-height: 2.6em; display: flex; align-items: center; overflow-wrap: anywhere; }
+.a-font__name { font-size: 13px; color: var(--a-muted); }
+.a-font.is-on .a-font__name { color: var(--a-primary); font-weight: 600; }
 .a-check { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; cursor: pointer; }
 .a-check input { width: 18px; height: 18px; accent-color: var(--a-primary); }
 .a-section-head { padding-top: 14px; margin-top: 6px; border-top: 1px solid var(--a-line); }

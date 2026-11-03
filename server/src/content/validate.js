@@ -80,7 +80,7 @@ function cleanValue(f, v) {
       const s = slugify(v);
       return { value: s };
     }
-    case 'select': {
+    case 'select': case 'font': {
       const opts = (f.options || []).map((o) => (typeof o === 'string' ? o : o.value));
       const s = v == null ? '' : String(v);
       if (!opts.includes(s)) return { error: 'Please choose one of the options' };
@@ -201,7 +201,7 @@ export function validateFields(fields, input, { partial = false, prefix = '' } =
       if (f.required) {
         errors[key] = f.type === 'image' ? 'Please choose a photo'
           : f.type === 'file' ? 'Please upload the PDF file'
-          : ['select', 'ref', 'datetime'].includes(f.type) ? 'Please choose one'
+          : ['select', 'font', 'ref', 'datetime'].includes(f.type) ? 'Please choose one'
             : 'This is required';
       } else if (f.type === 'boolean') {
         data[f.name] = false;
@@ -216,6 +216,16 @@ export function validateFields(fields, input, { partial = false, prefix = '' } =
     else if (r.value === '' && f.required) errors[key] = 'This is required';
     else if (r.value === '') unset.push(f.name);
     else data[f.name] = r.value;
+  }
+
+  // Paired fields (latitude + longitude): one without the other is a mistake.
+  if (!partial) {
+    for (const f of fields) {
+      if (!f.pair || errors[prefix + f.name] || isHidden(f, src)) continue;
+      const mine = Object.prototype.hasOwnProperty.call(data, f.name);
+      const theirs = Object.prototype.hasOwnProperty.call(data, f.pair);
+      if (!mine && theirs) errors[prefix + f.name] = 'Please fill in both boxes, or leave both empty';
+    }
   }
 
   return { data, unset, errors: Object.keys(errors).length ? errors : null };

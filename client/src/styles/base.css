@@ -31,8 +31,18 @@
   --f-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
   --f-body: 'Barlow', system-ui, sans-serif;
   --f-serif: 'IM Fell English', Georgia, serif;
-  --f-script: 'Mrs Saint Delafield', cursive;
-  --f-hand: 'Homemade Apple', cursive;
+  /* The two decorative fonts can be changed in the admin panel (Settings →
+     Fonts & lettering); components/layout/Lettering.jsx overrides these. */
+  --f-script-face: 'Mrs Saint Delafield';
+  --f-hand-face: 'Homemade Apple';
+  --f-script: var(--f-script-face), cursive;
+  --f-hand: var(--f-hand-face), cursive;
+  /* Normal weight, and what "bolder" means for each font: its real bold
+     weight, or — for fonts without one — a thin outline in the ink colour. */
+  --script-weight: 400; --script-stroke: 0px;
+  --hand-weight: 400; --hand-stroke: 0px;
+  --script-bold-weight: 400; --script-bold-stroke: .035em;
+  --hand-bold-weight: 400; --hand-bold-stroke: .035em;
 
   --wrap: 1440px;
   --gutter: 48px;
@@ -138,8 +148,8 @@ ul, ol { padding: 0; list-style: none; }
   letter-spacing: .005em;
   line-height: .92;
 }
-.script { font-family: var(--f-script); font-weight: 400; text-transform: none; letter-spacing: 0; line-height: 1; }
-.hand { font-family: var(--f-hand); font-weight: 400; }
+.script { font-family: var(--f-script); font-weight: var(--script-weight); -webkit-text-stroke: var(--script-stroke) currentColor; text-transform: none; letter-spacing: 0; line-height: 1; }
+.hand { font-family: var(--f-hand); font-weight: var(--hand-weight); -webkit-text-stroke: var(--hand-stroke) currentColor; }
 .serif { font-family: var(--f-serif); }
 
 .kicker {
@@ -312,15 +322,15 @@ html:lang(hi) {
   --f-display: 'Barlow Condensed', 'Anek Devanagari', 'Arial Narrow', sans-serif;
   --f-body: 'Barlow', 'Hind', system-ui, sans-serif;
   --f-serif: 'IM Fell English', 'Tiro Devanagari Hindi', Georgia, serif;
-  --f-script: 'Mrs Saint Delafield', 'Kalam', cursive;
-  --f-hand: 'Homemade Apple', 'Kalam', cursive;
+  --f-script: var(--f-script-face), 'Kalam', cursive;
+  --f-hand: var(--f-hand-face), 'Kalam', cursive;
 }
 html:lang(bn) {
   --f-display: 'Barlow Condensed', 'Anek Bangla', 'Arial Narrow', sans-serif;
   --f-body: 'Barlow', 'Hind Siliguri', system-ui, sans-serif;
   --f-serif: 'IM Fell English', 'Tiro Bangla', Georgia, serif;
-  --f-script: 'Mrs Saint Delafield', 'Galada', cursive;
-  --f-hand: 'Homemade Apple', 'Atma', cursive;
+  --f-script: var(--f-script-face), 'Galada', cursive;
+  --f-hand: var(--f-hand-face), 'Atma', cursive;
 }
 /* Condensed cut of Anek to sit beside Barlow Condensed; static faces ignore it */
 html:lang(hi) body, html:lang(bn) body { font-stretch: 82%; }
