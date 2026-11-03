@@ -3,7 +3,9 @@ import { useContent } from '../../content/store';
 import { downloadIcs, kickoff, team, useCountdown, useScroller } from '../../utils/helpers';
 import Icon from '../ui/Icon';
 import { Photo, TeamBadge } from '../ui/Art';
+import { imgUrl } from '../../content/image';
 import { ScrollMeter, SliderControls } from '../ui/Slider';
+import { latestCalendar } from './NoticeBoard';
 
 export function Countdown({ target, compact = false }) {
   const c = useCountdown(target);
@@ -67,7 +69,9 @@ export function MatchCard({ m, featured }) {
 export default function CalendarWidget() {
   const s = useScroller();
   const { t } = useLang();
-  const { FIXTURES, SLOTS } = useContent();
+  const { DOCUMENTS, FIXTURES, SLOTS } = useContent();
+  const yearCalendar = latestCalendar(DOCUMENTS);
+  const calendarHref = yearCalendar && (yearCalendar.pdf?.url || imgUrl(yearCalendar.photo, 2048));
   const upcoming = FIXTURES.filter((f) => new Date(f.date) > Date.now());
   const next = upcoming[0];
 
@@ -78,6 +82,7 @@ export default function CalendarWidget() {
           <h2 className="widget-title" id="cal-title">{t('Calendar')}</h2>
           {next && <Countdown target={next.date} />}
           <div className="calendar__tools">
+            {calendarHref && <a className="btn btn--ghost btn--sm" href={calendarHref} target="_blank" rel="noopener noreferrer"><Icon name="file" size={16} /> {t('Club calendar')}</a>}
             <button className="btn btn--ghost btn--sm" onClick={() => downloadIcs(upcoming)}><Icon name="sync" size={16} /> {t('Sync calendar')}</button>
             <SliderControls s={s} label={t('matches')} />
           </div>
@@ -98,6 +103,7 @@ export default function CalendarWidget() {
         <div className="calendar__mobile-ctas">
           <Link to="/schedule" className="btn btn--ghost"><Icon name="calendar" size={18} /> {t('Calendar')}</Link>
           <button className="btn btn--ghost" onClick={() => downloadIcs(upcoming)}><Icon name="sync" size={18} /> {t('Sync calendar')}</button>
+          {calendarHref && <a className="btn btn--ghost" href={calendarHref} target="_blank" rel="noopener noreferrer"><Icon name="file" size={18} /> {t('Club calendar')}</a>}
         </div>
       </div>
     </section>

@@ -102,7 +102,7 @@ describe('public website content', () => {
     const { status, body, headers } = await c.get('/api/public/content', { origin: null });
     assert.equal(status, 200);
     assert.equal(headers.get('access-control-allow-origin'), '*');
-    for (const k of ['CLUB', 'RIBBON', 'PAGES', 'SLOTS', 'TEAMS', 'FIXTURES', 'RESULTS', 'EVENTS', 'PROMOS', 'STORIES', 'EXPLORE', 'NEWS', 'SQUAD', 'COMMITTEE', 'HONOURS', 'TIMELINE', 'FAQ', 'MEMBER_FAQ', 'MEMBERSHIP_TIERS', 'GALLERY', 'VIDEOS', 'PARTNERS', 'I18N', 'version']) {
+    for (const k of ['CLUB', 'RIBBON', 'PAGES', 'SLOTS', 'TEAMS', 'FIXTURES', 'RESULTS', 'EVENTS', 'PROMOS', 'STORIES', 'EXPLORE', 'NEWS', 'SQUAD', 'COMMITTEE', 'HONOURS', 'TIMELINE', 'FAQ', 'MEMBER_FAQ', 'MEMBERSHIP_TIERS', 'GALLERY', 'VIDEOS', 'DOCUMENTS', 'LEGACY', 'PARTNERS', 'I18N', 'version']) {
       assert.ok(k in body, `missing ${k}`);
     }
     assert.equal(body.NEWS.length, 8);
@@ -117,6 +117,10 @@ describe('public website content', () => {
     assert.equal(body.PAGES.gallery.photo.pos, '50% 70%');
     assert.equal(body.MEMBER_FAQ.length, 3);
     assert.equal(body.STORIES[2].slides[1].letter.startsWith('Sixteen teams'), true);
+    assert.equal(body.LEGACY.title, 'Our Legacy');
+    assert.deepEqual(body.LEGACY.sides.map((x) => x.name), ['Married Boys', 'Unmarried Boys']);
+    assert.ok(body.LEGACY.intro.length >= 2);
+    assert.deepEqual(body.DOCUMENTS, []);
 
     const again = await c.get('/api/public/content', { origin: null, headers: { 'if-none-match': headers.get('etag') } });
     assert.equal(again.status, 304);
@@ -380,6 +384,57 @@ describe('content editing', () => {
     assert.equal(r.status, 200);
     const pub = await client().get('/api/public/content');
     assert.equal(pub.body.I18N.hi['New message on top'], 'शीर्ष पर नया संदेश');
+  });
+
+  test('Notice Board: a PDF letter is uploaded, saved and offered on the website', async () => {
+    const pdf = Buffer.from('%PDF-1.4\n1 0 obj << /Type /Page >> endobj\n%%EOF\n', 'latin1');
+    const fake = new FormData();
+    fake.append('file', new Blob([Buffer.from('not really a pdf')], { type: 'application/pdf' }), 'letter.pdf');
+    const refused = await c.post('/api/admin/files', fake);
+    assert.equal(refused.status, 400);
+    assert.match(refused.body.error, /not a PDF/);
+
+    const form = new FormData();
+    form.append('file', new Blob([pdf], { type: 'application/pdf' }), 'Invitation 2026.pdf');
+    const up = await c.post('/api/admin/files', form);
+    assert.equal(up.status, 201, JSON.stringify(up.body));
+    assert.equal(up.body.item.pages, 1);
+    assert.equal(up.body.item.originalName, 'Invitation 2026.pdf');
+
+    const missing = await c.post('/api/admin/c/documents', { title: 'Invitation', kind: 'Invitation', date: '2026-10-01T10:00:00Z', format: 'pdf' });
+    assert.equal(missing.status, 400);
+    assert.ok(missing.body.details.file);
+
+    const made = await c.post('/api/admin/c/documents', {
+      title: 'Invitation — Married vs Unmarried, Dussehra 2026', kind: 'Invitation', date: '2026-10-01T10:00:00Z',
+      format: 'pdf', file: { file: up.body.item.id }, photo: { media: photo?.id }, pinned: true, published: true,
+    });
+    assert.equal(made.status, 201, JSON.stringify(made.body));
+    assert.equal(made.body.item.photo, undefined, 'the hidden photo field is not stored');
+
+    const pub = await client().get('/api/public/content');
+    const doc = pub.body.DOCUMENTS[0];
+    assert.equal(doc.title, 'Invitation — Married vs Unmarried, Dussehra 2026');
+    assert.equal(doc.pdf.pages, 1);
+    const open = await fetch(local(doc.pdf.url));
+    assert.equal(open.headers.get('content-type'), 'application/pdf');
+    assert.ok((await open.text()).startsWith('%PDF-'));
+    const dl = await fetch(local(doc.pdf.download));
+    assert.match(dl.headers.get('content-disposition'), /attachment/);
+  });
+
+  test('Our Legacy saves, validates past results and can be hidden', async () => {
+    const { body } = await c.get('/api/admin/s/legacy');
+    const bad = await c.put('/api/admin/s/legacy', { ...body.item, winners: [{ year: '25', winner: 'a' }] });
+    assert.equal(bad.status, 400);
+    assert.ok(bad.body.details['winners.0.year']);
+    const ok = await c.put('/api/admin/s/legacy', { ...body.item, winners: [{ year: '2024', winner: 'b', score: '2–1' }, { year: '2025', winner: 'a' }] });
+    assert.equal(ok.status, 200, JSON.stringify(ok.body));
+    let pub = await client().get('/api/public/content');
+    assert.deepEqual(pub.body.LEGACY.winners.map((w) => w.year), ['2025', '2024']);
+    await c.put('/api/admin/s/legacy', { ...ok.body.item, on: false });
+    pub = await client().get('/api/public/content');
+    assert.equal(pub.body.LEGACY, null);
   });
 
   test('dashboard summarises everything', async () => {

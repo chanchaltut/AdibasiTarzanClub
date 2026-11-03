@@ -1,6 +1,6 @@
 # Progress — Adibasi Tarzan Club website management
 
-_Last updated: 1 Nov 2026_
+_Last updated: 2 Nov 2026_
 
 ## Status at a glance
 
@@ -14,8 +14,11 @@ _Last updated: 1 Nov 2026_
 | YouTube videos (paste link → embed) | ✅ Done |
 | Security audit (`npm audit`) | ✅ 0 vulnerabilities in both folders |
 | README with setup table | ✅ `README.md` |
-| Git commit | ⏳ **Not committed yet** — nothing staged as a commit |
-| Real Cloudinary / Atlas / Render / Vercel | ⏳ Not set up yet (needs accounts) |
+| Git commit | ✅ Pushed to `main` (latest `cfc9634`) |
+| Render API | ✅ Live (Node 22, env vars set, Cloudinary keys added — shared account, folder `atc`) |
+| `api.` DNS | ⏳ Custom domain added in Render; CNAME `api` at domain provider still to add |
+| Seed + owner login | ⏳ Not done |
+| Vercel `VITE_API_URL` | ⏳ Add only after `api.` health check works |
 
 ---
 
@@ -89,6 +92,13 @@ Also to do:
 - [ ] Review the changes and commit (no commit made yet).
 - [ ] After going live: upload a real photo, add a real YouTube video, check a WhatsApp link preview of a news story.
 - [ ] Replace SAMPLE content (squad names, committee, fixtures) through the admin.
+
+## Client request — 2 Nov 2026 (built, not committed)
+- **Our Legacy** (admin: Club information → Our Legacy): “Beyond the Game” section about the 35+ year Married vs Unmarried match at Sera/Dashami (Dussehra). Full section on the Club page (`/club#legacy`, new tab), short version on the home page. Optional year-by-year results list. Can be switched off.
+- **Notice Board** (admin: Website content → Notice Board): upload official letters, tournament invitations and the club calendar as PDF (≤10 MB) or as a photo. Shown on the home page under the Calendar (latest 3), and in full at `/schedule?tab=notices`. Newest Calendar item also gets a “Club calendar” button in the home Calendar strip. Nav links added.
+- Server: new `file` field type, `FileAsset` model, `POST /api/admin/files` (real-PDF check), PDFs on Cloudinary under `atc/documents` (first-page preview) or `server/uploads` locally. 32/32 tests.
+- ⚠️ Cloudinary: switch on *Settings → Security → Allow delivery of PDF and ZIP files* (shared account), otherwise PDFs won’t open.
+- Legacy default text is from the client’s WhatsApp message; photo is a SAMPLE placeholder.
 
 ## Possible later additions (not built)
 - Editable site-wide share image (og:image) and page SEO descriptions in the admin.

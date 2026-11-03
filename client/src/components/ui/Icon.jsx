@@ -15,6 +15,8 @@ const P = {
   ticket: <><path d="M3 8V6h18v2a2 2 0 0 0 0 4v2a2 2 0 0 0 0 4v0H3v0a2 2 0 0 0 0-4v-2a2 2 0 0 0 0-4Z" /><path d="M14 6v12" strokeDasharray="2 2" /></>,
   seal: <><circle cx="12" cy="11" r="6" /><path d="m9 16-1.5 5L12 19l4.5 2L15 16" /><path d="M10 11h4M12 9v4" /></>,
   shirt: <path d="M8 3 3 6l2 5 3-1.5V21h8V9.5L19 11l2-5-5-3c-.5 1.5-2 2.5-4 2.5S8.5 4.5 8 3Z" />,
+  file: <><path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8Z" /><path d="M14 3v5h5M8.5 13h7M8.5 17h5" /></>,
+  download: <><path d="M12 4v11M7 10l5 5 5-5" /><path d="M4 18v2h16v-2" /></>,
   letter: <><rect x="3" y="5" width="18" height="14" rx="1" /><path d="m3.5 6 8.5 7 8.5-7" /></>,
   pin: <><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z" /><circle cx="12" cy="9.5" r="2.5" /></>,
   ball: <><circle cx="12" cy="12" r="9" /><path d="m12 7.5 4 2.9-1.5 4.7h-5L8 10.4z" /><path d="M12 3v4.5M16 10.4l4.3-1.4M14.5 15.1l2.7 3.7M9.5 15.1l-2.7 3.7M8 10.4 3.7 9" /></>,

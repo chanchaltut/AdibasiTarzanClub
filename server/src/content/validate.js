@@ -131,6 +131,11 @@ function cleanValue(f, v) {
     }
     case 'image':
       return cleanImage(v);
+    case 'file': {
+      const id = v && typeof v === 'object' ? String(v.file || '') : '';
+      if (!isObjectId(id)) return { error: 'Please upload the PDF file' };
+      return { value: { file: id } };
+    }
     case 'ref': {
       const s = typeof v === 'object' && v?._id ? String(v._id) : String(v);
       if (!isObjectId(s)) return { error: 'Please choose one' };
@@ -192,9 +197,10 @@ export function validateFields(fields, input, { partial = false, prefix = '' } =
       continue;
     }
 
-    if (isEmpty(v) || (f.type === 'image' && v && !v.media && !v.src)) {
+    if (isEmpty(v) || (f.type === 'image' && v && !v.media && !v.src) || (f.type === 'file' && v && !v.file)) {
       if (f.required) {
         errors[key] = f.type === 'image' ? 'Please choose a photo'
+          : f.type === 'file' ? 'Please upload the PDF file'
           : ['select', 'ref', 'datetime'].includes(f.type) ? 'Please choose one'
             : 'This is required';
       } else if (f.type === 'boolean') {
@@ -231,6 +237,17 @@ export function mediaIdsIn(value, out = new Set()) {
   else if (value && typeof value === 'object') {
     if (value.media && (typeof value.media === 'string' || value.media._bsontype || value.media.toHexString)) out.add(String(value.media));
     for (const [k, v] of Object.entries(value)) if (k !== 'media' && v && typeof v === 'object' && !(v instanceof Date) && !v._bsontype) mediaIdsIn(v, out);
+  }
+  return out;
+}
+
+/** Every uploaded-file id an item points at (deep). */
+export function fileIdsIn(value, out = new Set()) {
+  if (Array.isArray(value)) value.forEach((v) => fileIdsIn(v, out));
+  else if (value && typeof value === 'object' && !(value instanceof Date) && !value._bsontype) {
+    const own = value.file && (typeof value.file === 'string' || value.file._bsontype);
+    if (own) out.add(String(value.file));
+    for (const [k, v] of Object.entries(value)) if (!(own && k === 'file') && v && typeof v === 'object') fileIdsIn(v, out);
   }
   return out;
 }

@@ -15,6 +15,8 @@ export const NAV_LEFT = [
       { label: 'Prize Distribution', href: '/schedule?tab=events' },
       { label: 'Sports Day', href: '/schedule?tab=events' },
       { label: 'Results', href: '/schedule?tab=results' },
+      { label: 'Notice Board', href: '/schedule?tab=notices' },
+      { label: 'Club Calendar', href: '/schedule?tab=notices' },
     ],
   },
   { label: 'Membership', href: '/membership' },
@@ -41,6 +43,7 @@ export const NAV_RIGHT = [
     items: [
       { label: 'About ATC', href: '/club' },
       { label: 'History', href: '/club#history' },
+      { label: 'Our Legacy', href: '/club#legacy' },
       { label: 'Committee', href: '/committee' },
       { label: 'Our Ground', href: '/club#ground' },
       { label: 'Honours', href: '/club#honours' },

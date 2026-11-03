@@ -5,11 +5,13 @@ import { Photo, TeamBadge, WaxSeal } from '../components/ui/Art';
 import Icon from '../components/ui/Icon';
 import { dayMonth, downloadIcs, kickoff, team } from '../utils/helpers';
 import { useLang } from '../i18n';
+import { DocumentList, sortDocuments } from '../components/home/NoticeBoard';
 
 const TABS = [
   { id: 'fixtures', label: 'Fixtures' },
   { id: 'results', label: 'Results' },
   { id: 'events', label: 'Club Events' },
+  { id: 'notices', label: 'Notice Board' },
 ];
 
 function DateStamp({ iso }) {
@@ -62,7 +64,7 @@ function MatchRow({ m, result }) {
 export default function Schedule() {
   const [params, setParams] = useSearchParams();
   const { t, ta } = useLang();
-  const { EVENTS, FIXTURES, RESULTS, PAGES } = useContent();
+  const { DOCUMENTS, EVENTS, FIXTURES, RESULTS, PAGES } = useContent();
   const tab = TABS.some((t) => t.id === params.get('tab')) ? params.get('tab') : 'fixtures';
   const upcoming = FIXTURES.filter((f) => new Date(f.date) > Date.now());
   // Events stay listed until the end of the day they happen.
@@ -125,6 +127,14 @@ export default function Schedule() {
                 ))}
               </ul>
               {!events.length && <p className="empty">{t('New club events will be announced here soon.')}</p>}
+            </>
+          )}
+
+          {tab === 'notices' && (
+            <>
+              <div className="widget-header"><h2 className="widget-title">{ta('Letters, invitations & *calendar*')}</h2></div>
+              <DocumentList docs={sortDocuments(DOCUMENTS)} />
+              {!DOCUMENTS.length && <p className="empty">{t('Official letters, invitations and the club calendar will be posted here.')}</p>}
             </>
           )}
         </div>

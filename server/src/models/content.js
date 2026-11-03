@@ -14,12 +14,17 @@ const imageSchema = new Schema({
   focal: { x: Number, y: Number },
 }, { _id: false });
 
+const fileSchema = new Schema({
+  file: { type: Schema.Types.ObjectId, ref: 'FileAsset' },
+}, { _id: false });
+
 function typeFor(f) {
   switch (f.type) {
     case 'number': return { type: Number };
     case 'boolean': return { type: Boolean, default: f.default ?? false };
     case 'datetime': return { type: Date };
     case 'image': return { type: imageSchema, default: undefined };
+    case 'file': return { type: fileSchema, default: undefined };
     case 'ref': return { type: Schema.Types.ObjectId, ref: modelName(f.to) };
     case 'list':
       return f.of === 'text'

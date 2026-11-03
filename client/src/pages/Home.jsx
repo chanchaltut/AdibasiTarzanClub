@@ -1,6 +1,8 @@
 import HeroFeatured from '../components/home/HeroFeatured';
 import PromoCarousel from '../components/home/PromoCarousel';
 import CalendarWidget from '../components/home/CalendarWidget';
+import NoticeBoard from '../components/home/NoticeBoard';
+import { LegacyTeaser } from '../components/page/Legacy';
 import Stories from '../components/home/Stories';
 import ExploreClub from '../components/home/ExploreClub';
 import MembershipPromo from '../components/home/MembershipPromo';
@@ -16,6 +18,7 @@ export default function Home() {
       <HeroFeatured />
       <PromoCarousel />
       <CalendarWidget />
+      <NoticeBoard />
 
       <div className="parchment-run bg-parchment">
         <TornEdge position="top" seed={3} />
@@ -24,6 +27,7 @@ export default function Home() {
         <TornEdge position="bottom" seed={9} />
       </div>
 
+      <LegacyTeaser />
       <MembershipPromo />
 
       <div className="parchment-run bg-parchment">

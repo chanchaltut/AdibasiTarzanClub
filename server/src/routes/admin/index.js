@@ -17,6 +17,7 @@ import env from '../../config/env.js';
 import collections from './collections.js';
 import singles from './singles.js';
 import media from './media.js';
+import files from './files.js';
 import translations from './translations.js';
 import users from './users.js';
 
@@ -94,6 +95,7 @@ router.get('/youtube', async (req, res) => {
 router.use('/c', collections);
 router.use('/s', singles);
 router.use('/media', media);
+router.use('/files', files);
 router.use('/translations', translations);
 router.use('/users', users);
 

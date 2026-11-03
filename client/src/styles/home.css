@@ -446,3 +446,9 @@ a:hover .play-badge { transform: translate(-50%, -50%) scale(1.08); }
 .hero__partners-logos { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
 .hero__partners-logos img { height: 40px; width: auto; max-width: 132px; object-fit: contain; filter: grayscale(1) sepia(.35) brightness(1.6) contrast(.9); opacity: .9; transition: filter .3s, opacity .3s; }
 .hero__partners:hover .hero__partners-logos img { filter: none; opacity: 1; }
+
+/* Third calendar button (club calendar PDF) spans the row on phones */
+@media (max-width: 640px) { .calendar__mobile-ctas > :nth-child(3) { grid-column: 1 / -1; } }
+
+/* ═══ Notice Board (home) ════════════════════════════════════ */
+.notice-board { padding-top: 8px; }

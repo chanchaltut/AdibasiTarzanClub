@@ -10,8 +10,8 @@
 // Field types
 //   text, textarea, longtext (paragraphs), number, boolean, datetime,
 //   select, combo (pick or type), color, link (site page or web
-//   address), url, email, image, ref (another item), list, youtube,
-//   slug, heading (a sub-title in long forms; stores nothing)
+//   address), url, email, image, file (an uploaded PDF), ref (another
+//   item), list, youtube, slug, heading (a sub-title in long forms; stores nothing)
 //
 // Common options
 //   required, help, placeholder, max (characters / value), min,
@@ -27,6 +27,7 @@ export const SITE_LINKS = [
   { value: '/schedule', label: 'Schedule — fixtures' },
   { value: '/schedule?tab=results', label: 'Schedule — results' },
   { value: '/schedule?tab=events', label: 'Schedule — club events' },
+  { value: '/schedule?tab=notices', label: 'Notice Board — letters & calendar' },
   { value: '/squad', label: 'Players' },
   { value: '/squad#youth', label: 'Players — youth' },
   { value: '/committee', label: 'Committee' },
@@ -35,6 +36,7 @@ export const SITE_LINKS = [
   { value: '/membership', label: 'Membership' },
   { value: '/club', label: 'The Club' },
   { value: '/club#history', label: 'The Club — history' },
+  { value: '/club#legacy', label: 'The Club — our legacy (Married vs Unmarried)' },
   { value: '/club#heritage', label: 'The Club — heritage' },
   { value: '/club#community', label: 'The Club — community' },
   { value: '/club#ground', label: 'The Club — our ground' },
@@ -187,6 +189,31 @@ export const COLLECTIONS = [
       { name: 'album', label: 'Album (optional)', type: 'combo', options: ['Matchday', 'Training', 'Youth', 'Heritage Night', 'Annual Cup', 'Community'], max: 60, t: true, help: 'Photos with the same album can be filtered together on the Gallery page.' },
       published(),
       order,
+    ],
+  },
+  {
+    key: 'documents',
+    label: 'Notice Board',
+    singular: 'letter or notice',
+    icon: 'file',
+    group: 'Website content',
+    description: 'Official letters, tournament invitations and the club calendar. Upload a PDF, or a photo of the letter. Visitors can open and download them.',
+    titleField: 'title',
+    subtitle: ['kind', 'date'],
+    imageField: 'photo',
+    sort: { pinned: -1, date: -1 },
+    publishable: true,
+    searchable: ['title', 'desc', 'kind'],
+    fields: [
+      { name: 'title', label: 'Title', type: 'text', required: true, max: 120, t: true, placeholder: 'e.g. Invitation — Married vs Unmarried Match, Dussehra 2026' },
+      { name: 'kind', label: 'Type', type: 'combo', required: true, options: ['Invitation', 'Official Letter', 'Calendar', 'Notice', 'Fixture List'], default: 'Invitation', max: 40, t: true, half: true },
+      { name: 'date', label: 'Date', type: 'datetime', required: true, default: 'now', half: true, help: 'The date on the letter. Newest are shown first.' },
+      { name: 'desc', label: 'Short note (optional)', type: 'textarea', max: 300, t: true, placeholder: 'e.g. All members and families are warmly invited.' },
+      { name: 'format', label: 'What are you adding?', type: 'select', required: true, default: 'pdf', options: [{ value: 'pdf', label: 'A PDF file' }, { value: 'photo', label: 'A photo or scan of the letter (JPG / PNG)' }] },
+      { name: 'file', label: 'PDF file', type: 'file', required: true, when: { field: 'format', is: 'pdf' }, help: 'Up to 10 MB.' },
+      { name: 'photo', label: 'Photo of the letter', type: 'image', required: true, aspect: 'any', when: { field: 'format', is: 'photo' }, help: 'Take the photo straight on, in good light. You can crop the edges after uploading.' },
+      { name: 'pinned', label: 'Pin to the top', type: 'boolean', default: false, help: 'Pinned items stay first — use it for this year’s calendar or the current invitation.' },
+      published(),
     ],
   },
   {
@@ -491,6 +518,41 @@ export const SINGLES = [
       { name: 'clubHeading', type: 'heading', label: 'Club page photos' },
       { name: 'clubHeritage', label: 'Heritage & culture photo', type: 'image', aspect: 'photo', required: true },
       { name: 'clubCommunity', label: 'Community photo', type: 'image', aspect: 'photo', required: true },
+    ],
+  },
+  {
+    key: 'legacy',
+    label: 'Our Legacy',
+    icon: 'history',
+    group: 'Club information',
+    description: 'The “Beyond the Game — Our Legacy” section about the yearly Married vs Unmarried match at Dussehra. Shown on the Club page, with a short version on the home page.',
+    fields: [
+      { name: 'on', label: 'Show this section on the website', type: 'boolean', default: true },
+      { name: 'h1', type: 'heading', label: 'Heading' },
+      { name: 'kicker', label: 'Small line above the title', type: 'text', max: 40, t: true, default: 'Beyond the Game', half: true },
+      { name: 'title', label: 'Title', type: 'text', required: true, max: 60, t: true, default: 'Our Legacy', half: true },
+      { name: 'tagline', label: 'Second line', type: 'text', max: 80, t: true, default: 'More than 35 years of togetherness' },
+      { name: 'years', label: 'Big number', type: 'text', max: 8, default: '35+', half: true, help: 'e.g. 35+' },
+      { name: 'yearsLabel', label: 'Words under the number', type: 'text', max: 40, t: true, default: 'Years of tradition', half: true },
+      { name: 'h2', type: 'heading', label: 'The story' },
+      { name: 'intro', label: 'Story', type: 'longtext', required: true, max: 4000, t: true, help: 'Leave an empty line between paragraphs. The home page shows only the first paragraph.' },
+      { name: 'occasion', label: 'When it happens', type: 'text', max: 80, t: true, default: 'Every year on Sera / Dashami (Dussehra)' },
+      { name: 'photo', label: 'Photo (optional)', type: 'image', aspect: 'photo', help: 'A team photo of both sides, or the crowd on match day.' },
+      { name: 'h3', type: 'heading', label: 'The two teams' },
+      { name: 'sideA', label: 'First team', type: 'text', required: true, max: 40, t: true, default: 'Married Boys', half: true },
+      { name: 'sideANote', label: 'Under the first team', type: 'text', max: 60, t: true, default: 'Married Men', half: true },
+      { name: 'sideB', label: 'Second team', type: 'text', required: true, max: 40, t: true, default: 'Unmarried Boys', half: true },
+      { name: 'sideBNote', label: 'Under the second team', type: 'text', max: 60, t: true, default: 'Bachelor Boys · Young Generation', half: true },
+      {
+        name: 'winners', label: 'Past results (optional)', type: 'list', max: 60, itemLabel: 'Year',
+        help: 'Add a row for each year you remember. Newest years are shown first.',
+        fields: [
+          { name: 'year', label: 'Year', type: 'text', required: true, max: 4, pattern: '^[0-9]{4}$', patternHelp: 'Write a year like 2025', half: true },
+          { name: 'winner', label: 'Who won', type: 'select', required: true, default: 'a', options: [{ value: 'a', label: 'First team (Married)' }, { value: 'b', label: 'Second team (Unmarried)' }, { value: 'draw', label: 'Draw / shared' }], half: true },
+          { name: 'score', label: 'Score (optional)', type: 'text', max: 20, placeholder: 'e.g. 2–1', half: true },
+          { name: 'note', label: 'Note (optional)', type: 'text', max: 80, t: true, placeholder: 'e.g. Won on penalties', half: true },
+        ],
+      },
     ],
   },
 ];

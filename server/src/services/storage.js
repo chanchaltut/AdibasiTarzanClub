@@ -71,6 +71,72 @@ export async function removeImage(media) {
   }
 }
 
+// ─── Documents (PDF letters, invitations, calendars) ──────────
+// On Cloudinary a PDF is stored as an "image" so it can also draw a
+// preview of the first page. Cloudinary blocks PDF delivery on new
+// accounts until "Allow delivery of PDF and ZIP files" is switched on
+// (Settings → Security) — see README.
+
+export const isPdf = (buffer) => buffer?.length > 5 && buffer.subarray(0, 5).toString('latin1') === '%PDF-';
+
+/** Save a PDF. Returns what the FileAsset record needs. */
+export async function putPdf(buffer) {
+  if (env.cloudinary) {
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream({
+        folder: `${env.CLOUDINARY_FOLDER}/documents`,
+        resource_type: 'image',
+        format: 'pdf',
+        use_filename: false,
+        unique_filename: true,
+        overwrite: false,
+      }, (err, res) => (err ? reject(err) : resolve(res)));
+      stream.end(buffer);
+    }).catch((err) => {
+      log.error('Cloudinary PDF upload failed:', err.message || err);
+      throw new HttpError(502, 'The file could not be saved to the storage service. Please try again in a minute.');
+    });
+    return {
+      storage: 'cloudinary', publicId: result.public_id, version: result.version, format: 'pdf',
+      pages: result.pages || 0, width: result.width || 0, height: result.height || 0,
+    };
+  }
+
+  await fs.mkdir(UPLOAD_DIR, { recursive: true });
+  const id = randomBytes(12).toString('hex');
+  await fs.writeFile(path.join(UPLOAD_DIR, `${id}.pdf`), buffer);
+  const pages = (buffer.toString('latin1').match(/\/Type\s*\/Page(?!s)/g) || []).length;
+  return { storage: 'local', publicId: id, version: 1, format: 'pdf', pages };
+}
+
+export async function removeFile(file) {
+  try {
+    if (file.storage === 'cloudinary') {
+      if (!env.cloudinary) return;
+      await cloudinary.uploader.destroy(file.publicId, { invalidate: true, resource_type: 'image' });
+    } else if (/^[a-f0-9]{24}$/.test(file.publicId)) {
+      await fs.rm(path.join(UPLOAD_DIR, `${file.publicId}.pdf`), { force: true });
+    }
+  } catch (err) {
+    log.warn(`Could not delete stored file ${file.publicId}: ${err.message}`);
+  }
+}
+
+/** Addresses for a stored PDF: open in the browser, download, and a first-page preview (Cloudinary only). */
+export function fileUrls(file) {
+  if (file.storage === 'cloudinary') {
+    const root = `https://res.cloudinary.com/${env.CLOUDINARY_CLOUD_NAME}/image/upload`;
+    const tail = `v${file.version}/${file.publicId}`;
+    return {
+      url: `${root}/${tail}.pdf`,
+      download: `${root}/fl_attachment/${tail}.pdf`,
+      thumb: `${root}/pg_1/c_limit,w_{w}/q_auto:good/${tail}.jpg`,
+    };
+  }
+  const url = `${env.PUBLIC_URL}/uploads/${file.publicId}.pdf`;
+  return { url, download: `${url}?download=1`, thumb: null };
+}
+
 /** Crop (stored in % of the photo) → whole pixels of the stored file. */
 export function cropPixels(media, crop) {
   if (!crop) return null;
@@ -133,7 +199,25 @@ export async function storageUsage() {
 const resized = new Map(); // tiny in-memory cache
 const ALLOWED_WIDTHS = new Set([64, 160, 320, 480, 640, 800, 960, 1200, 1600, 2000, 2560]);
 
+async function serveLocalPdf(req, res, id) {
+  try {
+    const buf = await fs.readFile(path.join(UPLOAD_DIR, `${id}.pdf`));
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': req.query.download ? `attachment; filename="${id}.pdf"` : 'inline',
+      'Cache-Control': 'public, max-age=86400',
+      'Cross-Origin-Resource-Policy': 'cross-origin',
+      'X-Content-Type-Options': 'nosniff',
+    });
+    return res.end(buf);
+  } catch {
+    return res.status(404).end();
+  }
+}
+
 export async function serveLocal(req, res) {
+  const pdf = /^([a-f0-9]{24})\.pdf$/.exec(req.params.file || '');
+  if (pdf) return serveLocalPdf(req, res, pdf[1]);
   const m = /^([a-f0-9]{24})\.webp$/.exec(req.params.file || '');
   if (!m) return res.status(404).end();
   const want = Number(req.query.w) || 1200;

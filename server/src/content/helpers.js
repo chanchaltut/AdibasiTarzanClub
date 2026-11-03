@@ -1,11 +1,12 @@
 // Shared bits for the admin routes: media details, "where is this used?", reference checks.
 
+import FileAsset from '../models/FileAsset.js';
 import Media from '../models/Media.js';
 import Single from '../models/Single.js';
 import { contentModel } from '../models/content.js';
 import { COLLECTIONS, COLLECTION_MAP, SINGLE_MAP, titleOf } from './schemas.js';
-import { mediaIdsIn } from './validate.js';
-import { urlPattern } from '../services/storage.js';
+import { fileIdsIn, mediaIdsIn } from './validate.js';
+import { fileUrls, urlPattern } from '../services/storage.js';
 import { badRequest } from '../utils/http.js';
 
 /** What the admin panel knows about a photo. */
@@ -34,12 +35,32 @@ export async function mediaFor(value) {
   return Object.fromEntries(docs.map((m) => [String(m._id), mediaPublic(m)]));
 }
 
-/** Throw a friendly error if an item points at photos that were deleted meanwhile. */
+/** What the admin panel and website know about an uploaded PDF. */
+export function filePublic(f) {
+  return {
+    id: String(f._id),
+    ...fileUrls(f),
+    bytes: f.bytes,
+    pages: f.pages || 0,
+    width: f.width || 0,
+    height: f.height || 0,
+    originalName: f.originalName,
+    createdAt: f.createdAt,
+  };
+}
+
+/** Throw a friendly error if an item points at photos or files that were deleted meanwhile. */
 export async function assertMediaExist(value) {
   const ids = [...mediaIdsIn(value)];
-  if (!ids.length) return;
-  const found = await Media.countDocuments({ _id: { $in: ids } });
-  if (found !== ids.length) throw badRequest('One of the photos was deleted from the library. Please choose it again.');
+  if (ids.length) {
+    const found = await Media.countDocuments({ _id: { $in: ids } });
+    if (found !== ids.length) throw badRequest('One of the photos was deleted from the library. Please choose it again.');
+  }
+  const files = [...fileIdsIn(value)];
+  if (files.length) {
+    const found = await FileAsset.countDocuments({ _id: { $in: files } });
+    if (found !== files.length) throw badRequest('The PDF file could not be found. Please upload it again.');
+  }
 }
 
 /** Titles of referenced items (e.g. team names for matches). */

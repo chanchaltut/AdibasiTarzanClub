@@ -5,6 +5,7 @@ import { api } from '../api';
 import { useSchema } from '../schema';
 import { fromLocalInput, toLocalInput } from '../format';
 import { FieldFrame, Icon, IconButton, Toggle } from '../ui';
+import FileField from './FileField';
 import ImageField from './ImageField';
 import YouTubeField from './YouTubeField';
 
@@ -218,6 +219,8 @@ export function Field({ f, value, onChange, data, errors = {}, path = f.name, me
       return <FieldFrame {...common}><YouTubeField id={id} value={value} onChange={onChange} onInfo={(info) => onAlso?.(info)} /></FieldFrame>;
     case 'image':
       return <ImageField f={f} value={value} onChange={onChange} error={error} media={media} onMedia={onMedia} half={f.half} />;
+    case 'file':
+      return <FileField f={f} value={value} onChange={onChange} error={error} half={f.half} />;
     case 'list':
       if (f.of === 'text') {
         return (

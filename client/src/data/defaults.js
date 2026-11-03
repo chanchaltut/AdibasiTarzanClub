@@ -321,6 +321,28 @@ const GALLERY = [
   { id: 'g12', photo: PHOTO.goalNight, cap: 'Late session', album: 'Training' },
 ];
 
+// ─── Our Legacy: the Married vs Unmarried match at Dussehra ───
+// Wording from the club. Past results are left for the club to add.
+const LEGACY = {
+  kicker: 'Beyond the Game',
+  title: 'Our Legacy',
+  tagline: 'More than 35 years of togetherness',
+  years: '35+',
+  yearsLabel: 'Years of tradition',
+  intro: [
+    'For more than 35 years, our annual football tradition has continued in our village community and our club.',
+    'Every year, on the occasion of Sera / Dashami (Dussehra), our community comes together to celebrate a special football match between the Married Boys and the Unmarried Boys — the young generation of the village.',
+    'It is more than a game. It is the day the whole village comes together.',
+  ],
+  occasion: 'Every year on Sera / Dashami (Dussehra)',
+  photo: PHOTO.action, // SAMPLE — replace with a photo of the Dussehra match
+  sides: [
+    { name: 'Married Boys', note: 'Married Men' },
+    { name: 'Unmarried Boys', note: 'Bachelor Boys · Young Generation' },
+  ],
+  winners: [],
+};
+
 export default {
   version: 'defaults',
   CLUB,
@@ -344,6 +366,8 @@ export default {
   MEMBERSHIP_TIERS,
   GALLERY,
   VIDEOS: [],
+  DOCUMENTS: [],
+  LEGACY,
   PARTNERS: [],
   I18N: { hi: {}, bn: {} },
 };

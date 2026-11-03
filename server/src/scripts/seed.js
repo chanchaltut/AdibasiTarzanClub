@@ -84,7 +84,17 @@ for (const [k, p] of Object.entries(D.PAGES)) {
 for (const [k, v] of Object.entries(D.SLOTS)) pages[k] = img(v);
 check('pages', pages, SINGLE_MAP.pages.fields);
 await Single.create({ key: 'pages', data: validateFields(SINGLE_MAP.pages.fields, pages).data });
-console.log('  ✓ Club details and page banners');
+
+const L = D.LEGACY;
+const legacy = {
+  on: true, kicker: L.kicker, title: L.title, tagline: L.tagline, years: L.years, yearsLabel: L.yearsLabel,
+  intro: L.intro.join('\n\n'), occasion: L.occasion, photo: L.photo ? img(L.photo) : undefined,
+  sideA: L.sides[0].name, sideANote: L.sides[0].note, sideB: L.sides[1].name, sideBNote: L.sides[1].note,
+  winners: L.winners,
+};
+check('legacy', legacy, SINGLE_MAP.legacy.fields);
+await Single.create({ key: 'legacy', data: validateFields(SINGLE_MAP.legacy.fields, legacy).data });
+console.log('  ✓ Club details, page banners and Our Legacy');
 
 // Teams first: matches point at them.
 const codes = Object.keys(D.TEAMS);

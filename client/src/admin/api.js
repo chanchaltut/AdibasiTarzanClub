@@ -44,12 +44,23 @@ export async function api(path, { method = 'GET', body, signal } = {}) {
  * Calls onProgress(0..1). Resolves with the server's { items, failed }.
  */
 export function uploadFiles(files, { onProgress, alt } = {}) {
+  const form = new FormData();
+  files.forEach((f) => form.append('files', f, f.name));
+  if (alt) form.append('alt', alt);
+  return sendForm('/admin/media', form, onProgress);
+}
+
+/** Upload one PDF for the Notice Board. Resolves with { item }. */
+export function uploadPdf(file, { onProgress } = {}) {
+  const form = new FormData();
+  form.append('file', file, file.name);
+  return sendForm('/admin/files', form, onProgress);
+}
+
+function sendForm(path, form, onProgress) {
   return new Promise((resolve, reject) => {
-    const form = new FormData();
-    files.forEach((f) => form.append('files', f, f.name));
-    if (alt) form.append('alt', alt);
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', `${API}/api/admin/media`);
+    xhr.open('POST', `${API}/api${path}`);
     xhr.withCredentials = true;
     xhr.setRequestHeader('X-Requested-With', 'fetch');
     xhr.upload.onprogress = (e) => { if (e.lengthComputable) onProgress?.(e.loaded / e.total); };

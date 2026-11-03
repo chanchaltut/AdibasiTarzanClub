@@ -10,7 +10,7 @@
 import { useSyncExternalStore } from 'react';
 import { setRuntimeTranslations } from '../i18n';
 
-const LISTS = ['FIXTURES', 'RESULTS', 'EVENTS', 'PROMOS', 'STORIES', 'EXPLORE', 'NEWS', 'SQUAD', 'COMMITTEE', 'HONOURS', 'TIMELINE', 'FAQ', 'MEMBER_FAQ', 'MEMBERSHIP_TIERS', 'GALLERY', 'VIDEOS', 'PARTNERS'];
+const LISTS = ['FIXTURES', 'RESULTS', 'EVENTS', 'PROMOS', 'STORIES', 'EXPLORE', 'NEWS', 'SQUAD', 'COMMITTEE', 'HONOURS', 'TIMELINE', 'FAQ', 'MEMBER_FAQ', 'MEMBERSHIP_TIERS', 'GALLERY', 'VIDEOS', 'DOCUMENTS', 'PARTNERS'];
 
 let current = null;
 const listeners = new Set();
@@ -22,6 +22,7 @@ function normalise(c) {
   ['TEAMS', 'PAGES', 'SLOTS'].forEach((k) => { out[k] = out[k] && typeof out[k] === 'object' ? out[k] : {}; });
   out.CLUB = { address: [], socials: {}, maps: {}, coords: { lat: 25.6293, lng: 88.2028 }, ...(out.CLUB || {}) };
   out.RIBBON = out.RIBBON || { enabled: false };
+  out.LEGACY = out.LEGACY && Array.isArray(out.LEGACY.intro) ? out.LEGACY : null;
   out.I18N = out.I18N || { hi: {}, bn: {} };
   return out;
 }

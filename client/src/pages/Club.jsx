@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLang } from '../i18n';
 import { useContent } from '../content/store';
 import PageHero from '../components/page/PageHero';
+import Legacy from '../components/page/Legacy';
 import Trophies from '../components/ui/Trophies';
 import { Crest, Drum, Photo, Sprig, TornEdge, WaxSeal } from '../components/ui/Art';
 import Icon from '../components/ui/Icon';
@@ -10,12 +11,14 @@ import { tornClip } from '../utils/helpers';
 const TABS = [
   { id: 'about', label: 'About' },
   { id: 'history', label: 'History' },
+  { id: 'legacy', label: 'Our Legacy' },
   { id: 'honours', label: 'Honours' },
   { id: 'heritage', label: 'Heritage' },
   { id: 'community', label: 'Community' },
   { id: 'ground', label: 'Our Ground' },
   { id: 'faq', label: 'FAQ' },
 ];
+const TABS_NO_LEGACY = TABS.filter((x) => x.id !== 'legacy');
 
 export function FaqList({ items: given }) {
   const [open, setOpen] = useState(0);
@@ -82,7 +85,8 @@ export function MapCard() {
 
 export default function Club() {
   const { t, ta } = useLang();
-  const { CLUB, PAGES, SLOTS, TIMELINE } = useContent();
+  const { CLUB, LEGACY, PAGES, SLOTS, TIMELINE } = useContent();
+  const tabs = LEGACY ? TABS : TABS_NO_LEGACY;
   const seasons = new Date().getFullYear() - (CLUB.founded || 1981);
   return (
     <>
@@ -92,7 +96,7 @@ export default function Club() {
         intro={PAGES.club?.intro}
         photo={PAGES.club?.photo}
         crumbs={[{ label: 'Club' }]}
-        tabs={TABS}
+        tabs={tabs}
       />
 
       <section className="section bg-parchment" id="about">
@@ -142,6 +146,8 @@ export default function Club() {
           </ol>
         </div>
       </section>
+
+      <Legacy />
 
       <section className="section bg-bark-deep" id="honours">
         <div className="wrapper">

@@ -6,13 +6,14 @@
 // ─────────────────────────────────────────────────────────────
 
 import { createHash } from 'node:crypto';
+import FileAsset from '../models/FileAsset.js';
 import Media from '../models/Media.js';
 import Single from '../models/Single.js';
 import Translation from '../models/Translation.js';
 import { contentModel } from '../models/content.js';
 import { COLLECTIONS, SINGLES } from './schemas.js';
-import { mediaIdsIn } from './validate.js';
-import { cropPixels, shareImageUrl, urlPattern } from '../services/storage.js';
+import { fileIdsIn, mediaIdsIn } from './validate.js';
+import { cropPixels, fileUrls, shareImageUrl, urlPattern } from '../services/storage.js';
 import { contentChanged } from '../services/rebuild.js';
 
 export function sortFor(def) {
@@ -38,11 +39,16 @@ export async function loadAll({ includeHidden = false } = {}) {
   const ids = new Set();
   Object.values(lists).forEach((docs) => mediaIdsIn(docs, ids));
   mediaIdsIn(Object.values(singles), ids);
-  const media = await Media.find({ _id: { $in: [...ids] } }).lean();
+  const fileIds = fileIdsIn([...Object.values(lists), ...Object.values(singles)]);
+  const [media, files] = await Promise.all([
+    Media.find({ _id: { $in: [...ids] } }).lean(),
+    fileIds.size ? FileAsset.find({ _id: { $in: [...fileIds] } }).lean() : [],
+  ]);
   const mediaMap = new Map(media.map((m) => [String(m._id), m]));
+  const fileMap = new Map(files.map((f) => [String(f._id), f]));
   const updatedAt = [...singleDocs, ...Object.values(lists).flat()]
     .reduce((max, d) => (d.updatedAt && d.updatedAt > max ? d.updatedAt : max), new Date(0));
-  return { lists, singles, mediaMap, updatedAt };
+  return { lists, singles, mediaMap, fileMap, updatedAt };
 }
 
 /** Stored image value → what the site's <Photo> needs. */
@@ -70,9 +76,45 @@ export function makeImage(mediaMap) {
   };
 }
 
+/** Stored file value → what the site needs to show, open and download a PDF. */
+function makeFile(fileMap) {
+  return (v) => {
+    const f = v?.file && fileMap.get(String(v.file));
+    if (!f) return null;
+    const u = fileUrls(f);
+    return compact({
+      url: u.url,
+      download: u.download,
+      thumb: u.thumb && f.width ? { url: u.thumb, w: f.width, h: f.height } : undefined,
+      pages: f.pages || undefined,
+      bytes: f.bytes,
+    });
+  };
+}
+
+function buildLegacy(l, img) {
+  if (!l || l.on === false || !l.title || !l.intro) return null;
+  return compact({
+    kicker: l.kicker,
+    title: l.title,
+    tagline: l.tagline,
+    years: l.years,
+    yearsLabel: l.yearsLabel,
+    intro: paragraphs(l.intro),
+    occasion: l.occasion,
+    photo: img(l.photo),
+    sides: [compact({ name: l.sideA, note: l.sideANote }), compact({ name: l.sideB, note: l.sideBNote })],
+    winners: (l.winners || [])
+      .filter((w) => w.year && w.winner)
+      .map((w) => compact({ year: w.year, winner: w.winner, score: w.score, note: w.note }))
+      .sort((a, b) => b.year.localeCompare(a.year)),
+  });
+}
+
 export async function buildBundle() {
-  const { lists, singles, mediaMap, updatedAt } = await loadAll();
+  const { lists, singles, mediaMap, fileMap, updatedAt } = await loadAll();
   const img = makeImage(mediaMap);
+  const file = makeFile(fileMap);
   const s = singles.settings || {};
   const p = singles.pages || {};
   const id = (d) => String(d._id);
@@ -167,6 +209,17 @@ export async function buildBundle() {
       const yt = /[?&]v=([A-Za-z0-9_-]{11})/.exec(v.url || '')?.[1];
       return yt && compact({ id: id(v), youtubeId: yt, title: v.title, desc: v.desc, date: iso(v.date), thumb: `https://i.ytimg.com/vi/${yt}/hqdefault.jpg` });
     }).filter(Boolean),
+    DOCUMENTS: lists.documents.map((d) => compact({
+      id: id(d),
+      title: d.title,
+      kind: d.kind,
+      date: iso(d.date),
+      desc: d.desc,
+      pinned: d.pinned || undefined,
+      pdf: d.format === 'pdf' ? file(d.file) : undefined,
+      photo: d.format === 'photo' ? img(d.photo) : undefined,
+    })).filter((d) => d.pdf || d.photo),
+    LEGACY: buildLegacy(singles.legacy, img),
     PARTNERS: lists.partners.map((x) => compact({ id: id(x), name: x.name, logo: img(x.logo), url: x.url, level: x.level })).filter((x) => x.logo),
     I18N: await translationMaps(),
     updatedAt: iso(updatedAt),
