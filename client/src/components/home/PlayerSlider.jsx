@@ -10,7 +10,7 @@ export function PlayerCard({ p, i = 0 }) {
     <Link to="/squad" className={`player-card player-card--${i % 2 ? 'b' : 'a'}`}>
       <span className="player-card__art">
         <span className="player-card__bignum" aria-hidden="true">{p.no}</span>
-        {p.photo ? <Photo src={p.photo} className="player-card__photo" sizes="280px" alt={`${t(p.first)} ${t(p.last)}`} /> : <Jersey name={p.last} number={p.no} />}
+        {p.photo ? <Photo src={p.photo} className="player-card__photo" sizes="280px" alt={`${t(p.first)} ${t(p.last)} — ${t(p.pos)}, ${t('Adibasi Tarzan Club')}`} /> : <Jersey name={p.last} number={p.no} />}
       </span>
       <span className="player-card__text">
         <span className="player-card__no">{p.no}</span>

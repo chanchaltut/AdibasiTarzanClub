@@ -9,14 +9,15 @@
 
 import { getContent } from '../content/store';
 import { imgUrl } from '../content/image';
+import { localFaq } from './localFaq';
 import { LANG_CODES, LANGS, langFromPath, localePath, stripLang, translate } from '../i18n';
 
 // The content these functions describe. Every exported function calls sync() first, so it
 // always works from whatever the site currently shows (server content, saved copy or defaults).
-let CLUB; let EVENTS; let FAQ; let FIXTURES; let HONOURS; let MEMBERSHIP_TIERS; let NEWS; let RESULTS; let SQUAD; let TEAMS; let TIMELINE; let GALLERY;
+let CLUB; let EVENTS; let FAQ; let FIXTURES; let HONOURS; let MEMBERSHIP_TIERS; let NEWS; let RESULTS; let SQUAD; let TEAMS; let TIMELINE; let GALLERY; let COMMITTEE; let MEMBERS;
 function sync() {
   ({
-    CLUB, EVENTS, FAQ, FIXTURES, HONOURS, MEMBERSHIP_TIERS, NEWS, RESULTS, SQUAD, TEAMS, TIMELINE, GALLERY,
+    CLUB, EVENTS, FAQ, FIXTURES, HONOURS, MEMBERSHIP_TIERS, NEWS, RESULTS, SQUAD, TEAMS, TIMELINE, GALLERY, COMMITTEE, MEMBERS,
   } = getContent());
 }
 
@@ -127,6 +128,54 @@ export function articlePaths() {
   return NEWS.map((n) => `/news/${n.slug}`);
 }
 
+// ─── Local search ─────────────────────────────────────────────
+// What people nearby actually type. Used as organisation keywords and in llms.txt.
+const LOCAL_KEYWORDS = [
+  'football club in Kaliyaganj',
+  'football club in Uttar Dinajpur',
+  'football club near Raiganj',
+  'football club in S. Akhanagar',
+  'Adibasi football club in West Bengal',
+  'youth football training in Kaliyaganj',
+  'football tournament in Kaliyaganj',
+];
+
+// ─── People ───────────────────────────────────────────────────
+// Every player, office-bearer and member is published as a person who belongs to the
+// club, so a search for "<name> Adibasi Tarzan Club" finds them here.
+const named = (name) => Boolean(name) && name !== 'To be announced';
+const squadOf = (p) => p.squad || 'first-team';
+
+function personNode({ name, role, photo, url, team: inTeam }, tr) {
+  return {
+    '@type': 'Person',
+    name,
+    ...(role && { jobTitle: role }),
+    description: tr('{name} — {role}, Adibasi Tarzan Club (ATC), S. Akhanagar, Kaliyaganj.', { name, role: role || tr('Member') }),
+    ...(photoUrl(photo) && { image: photoUrl(photo) }),
+    url,
+    affiliation: { '@id': ID.org },
+    memberOf: inTeam ? [{ '@id': ID.team }, { '@id': ID.org }] : { '@id': ID.org },
+  };
+}
+
+const playerNode = (p, tr, url) => personNode({
+  name: `${tr(p.first)} ${tr(p.last)}`,
+  role: [tr(p.pos), p.captain && tr('Captain'), squadOf(p) === 'youth' && tr('Youth (U-17)'), squadOf(p) === 'veterans' && tr('Veterans')].filter(Boolean).join(', '),
+  photo: p.photo,
+  url,
+  team: squadOf(p) === 'first-team',
+}, tr);
+const officerNode = (c, tr, url) => personNode({ name: tr(c.name), role: tr(c.role), photo: c.photo, url }, tr);
+const memberNode = (m, tr, url) => personNode({ name: tr(m.name), role: tr(m.kind || 'Member'), photo: m.photo, url }, tr);
+
+const peopleList = (name, people) => ({
+  '@type': 'ItemList',
+  name,
+  numberOfItems: people.length,
+  itemListElement: people.map((item, i) => ({ '@type': 'ListItem', position: i + 1, item })),
+});
+
 // ─── Schema.org nodes ─────────────────────────────────────────
 const organization = () => ({
   '@type': ['SportsClub', 'SportsOrganization'],
@@ -149,9 +198,12 @@ const organization = () => ({
   location: { '@id': ID.ground },
   areaServed: [
     { '@type': 'City', name: 'Kaliyaganj' },
+    { '@type': 'City', name: 'Raiganj' },
+    { '@type': 'City', name: 'Hemtabad' },
     { '@type': 'AdministrativeArea', name: 'Uttar Dinajpur district' },
     { '@type': 'State', name: 'West Bengal' },
   ],
+  keywords: LOCAL_KEYWORDS.join(', '),
   knowsAbout: ['Football', 'Youth football coaching', 'Adivasi culture and heritage', 'Community sport', 'Football tournaments'],
   contactPoint: {
     '@type': 'ContactPoint', contactType: 'customer support', email: CLUB.email, areaServed: 'IN', availableLanguage: ['English', 'Bengali'],
@@ -188,7 +240,7 @@ const agency = () => ({
   description: 'Website design and development agency.',
 });
 
-const team = (withPlayers) => ({
+const team = (athletes) => ({
   '@type': 'SportsTeam',
   '@id': ID.team,
   name: `${CLUB.name} First Team`,
@@ -198,14 +250,7 @@ const team = (withPlayers) => ({
   parentOrganization: { '@id': ID.org },
   location: { '@id': ID.ground },
   logo: abs(SITE.logo),
-  ...(withPlayers && {
-    athlete: SQUAD.filter((p) => (p.squad || 'first-team') === 'first-team').map((p) => ({
-      '@type': 'Person',
-      name: `${p.first} ${p.last}`,
-      jobTitle: p.captain ? `${p.pos} (Captain)` : p.pos,
-      memberOf: { '@id': ID.team },
-    })),
-  }),
+  ...(athletes && { athlete: athletes }),
 });
 
 const teamRef = (code) => (TEAMS[code]?.isClub
@@ -273,7 +318,10 @@ function pageExtras(path, lang) {
     case '/club':
       return {
         page: {
-          mainEntity: FAQ.map((f) => ({ '@type': 'Question', name: tr(f.q), acceptedAnswer: { '@type': 'Answer', text: tr(f.a) } })),
+          mainEntity: [
+            ...FAQ.map((f) => ({ q: tr(f.q), a: tr(f.a) })),
+            ...localFaq(getContent(), tr),
+          ].map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
         },
         nodes: [{
           '@type': 'ItemList',
@@ -305,8 +353,26 @@ function pageExtras(path, lang) {
           },
         },
       };
-    case '/squad':
-      return { page: { mainEntity: { '@id': ID.team } }, nodes: [team(true)] };
+    case '/squad': {
+      const others = SQUAD.filter((p) => squadOf(p) !== 'first-team');
+      return {
+        page: { mainEntity: { '@id': ID.team } },
+        nodes: [
+          team(SQUAD.filter((p) => squadOf(p) === 'first-team').map((p) => playerNode(p, tr, url))),
+          ...(others.length ? [peopleList('Adibasi Tarzan Club youth and veterans players', others.map((p) => playerNode(p, tr, url)))] : []),
+        ],
+      };
+    }
+    case '/committee': {
+      const officers = COMMITTEE.filter((c) => named(c.name));
+      return officers.length
+        ? { page: { mainEntity: peopleList('Adibasi Tarzan Club committee and office-bearers', officers.map((c) => officerNode(c, tr, url))) } }
+        : {};
+    }
+    case '/members':
+      return MEMBERS.length
+        ? { page: { mainEntity: peopleList('Adibasi Tarzan Club members', MEMBERS.map((m) => memberNode(m, tr, url))) } }
+        : {};
     case '/gallery':
       return {
         page: {
@@ -369,10 +435,14 @@ export function getPageMeta(pathname) {
   const url = abs(localePath(lang, path));
   const extras = pageExtras(path, lang);
   const title = path === '/' ? tr(page.title) : `${tr(page.title)} | ${tr(CLUB.name)}`;
-  const description = tr(page.description);
+  // Name the office-bearers in the search snippet itself.
+  const officers = path === '/committee'
+    ? COMMITTEE.filter((c) => named(c.name)).slice(0, 4).map((c) => `${tr(c.role)}: ${tr(c.name)}`).join(' · ')
+    : '';
+  const description = officers ? `${tr(page.description)} ${officers}.` : tr(page.description);
   const nodes = [
     ...baseNodes(),
-    ...(path === '/' ? [team(false)] : []),
+    ...(path === '/' ? [team()] : []),
     {
       '@type': page.type,
       '@id': `${url}#webpage`,
@@ -536,6 +606,7 @@ const KEY_FACTS = () => [
   `- Founded: ${CLUB.founded}, in S. Akhanagar, Kaliyaganj`,
   `- Location: ${CLUB.address.join(', ')}`,
   `- Home ground: ${CLUB.ground}`,
+  '- Area: Kaliyaganj, Uttar Dinajpur district, West Bengal — near Raiganj and Hemtabad',
   '- Sport: football (soccer), plus a cultural / heritage wing and community work',
   `- Motto: "${CLUB.motto}"`,
   ...(CLUB.email ? [`- Email: ${CLUB.email}`] : []),
@@ -543,6 +614,29 @@ const KEY_FACTS = () => [
   `- Official website: ${SITE.url}`,
   `- Social: ${Object.values(CLUB.socials).join(', ')}`,
 ];
+
+const squadLine = (players) => ['Goalkeeper', 'Defender', 'Midfielder', 'Forward']
+  .map((pos) => [pos, players.filter((p) => p.pos === pos).sort((a, b) => a.no - b.no)])
+  .filter(([, list]) => list.length)
+  .map(([pos, list]) => `- ${pos}s: ${list.map((p) => `${p.first} ${p.last} (#${p.no}${p.captain ? ', captain' : ''})`).join(', ')}`)
+  .join('\n');
+
+const committeeLines = () => COMMITTEE.filter((c) => named(c.name)).map((c) => `- ${c.role}: ${c.name}`);
+const memberLines = () => MEMBERS.map((m) => `- ${m.name} — ${m.kind || 'Member'}${m.since ? `, since ${m.since}` : ''}`);
+
+/** Short "who is at the club" lines for llms.txt. */
+function peopleSummary() {
+  const first = SQUAD.filter((p) => squadOf(p) === 'first-team');
+  const captain = first.find((p) => p.captain);
+  return [
+    ...committeeLines(),
+    ...(first.length ? [`- First team: ${first.length} players${captain ? `, captained by ${captain.first} ${captain.last}` : ''} — ${abs('/squad')}`] : []),
+    ...(MEMBERS.length ? [`- Members: ${MEMBERS.length} named club members — ${abs('/members')}`] : []),
+    `- Everyone listed on ${abs('/squad')}, ${abs('/committee')} and ${abs('/members')} belongs to ${CLUB.name}.`,
+  ];
+}
+
+const section = (title, body) => (body ? `## ${title}\n\n${body}\n\n` : '');
 
 export function llmsTxt() {
   sync();
@@ -567,6 +661,14 @@ ${page('/committee', 'Committee')}
 ${page('/members', 'Members')}
 ${page('/gallery', 'Gallery')}
 ${page('/contact', 'Contact & partnerships')}
+
+## People
+
+${peopleSummary().join('\n')}
+
+## Often searched as
+
+${LOCAL_KEYWORDS.map((k) => `- ${k}`).join('\n')}
 
 ## Latest news
 
@@ -616,15 +718,15 @@ ${EVENTS.map((e) => `- ${fmtDate(e.date)}, ${fmtTime(e.date)} IST — ${e.title}
 
 ## First team squad
 
-${['Goalkeeper', 'Defender', 'Midfielder', 'Forward'].map((pos) => `- ${pos}s: ${SQUAD.filter((p) => p.pos === pos && (p.squad || 'first-team') === 'first-team').sort((a, b) => a.no - b.no).map((p) => `${p.first} ${p.last} (#${p.no}${p.captain ? ', captain' : ''})`).join(', ')}`).join('\n')}
+${squadLine(SQUAD.filter((p) => squadOf(p) === 'first-team'))}
 
-## Membership
+${section('Youth (U-17) squad', squadLine(SQUAD.filter((p) => squadOf(p) === 'youth')))}${section('Veterans squad', squadLine(SQUAD.filter((p) => squadOf(p) === 'veterans')))}${section('Committee and office-bearers', committeeLines().join('\n'))}${section(`Members of ${CLUB.name}`, memberLines().join('\n'))}## Membership
 
 ${MEMBERSHIP_TIERS.map((t) => `- ${t.name} (${t.price}): ${t.perks.join('; ')}`).join('\n')}
 
 ## Frequently asked questions
 
-${FAQ.map((f) => `### ${f.q}\n\n${f.a}`).join('\n\n')}
+${[...FAQ, ...localFaq(getContent(), (text, vars) => translate('en', text, vars))].map((f) => `### ${f.q}\n\n${f.a}`).join('\n\n')}
 
 ## News
 

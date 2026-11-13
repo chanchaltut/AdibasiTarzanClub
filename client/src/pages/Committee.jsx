@@ -27,7 +27,7 @@ export default function Committee() {
           <ul className="committee-grid">
             {COMMITTEE.map((c, i) => (
               <li key={c.id || c.role} className="member-card paper paper--sm" data-reveal style={{ '--tilt': `${(i % 3 - 1) * 0.9}deg`, transitionDelay: `${(i % 4) * 70}ms` }}>
-                <span className={`member-card__photo ${c.photo ? 'member-card__photo--img' : ''}`}>{c.photo ? <Photo src={c.photo} sizes="120px" alt={t(c.name)} /> : <Crest size={84} alt="" />}</span>
+                <span className={`member-card__photo ${c.photo ? 'member-card__photo--img' : ''}`}>{c.photo ? <Photo src={c.photo} sizes="120px" alt={`${t(c.name)} — ${t(c.role)}, ${t('Adibasi Tarzan Club')}`} /> : <Crest size={84} alt="" />}</span>
                 <span className="member-card__role display">{t(c.role)}</span>
                 <span className={nameClass}>{t(c.name)}</span>
               </li>

@@ -495,6 +495,38 @@ export default {
   'Looking for someone else? See the full list of [club members].': 'অন্য কাউকে খুঁজছেন? [ক্লাবের সদস্যদের] সম্পূর্ণ তালিকা দেখুন।',
   'Want your name on this list? [Become a member].': 'এই তালিকায় নিজের নাম চান? [সদস্য হোন]।',
 
+  // ─── Local search answers & people (seo/localFaq.js, seo/meta.js) ───
+  '{name} — {role}, Adibasi Tarzan Club (ATC), S. Akhanagar, Kaliyaganj.':
+    '{name} — {role}, আদিবাসী টারজান ক্লাব (ATC), এস. আখানগর, কালিয়াগঞ্জ।',
+  'Which is the best football club in Kaliyaganj, Uttar Dinajpur?':
+    'কালিয়াগঞ্জ, উত্তর দিনাজপুরের সেরা ফুটবল ক্লাব কোনটি?',
+  'Adibasi Tarzan Club (ATC) has been the football club of S. Akhanagar, Kaliyaganj since {founded} — more than {years} years of football in Uttar Dinajpur district. It fields a first team in the District League, trains young players, hosts the ATC Annual Cup every year and keeps Adibasi heritage alive through its cultural wing.':
+    'আদিবাসী টারজান ক্লাব (ATC) {founded} সাল থেকে এস. আখানগর, কালিয়াগঞ্জের ফুটবল ক্লাব — উত্তর দিনাজপুর জেলায় {years} বছরেরও বেশি সময়ের ফুটবল। ক্লাবের প্রথম দল জেলা লিগে খেলে, ক্লাব তরুণ খেলোয়াড়দের প্রশিক্ষণ দেয়, প্রতি বছর ATC বার্ষিক কাপ আয়োজন করে এবং সাংস্কৃতিক শাখার মাধ্যমে আদিবাসী ঐতিহ্যকে বাঁচিয়ে রাখে।',
+  'Club honours: {list}.':
+    'ক্লাবের সম্মাননা: {list}।',
+  'Where is Adibasi Tarzan Club and where does it play?':
+    'আদিবাসী টারজান ক্লাব কোথায় এবং কোথায় খেলে?',
+  'The club is at {address}. Home matches are played at {ground}. Kaliyaganj is a town in Uttar Dinajpur district, West Bengal, east of the district headquarters Raiganj.':
+    'ক্লাবের ঠিকানা: {address}। ঘরের ম্যাচ খেলা হয় {ground}-এ। কালিয়াগঞ্জ পশ্চিমবঙ্গের উত্তর দিনাজপুর জেলার একটি শহর, জেলা সদর রায়গঞ্জের পূর্বে।',
+  'Who are the people of Adibasi Tarzan Club?':
+    'আদিবাসী টারজান ক্লাবের সঙ্গে কারা যুক্ত?',
+  'Adibasi Tarzan Club is run by an elected committee of office-bearers on behalf of its members.':
+    'সদস্যদের হয়ে পদাধিকারীদের একটি নির্বাচিত কমিটি আদিবাসী টারজান ক্লাব পরিচালনা করে।',
+  'Office-bearers: {list}.':
+    'পদাধিকারী: {list}।',
+  'The first team has {n} players and is captained by {captain}.':
+    'প্রথম দলে {n} জন খেলোয়াড় আছেন, অধিনায়ক {captain}।',
+  'The first team has {n} players.':
+    'প্রথম দলে {n} জন খেলোয়াড় আছেন।',
+  'The members’ list on this website names {n} club members.':
+    'এই ওয়েবসাইটের সদস্য তালিকায় ক্লাবের {n} জন সদস্যের নাম আছে।',
+  'Every player, office-bearer and member is named on the Players, Committee and Members pages.':
+    'প্রত্যেক খেলোয়াড়, পদাধিকারী ও সদস্যের নাম খেলোয়াড়, কমিটি ও সদস্য পেজে আছে।',
+  'How can I join a football club in Kaliyaganj?':
+    'কালিয়াগঞ্জে ফুটবল ক্লাবে কীভাবে যোগ দেব?',
+  'Anyone from Kaliyaganj and the nearby villages of Uttar Dinajpur can join Adibasi Tarzan Club. Visit the club office at the ground in S. Akhanagar on any evening, or write to the club through this website. Parents can ask about youth football training at the same time.':
+    'কালিয়াগঞ্জ ও উত্তর দিনাজপুরের আশপাশের গ্রামের যে কেউ আদিবাসী টারজান ক্লাবে যোগ দিতে পারেন। যে কোনো সন্ধ্যায় এস. আখানগরের মাঠে ক্লাব অফিসে আসুন, অথবা এই ওয়েবসাইটের মাধ্যমে ক্লাবকে লিখুন। অভিভাবকেরা একই সঙ্গে যুব ফুটবল প্রশিক্ষণের কথাও জেনে নিতে পারেন।',
+
   // ─── Gallery page ───────────────────────────────────────────
   'In pictures': 'ছবিতে',
   'Moments from the ground, the training pitch and the club grounds.': 'মাঠ, অনুশীলনের পিচ আর ক্লাব প্রাঙ্গণের মুহূর্ত।',

@@ -7,6 +7,7 @@ import Trophies from '../components/ui/Trophies';
 import { Crest, Drum, Photo, Sprig, TornEdge, WaxSeal } from '../components/ui/Art';
 import Icon from '../components/ui/Icon';
 import { tornClip } from '../utils/helpers';
+import { localFaq } from '../seo/localFaq';
 
 const TABS = [
   { id: 'about', label: 'About' },
@@ -24,16 +25,18 @@ export function FaqList({ items: given }) {
   const [open, setOpen] = useState(0);
   const { t } = useLang();
   const { FAQ } = useContent();
-  const items = given || FAQ;
+  const content = useContent();
+  // The club's own questions, then the ones answered from the live content (see seo/localFaq.js).
+  const items = given || [...FAQ, ...localFaq(content, t)];
   return (
     <ul className="faq">
       {items.map((f, i) => (
         <li key={f.q} className={`faq__item ${open === i ? 'is-open' : ''}`}>
           <button className="faq__q" onClick={() => setOpen(open === i ? -1 : i)} aria-expanded={open === i}>
-            <span>{t(f.q)}</span>
+            <span>{f.done ? f.q : t(f.q)}</span>
             <Icon name={open === i ? 'minus' : 'plus'} size={20} />
           </button>
-          <div className="faq__a"><p>{t(f.a)}</p></div>
+          <div className="faq__a"><p>{f.done ? f.a : t(f.a)}</p></div>
         </li>
       ))}
     </ul>

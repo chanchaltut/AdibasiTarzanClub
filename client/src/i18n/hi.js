@@ -495,6 +495,38 @@ export default {
   'Looking for someone else? See the full list of [club members].': 'किसी और को ढूँढ रहे हैं? [क्लब के सदस्यों] की पूरी सूची देखें।',
   'Want your name on this list? [Become a member].': 'इस सूची में अपना नाम चाहते हैं? [सदस्य बनें]।',
 
+  // ─── Local search answers & people (seo/localFaq.js, seo/meta.js) ───
+  '{name} — {role}, Adibasi Tarzan Club (ATC), S. Akhanagar, Kaliyaganj.':
+    '{name} — {role}, आदिवासी टार्ज़न क्लब (ATC), एस. आखानगर, कालियागंज।',
+  'Which is the best football club in Kaliyaganj, Uttar Dinajpur?':
+    'कालियागंज, उत्तर दिनाजपुर का सबसे अच्छा फ़ुटबॉल क्लब कौन-सा है?',
+  'Adibasi Tarzan Club (ATC) has been the football club of S. Akhanagar, Kaliyaganj since {founded} — more than {years} years of football in Uttar Dinajpur district. It fields a first team in the District League, trains young players, hosts the ATC Annual Cup every year and keeps Adibasi heritage alive through its cultural wing.':
+    'आदिवासी टार्ज़न क्लब (ATC) {founded} से एस. आखानगर, कालियागंज का फ़ुटबॉल क्लब है — उत्तर दिनाजपुर ज़िले में {years} से ज़्यादा वर्षों का फ़ुटबॉल। क्लब की मुख्य टीम ज़िला लीग में खेलती है, क्लब युवा खिलाड़ियों को प्रशिक्षण देता है, हर साल ATC वार्षिक कप आयोजित करता है और अपने सांस्कृतिक विभाग के ज़रिए आदिवासी विरासत को जीवित रखता है।',
+  'Club honours: {list}.':
+    'क्लब की उपलब्धियाँ: {list}।',
+  'Where is Adibasi Tarzan Club and where does it play?':
+    'आदिवासी टार्ज़न क्लब कहाँ है और कहाँ खेलता है?',
+  'The club is at {address}. Home matches are played at {ground}. Kaliyaganj is a town in Uttar Dinajpur district, West Bengal, east of the district headquarters Raiganj.':
+    'क्लब का पता है: {address}। घरेलू मैच {ground} पर खेले जाते हैं। कालियागंज पश्चिम बंगाल के उत्तर दिनाजपुर ज़िले का एक क़स्बा है, जो ज़िला मुख्यालय रायगंज के पूर्व में है।',
+  'Who are the people of Adibasi Tarzan Club?':
+    'आदिवासी टार्ज़न क्लब से कौन-कौन जुड़ा है?',
+  'Adibasi Tarzan Club is run by an elected committee of office-bearers on behalf of its members.':
+    'आदिवासी टार्ज़न क्लब को सदस्यों की ओर से पदाधिकारियों की एक निर्वाचित समिति चलाती है।',
+  'Office-bearers: {list}.':
+    'पदाधिकारी: {list}।',
+  'The first team has {n} players and is captained by {captain}.':
+    'मुख्य टीम में {n} खिलाड़ी हैं और कप्तान {captain} हैं।',
+  'The first team has {n} players.':
+    'मुख्य टीम में {n} खिलाड़ी हैं।',
+  'The members’ list on this website names {n} club members.':
+    'इस वेबसाइट की सदस्य सूची में क्लब के {n} सदस्यों के नाम हैं।',
+  'Every player, office-bearer and member is named on the Players, Committee and Members pages.':
+    'हर खिलाड़ी, पदाधिकारी और सदस्य का नाम खिलाड़ी, समिति और सदस्य पेजों पर दर्ज है।',
+  'How can I join a football club in Kaliyaganj?':
+    'मैं कालियागंज में फ़ुटबॉल क्लब से कैसे जुड़ सकता हूँ?',
+  'Anyone from Kaliyaganj and the nearby villages of Uttar Dinajpur can join Adibasi Tarzan Club. Visit the club office at the ground in S. Akhanagar on any evening, or write to the club through this website. Parents can ask about youth football training at the same time.':
+    'कालियागंज और उत्तर दिनाजपुर के आसपास के गाँवों का कोई भी व्यक्ति आदिवासी टार्ज़न क्लब से जुड़ सकता है। किसी भी शाम एस. आखानगर के मैदान पर क्लब कार्यालय आइए, या इस वेबसाइट के ज़रिए क्लब को लिखिए। अभिभावक उसी समय युवा फ़ुटबॉल प्रशिक्षण के बारे में भी पूछ सकते हैं।',
+
   // ─── Gallery page ───────────────────────────────────────────
   'In pictures': 'तस्वीरों में',
   'Moments from the ground, the training pitch and the club grounds.': 'मैदान, अभ्यास पिच और क्लब परिसर के यादगार पल।',

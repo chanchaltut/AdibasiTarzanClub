@@ -52,7 +52,7 @@ export default function Members() {
               <ul className="members-grid">
                 {shown.map((m, i) => (
                   <li key={m.id || `${m.name}-${i}`} className="member-card paper paper--sm" style={{ '--tilt': `${(i % 3 - 1) * 0.7}deg` }}>
-                    <span className={`member-card__photo ${m.photo ? 'member-card__photo--img' : ''}`}>{m.photo ? <Photo src={m.photo} sizes="92px" alt={t(m.name)} /> : <Crest size={64} alt="" />}</span>
+                    <span className={`member-card__photo ${m.photo ? 'member-card__photo--img' : ''}`}>{m.photo ? <Photo src={m.photo} sizes="92px" alt={`${t(m.name)} — ${t(m.kind || 'Member')}, ${t('Adibasi Tarzan Club')}`} /> : <Crest size={64} alt="" />}</span>
                     <span className={nameClass}>{t(m.name)}</span>
                     {m.kind && <span className="member-card__kind">{t(m.kind)}</span>}
                     {m.since && <span className="member-card__since">{t('Since {year}', { year: m.since })}</span>}
