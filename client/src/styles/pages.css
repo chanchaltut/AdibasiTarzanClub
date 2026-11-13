@@ -264,18 +264,23 @@
 .members-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; margin-bottom: 36px; }
 .members-head .chips { margin-bottom: 0; }
 .members-count { font-size: 26px; color: var(--ink-soft); }
-.members-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px 22px; }
-.members-grid .member-card { padding: 26px 14px 24px; gap: 6px; }
-.members-grid .member-card__photo { width: 92px; height: 92px; }
-.members-grid .member-card__photo .crest { width: 64px; height: 64px; }
-.members-grid .member-card__name { margin-top: 2px; }
-.member-card__kind { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--sienna); }
-.member-card__since { font-size: 13px; color: var(--ink-soft); }
+.members-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+/* Members use the players' card, with the cream members' shirt on dark bark instead of the striped match shirt. */
+.member-tile { cursor: default; color: var(--parchment-light); }
+.member-tile--a { background: radial-gradient(circle at 50% 34%, rgba(233, 190, 106, .26), transparent 62%), var(--grain-dark), var(--bark-800); }
+.member-tile--b { background: radial-gradient(circle at 50% 34%, rgba(233, 190, 106, .22), transparent 62%), var(--grain-dark), #3B1511; }
+.member-tile::after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(233, 190, 106, .16); }
+.member-tile .player-card__text { grid-template-columns: 1fr; padding: 22cqw 7cqw 6.5cqw; }
+.member-tile .player-card__name { overflow-wrap: anywhere; }
+.member-tile .player-card__first { font-size: clamp(12px, 5.8cqw, 18px); }
+.member-tile .player-card__last { font-size: clamp(17px, 9cqw, 28px); }
+.member-tile .player-card__pos { font-size: clamp(12px, 5.2cqw, 15px); }
+.member-tile__since { margin-top: 5px; font-family: var(--f-display); font-weight: 600; font-size: clamp(10px, 4.4cqw, 13px); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-soft); }
 .members-empty { max-width: 620px; margin: 0 auto; padding: 48px 40px; text-align: center; }
 .members-empty p { font-family: var(--f-serif); font-size: 19px; line-height: 1.6; margin-bottom: 24px; color: #4A3020; }
 @media (max-width: 1024px) { .members-grid { grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 840px) { .members-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 640px) { .members-grid { grid-template-columns: repeat(2, 1fr); gap: 20px 14px; } .members-grid .member-card { padding: 22px 10px 20px; } .members-grid .member-card__photo { width: 76px; height: 76px; } .members-grid .member-card__photo .crest { width: 54px; height: 54px; } .members-empty { padding: 36px 22px; } }
+@media (max-width: 640px) { .members-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } .members-empty { padding: 36px 22px; } }
 
 /* ═══ Gallery ════════════════════════════════════════════════ */
 .scrapbook { columns: 4; column-gap: 28px; }

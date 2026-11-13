@@ -2,22 +2,14 @@ import { useState } from 'react';
 import { Link, useLang } from '../i18n';
 import { useContent } from '../content/store';
 import PageHero from '../components/page/PageHero';
-import { Crest, Photo } from '../components/ui/Art';
+import { MemberJersey, Photo } from '../components/ui/Art';
 
 const ALL = 'All';
 
 export default function Members() {
   const { t, ta } = useLang();
-  const { MEMBERS, PAGES, LETTERING } = useContent();
+  const { MEMBERS, PAGES } = useContent();
   const [kind, setKind] = useState(ALL);
-
-  // Same lettering as the names on the Committee page (Fonts & lettering).
-  const names = LETTERING?.names || {};
-  const nameClass = [
-    'member-card__name',
-    ['hand', 'script', 'serif', 'print'].includes(names.style) ? names.style : 'hand',
-    names.bold ? 'is-bold' : '',
-  ].filter(Boolean).join(' ');
 
   const kinds = [...new Set(MEMBERS.map((m) => m.kind).filter(Boolean))];
   const active = kinds.includes(kind) ? kind : ALL;
@@ -50,14 +42,28 @@ export default function Members() {
                 <p className="members-count script" aria-live="polite">{t(shown.length === 1 ? '{n} member' : '{n} members', { n: shown.length })}</p>
               </div>
               <ul className="members-grid">
-                {shown.map((m, i) => (
-                  <li key={m.id || `${m.name}-${i}`} className="member-card paper paper--sm" style={{ '--tilt': `${(i % 3 - 1) * 0.7}deg` }}>
-                    <span className={`member-card__photo ${m.photo ? 'member-card__photo--img' : ''}`}>{m.photo ? <Photo src={m.photo} sizes="92px" alt={`${t(m.name)} — ${t(m.kind || 'Member')}, ${t('Adibasi Tarzan Club')}`} /> : <Crest size={64} alt="" />}</span>
-                    <span className={nameClass}>{t(m.name)}</span>
-                    {m.kind && <span className="member-card__kind">{t(m.kind)}</span>}
-                    {m.since && <span className="member-card__since">{t('Since {year}', { year: m.since })}</span>}
-                  </li>
-                ))}
+                {shown.map((m, i) => {
+                  const name = t(m.name).trim();
+                  const cut = name.lastIndexOf(' ');
+                  const kindLabel = t(m.kind || 'Member');
+                  return (
+                    <li key={m.id || `${m.name}-${i}`}>
+                      <div className={`player-card member-tile member-tile--${i % 2 ? 'b' : 'a'}`}>
+                        <span className="player-card__art">
+                          {m.photo ? <Photo src={m.photo} className="player-card__photo" sizes="(max-width: 640px) 50vw, 280px" alt={`${name} — ${kindLabel}, ${t('Adibasi Tarzan Club')}`} /> : <MemberJersey />}
+                        </span>
+                        <span className="player-card__text">
+                          <span className="player-card__name">
+                            {cut > 0 && <span className="player-card__first">{name.slice(0, cut)}</span>}
+                            <span className="player-card__last">{cut > 0 ? name.slice(cut + 1) : name}</span>
+                          </span>
+                          {m.kind && <span className="player-card__pos">{kindLabel}</span>}
+                          {m.since && <span className="member-tile__since">{t('Since {year}', { year: m.since })}</span>}
+                        </span>
+                      </div>
+                    </li>
+                  );
+                })}
               </ul>
             </>
           ) : (

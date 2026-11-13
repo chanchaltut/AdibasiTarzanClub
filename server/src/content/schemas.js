@@ -284,7 +284,7 @@ export const COLLECTIONS = [
       { name: 'name', label: 'Name', type: 'text', required: true, max: 80, t: true },
       { name: 'kind', label: 'Type of member', type: 'combo', required: true, options: ['Member', 'Life Member', 'Founding Member', 'Patron', 'Well-wisher'], default: 'Member', max: 40, t: true, half: true, help: 'Pick one or type your own. Visitors can filter the list by this.' },
       { name: 'since', label: 'Member since (optional)', type: 'text', max: 4, pattern: '^[0-9]{4}$', patternHelp: 'Write a year like 2012', placeholder: 'e.g. 2012', half: true },
-      { name: 'photo', label: 'Photo (optional)', type: 'image', aspect: 'square', help: 'Shown in a circle — put the focus point on the face. Without one, the club crest is shown.' },
+      { name: 'photo', label: 'Photo (optional)', type: 'image', aspect: 'square', help: 'Shown on a card like the players’ — put the focus point on the face. Without one, the members’ shirt is shown.' },
       published(),
       order,
     ],

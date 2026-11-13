@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useId, useMemo } from 'react';
 import { useContent } from '../../content/store';
 import { imgUrl, srcSet, toImg } from '../../content/image';
 import { tornStripPath } from '../../utils/helpers';
@@ -80,6 +80,41 @@ export function Jersey({ name = '', number = '', className = '' }) {
       <text x="120" y="182" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="800" fontSize="104" fill="#E9BE6A" stroke="#1A0A04" strokeWidth="2.5" paintOrder="stroke">
         {number}
       </text>
+    </svg>
+  );
+}
+
+/** Front of the cream members' shirt, with a wax-red sash and the crest. Decorative: the card beside it carries the name. */
+export function MemberJersey({ className = '' }) {
+  const id = `m${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
+  const body = 'M78 18 L120 58 L162 18 L212 38 L236 92 L200 108 L190 96 L190 236 Q120 246 50 236 L50 96 L40 108 L4 92 L28 38 Z';
+  return (
+    <svg className={`jersey jersey--member ${className}`} viewBox="0 0 240 250" aria-hidden="true" focusable="false">
+      <defs>
+        <clipPath id={`${id}c`}><path d={body} /></clipPath>
+        <pattern id={`${id}p`} width="14" height="10" patternUnits="userSpaceOnUse">
+          <rect width="14" height="10" fill="#EFE0BF" />
+          <rect x="6" width="1.5" height="10" fill="#B48B5C" opacity=".28" />
+        </pattern>
+        <linearGradient id={`${id}s`} x1="0" x2="1">
+          <stop offset="0" stopColor="#3A1A0B" stopOpacity=".38" />
+          <stop offset=".24" stopColor="#3A1A0B" stopOpacity="0" />
+          <stop offset=".76" stopColor="#3A1A0B" stopOpacity="0" />
+          <stop offset="1" stopColor="#3A1A0B" stopOpacity=".38" />
+        </linearGradient>
+      </defs>
+      <g clipPath={`url(#${id}c)`}>
+        <rect width="240" height="250" fill={`url(#${id}p)`} />
+        <path d="M52 20 L190 236" stroke="#7B1F17" strokeWidth="42" />
+        <path d="M71.4 7.6 L209.4 223.6 M32.6 32.4 L170.6 248.4" stroke="#D99A2B" strokeWidth="3" />
+        <path d="M4 92 L40 108 L50 96 L28 38 Z M236 92 L200 108 L190 96 L212 38 Z" fill="#7B1F17" />
+        <path d="M4 92 L40 108 L44 99 L8 83 Z M236 92 L200 108 L196 99 L232 83 Z" fill="#D99A2B" />
+        <rect width="240" height="250" fill={`url(#${id}s)`} />
+      </g>
+      <path d="M78 18 L120 58 L162 18" fill="none" stroke="#7B1F17" strokeWidth="10" strokeLinejoin="miter" />
+      <path d="M84.5 17 L120 51 L155.5 17" fill="none" stroke="#D99A2B" strokeWidth="1.6" />
+      <image href="/brand/crest.webp?v=2" x="136" y="66" width="44" height="44" />
+      <path d={body} fill="none" stroke="#1A0A04" strokeOpacity=".45" strokeWidth="1.5" />
     </svg>
   );
 }
