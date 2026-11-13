@@ -45,6 +45,7 @@ export const NAV_RIGHT = [
       { label: 'History', href: '/club#history' },
       { label: 'Our Legacy', href: '/club#legacy' },
       { label: 'Committee', href: '/committee' },
+      { label: 'Members', href: '/members' },
       { label: 'Our Ground', href: '/club#ground' },
       { label: 'Honours', href: '/club#honours' },
       { label: 'Membership', href: '/membership' },

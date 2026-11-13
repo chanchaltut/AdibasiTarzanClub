@@ -9,6 +9,7 @@ const PAGES = [
   { title: 'Schedule & results', href: '/schedule', type: 'Page' },
   { title: 'Squad', href: '/squad', type: 'Page' },
   { title: 'Committee', href: '/committee', type: 'Page' },
+  { title: 'Members', href: '/members', type: 'Page' },
   { title: 'Membership', href: '/membership', type: 'Page' },
   { title: 'Gallery', href: '/gallery', type: 'Page' },
   { title: 'Contact & directions', href: '/contact', type: 'Page' },
@@ -18,7 +19,7 @@ export default function Search({ open, onClose }) {
   const [q, setQ] = useState('');
   const input = useRef(null);
   const { t, name, lang } = useLang();
-  const { NEWS, SQUAD, EVENTS, VIDEOS } = useContent();
+  const { NEWS, SQUAD, MEMBERS, EVENTS, VIDEOS } = useContent();
 
   useEffect(() => {
     if (!open) return;
@@ -34,9 +35,10 @@ export default function Search({ open, onClose }) {
     ...PAGES.map((p) => ({ ...p, title: t(p.title), en: p.title })),
     ...NEWS.map((n) => ({ title: t(n.title), en: n.title, href: `/news/${n.slug}`, type: 'News' })),
     ...SQUAD.map((p) => ({ title: `${name(p)} — #${p.no} ${t(p.pos)}`, en: `${p.first} ${p.last} ${p.pos}`, href: '/squad', type: 'Player' })),
+    ...MEMBERS.map((m) => ({ title: `${t(m.name)} — ${t(m.kind || 'Member')}`, en: `${m.name} ${m.kind || 'Member'}`, href: '/members', type: 'Member' })),
     ...EVENTS.map((e) => ({ title: t(e.title), en: e.title, href: '/schedule?tab=events', type: 'Event' })),
     ...VIDEOS.map((v) => ({ title: t(v.title), en: v.title, href: '/gallery#videos', type: 'Video' })),
-  ], [lang, NEWS, SQUAD, EVENTS, VIDEOS]); // eslint-disable-line react-hooks/exhaustive-deps
+  ], [lang, NEWS, SQUAD, MEMBERS, EVENTS, VIDEOS]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const results = useMemo(() => {
     const s = q.trim().toLowerCase();

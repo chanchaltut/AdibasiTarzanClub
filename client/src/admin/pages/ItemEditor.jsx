@@ -16,6 +16,7 @@ const SITE_PATH = {
   gallery: () => '/gallery',
   players: () => '/squad',
   committee: () => '/committee',
+  members: () => '/members',
   stories: () => '/',
   promos: () => '/',
   explore: () => '/',

@@ -36,6 +36,9 @@ export default function Committee() {
           <p className="committee-note serif">
             {ta('Want to stand for the committee? Nominations open before every [Annual General Meeting].', (label) => <Link to="/schedule?tab=events">{label}</Link>)}
           </p>
+          <p className="committee-note committee-note--link serif">
+            {ta('Looking for someone else? See the full list of [club members].', (label) => <Link to="/members">{label}</Link>)}
+          </p>
         </div>
       </section>
     </>

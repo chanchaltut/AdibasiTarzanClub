@@ -95,6 +95,12 @@ const PAGES = {
     crumb: 'Committee',
     type: 'WebPage',
   },
+  '/members': {
+    title: 'Club Members',
+    description: 'The members of Adibasi Tarzan Club — the life members, founding members, patrons and well-wishers of S. Akhanagar, Kaliyaganj who stand behind the club.',
+    crumb: 'Members',
+    type: 'WebPage',
+  },
   '/gallery': {
     title: 'Photo Gallery',
     description: 'Photos from Adibasi Tarzan Club matchdays, youth sessions, floodlit training and club life at S. Akhanagar Ground, Kaliyaganj.',
@@ -558,6 +564,7 @@ ${page('/squad', 'First team squad')}
 ${page('/news', 'News')}
 ${page('/membership', 'Membership')}
 ${page('/committee', 'Committee')}
+${page('/members', 'Members')}
 ${page('/gallery', 'Gallery')}
 ${page('/contact', 'Contact & partnerships')}
 

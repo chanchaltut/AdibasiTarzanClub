@@ -13,6 +13,7 @@ const CLUB_LINKS = [
   { title: 'The Club', links: [
     { label: 'About ATC', href: '/club' },
     { label: 'Committee', href: '/committee' },
+    { label: 'Members', href: '/members' },
     { label: 'Our Ground', href: '/club#ground' },
     { label: 'Membership', href: '/membership' },
     { label: 'Partner With Us', href: '/contact#partners' },

@@ -259,6 +259,24 @@
 @media (max-width: 1024px) { .committee-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 640px) { .committee-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 14px; } .member-card { padding: 28px 12px; } .member-card__photo { width: 90px; height: 90px; } .member-card__photo .crest { width: 64px; height: 64px; } .member-card__role { font-size: 19px; } }
 
+/* ═══ Members ════════════════════════════════════════════════ */
+.committee-note--link { margin-top: 12px; }
+.members-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; margin-bottom: 36px; }
+.members-head .chips { margin-bottom: 0; }
+.members-count { font-size: 26px; color: var(--ink-soft); }
+.members-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px 22px; }
+.members-grid .member-card { padding: 26px 14px 24px; gap: 6px; }
+.members-grid .member-card__photo { width: 92px; height: 92px; }
+.members-grid .member-card__photo .crest { width: 64px; height: 64px; }
+.members-grid .member-card__name { margin-top: 2px; }
+.member-card__kind { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--sienna); }
+.member-card__since { font-size: 13px; color: var(--ink-soft); }
+.members-empty { max-width: 620px; margin: 0 auto; padding: 48px 40px; text-align: center; }
+.members-empty p { font-family: var(--f-serif); font-size: 19px; line-height: 1.6; margin-bottom: 24px; color: #4A3020; }
+@media (max-width: 1024px) { .members-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 840px) { .members-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px) { .members-grid { grid-template-columns: repeat(2, 1fr); gap: 20px 14px; } .members-grid .member-card { padding: 22px 10px 20px; } .members-grid .member-card__photo { width: 76px; height: 76px; } .members-grid .member-card__photo .crest { width: 54px; height: 54px; } .members-empty { padding: 36px 22px; } }
+
 /* ═══ Gallery ════════════════════════════════════════════════ */
 .scrapbook { columns: 4; column-gap: 28px; }
 .scrap { break-inside: avoid; margin-bottom: 36px; transform: rotate(var(--tilt, 0deg)); transition: transform .4s var(--ease); }

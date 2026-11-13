@@ -102,7 +102,7 @@ describe('public website content', () => {
     const { status, body, headers } = await c.get('/api/public/content', { origin: null });
     assert.equal(status, 200);
     assert.equal(headers.get('access-control-allow-origin'), '*');
-    for (const k of ['CLUB', 'RIBBON', 'PAGES', 'SLOTS', 'TEAMS', 'FIXTURES', 'RESULTS', 'EVENTS', 'PROMOS', 'STORIES', 'EXPLORE', 'NEWS', 'SQUAD', 'COMMITTEE', 'HONOURS', 'TIMELINE', 'FAQ', 'MEMBER_FAQ', 'MEMBERSHIP_TIERS', 'GALLERY', 'VIDEOS', 'DOCUMENTS', 'LEGACY', 'PARTNERS', 'I18N', 'version']) {
+    for (const k of ['CLUB', 'RIBBON', 'PAGES', 'SLOTS', 'TEAMS', 'FIXTURES', 'RESULTS', 'EVENTS', 'PROMOS', 'STORIES', 'EXPLORE', 'NEWS', 'SQUAD', 'COMMITTEE', 'MEMBERS', 'HONOURS', 'TIMELINE', 'FAQ', 'MEMBER_FAQ', 'MEMBERSHIP_TIERS', 'GALLERY', 'VIDEOS', 'DOCUMENTS', 'LEGACY', 'PARTNERS', 'I18N', 'version']) {
       assert.ok(k in body, `missing ${k}`);
     }
     assert.equal(body.NEWS.length, 8);

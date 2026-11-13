@@ -479,6 +479,22 @@ export default {
   'Want to stand for the committee? Nominations open before every [Annual General Meeting].':
     'समिति का चुनाव लड़ना चाहते हैं? हर [वार्षिक आम सभा] से पहले नामांकन खुलते हैं।',
 
+  // ─── Members page ───────────────────────────────────────────
+  'Club Members': 'क्लब के सदस्य',
+  'The members of Adibasi Tarzan Club — the life members, founding members, patrons and well-wishers of S. Akhanagar, Kaliyaganj who stand behind the club.': 'आदिवासी टार्ज़न क्लब के सदस्य — एस. आखानगर, कालियागंज के आजीवन सदस्य, संस्थापक सदस्य, संरक्षक और शुभचिंतक जो क्लब के साथ खड़े हैं।',
+  'One family': 'एक परिवार',
+  'The members who stand behind the club, season after season.': 'वे सदस्य जो हर सीज़न क्लब के साथ खड़े रहते हैं।',
+  'Founding Member': 'संस्थापक सदस्य',
+  'Patron': 'संरक्षक',
+  'Well-wisher': 'शुभचिंतक',
+  'Since {year}': '{year} से',
+  '{n} member': '{n} सदस्य',
+  '{n} members': '{n} सदस्य',
+  'Type of member': 'सदस्य का प्रकार',
+  'The list of club members will be published here soon.': 'क्लब के सदस्यों की सूची जल्द यहाँ प्रकाशित होगी।',
+  'Looking for someone else? See the full list of [club members].': 'किसी और को ढूँढ रहे हैं? [क्लब के सदस्यों] की पूरी सूची देखें।',
+  'Want your name on this list? [Become a member].': 'इस सूची में अपना नाम चाहते हैं? [सदस्य बनें]।',
+
   // ─── Gallery page ───────────────────────────────────────────
   'In pictures': 'तस्वीरों में',
   'Moments from the ground, the training pitch and the club grounds.': 'मैदान, अभ्यास पिच और क्लब परिसर के यादगार पल।',

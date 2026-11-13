@@ -156,7 +156,7 @@ export async function buildBundle() {
       socials: compact({ facebook: s.facebook, instagram: s.instagram, youtube: s.youtube }),
     },
     RIBBON: { enabled: s.ribbonOn !== false && Boolean(s.ribbonText), text: s.ribbonText || '', cta: s.ribbonCta || '', href: s.ribbonLink || '/' },
-    PAGES: Object.fromEntries(['club', 'schedule', 'news', 'squad', 'committee', 'gallery', 'membership', 'contact'].map((k) => [k, pageBanner(k)])),
+    PAGES: Object.fromEntries(['club', 'schedule', 'news', 'squad', 'committee', 'members', 'gallery', 'membership', 'contact'].map((k) => [k, pageBanner(k)])),
     SLOTS: compact({
       homeMembership: img(p.homeMembership),
       homeCalendar: img(p.homeCalendar),
@@ -201,6 +201,7 @@ export async function buildBundle() {
       id: id(pl), no: pl.no, first: pl.first, last: pl.last, pos: pl.pos, squad: pl.squad || 'first-team', captain: pl.captain || undefined, featured: pl.featured || undefined, photo: img(pl.photo),
     })),
     COMMITTEE: lists.committee.map((c) => compact({ id: id(c), role: c.role, name: c.name, photo: img(c.photo) })),
+    MEMBERS: lists.members.map((m) => compact({ id: id(m), name: m.name, kind: m.kind, since: m.since, photo: img(m.photo) })),
     HONOURS: lists.honours.map((h) => ({ comp: h.comp, count: h.count, unit: h.unit, icon: h.icon || 'cup' })),
     TIMELINE: lists.timeline.map((t) => ({ year: t.year, title: t.title, text: t.text })),
     FAQ: lists.faqs.filter((f) => f.page !== 'membership').map((f) => ({ q: f.q, a: f.a })),
