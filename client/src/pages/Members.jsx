@@ -3,12 +3,14 @@ import { Link, useLang } from '../i18n';
 import { useContent } from '../content/store';
 import PageHero from '../components/page/PageHero';
 import { MemberJersey, Photo } from '../components/ui/Art';
+import { CARD_NAME_STYLES, nameClasses } from '../components/layout/Lettering';
 
 const ALL = 'All';
 
 export default function Members() {
   const { t, ta } = useLang();
-  const { MEMBERS, PAGES } = useContent();
+  const { MEMBERS, PAGES, LETTERING } = useContent();
+  const nameClass = `player-card__name ${nameClasses(LETTERING?.memberNames, CARD_NAME_STYLES, 'display')}`;
   const [kind, setKind] = useState(ALL);
 
   const kinds = [...new Set(MEMBERS.map((m) => m.kind).filter(Boolean))];
@@ -53,7 +55,7 @@ export default function Members() {
                           {m.photo ? <Photo src={m.photo} className="player-card__photo" sizes="(max-width: 640px) 50vw, 280px" alt={`${name} — ${kindLabel}, ${t('Adibasi Tarzan Club')}`} /> : <MemberJersey />}
                         </span>
                         <span className="player-card__text">
-                          <span className="player-card__name">
+                          <span className={nameClass}>
                             {cut > 0 && <span className="player-card__first">{name.slice(0, cut)}</span>}
                             <span className="player-card__last">{cut > 0 ? name.slice(cut + 1) : name}</span>
                           </span>

@@ -21,7 +21,10 @@
 //   when another field has a value), half (half-width in the form)
 // ─────────────────────────────────────────────────────────────
 
-import { HAND_FONTS, NAME_SIZES, NAME_STYLES, SCRIPT_FONTS } from './fonts.js';
+import {
+  ACCENT_SIZES, BODY_FONTS, CARD_NAME_STYLES, DISPLAY_FONTS, DISPLAY_SIZES, HAND_FONTS, NAME_SIZES, NAME_STYLES,
+  SCRIPT_FONTS, SERIF_FONTS, TEXT_SIZES, scalesOf,
+} from './fonts.js';
 
 /** Pages of the website, offered as suggestions in every link field. */
 export const SITE_LINKS = [
@@ -555,18 +558,37 @@ export const SINGLES = [
     label: 'Fonts & lettering',
     icon: 'type',
     group: 'Settings',
-    description: 'Choose the hand-written and joined-up fonts used across the website, and how committee members’ names are written. Every font offered here suits the look of the site, and each is resized automatically to fit where the original font was.',
+    description: 'Choose the fonts used across the website — headings, reading text, old-style print, joined-up script and handwriting — how large each is drawn, and how people’s names are written. Every font offered here suits the look of the site, and each is resized automatically to fit where the original font was.',
     fields: [
+      { name: 'h4', type: 'heading', label: 'Headings', help: 'The bold capitals: page titles, section headings, the menu, buttons, scores and shirt numbers.' },
+      { name: 'displayFont', label: 'Font', type: 'font', required: true, options: DISPLAY_FONTS, default: DISPLAY_FONTS[0].value, sample: 'Adibasi Tarzan Club · Fixtures', look: 'display', sizeField: 'displaySize', scales: scalesOf(DISPLAY_SIZES) },
+      { name: 'displaySize', label: 'Size', type: 'select', required: true, options: DISPLAY_SIZES, default: 'normal', half: true },
+      { name: 'h5', type: 'heading', label: 'Reading text', help: 'The plain text people read: news stories, descriptions, forms and the footer.' },
+      { name: 'bodyFont', label: 'Font', type: 'font', required: true, options: BODY_FONTS, default: BODY_FONTS[0].value, sample: 'The members who stand behind the club, season after season.', look: 'body', sizeField: 'bodySize', scales: scalesOf(TEXT_SIZES) },
+      { name: 'bodySize', label: 'Size', type: 'select', required: true, options: TEXT_SIZES, default: 'normal', half: true },
+      { name: 'h6', type: 'heading', label: 'Old-style print', help: 'The bookish lettering: introductions, quotes, notes, players’ positions and the small italic lines.' },
+      { name: 'serifFont', label: 'Font', type: 'font', required: true, options: SERIF_FONTS, default: SERIF_FONTS[0].value, sample: 'Rooted in the soil. United in spirit.', look: 'serif', sizeField: 'serifSize', scales: scalesOf(TEXT_SIZES) },
+      { name: 'serifSize', label: 'Size', type: 'select', required: true, options: TEXT_SIZES, default: 'normal', half: true },
       { name: 'h1', type: 'heading', label: 'Joined-up script', help: 'The flowing accent lettering: the line on each page banner (“Since 1981”), the highlighted word in headings, and “Est. 1981”.' },
-      { name: 'scriptFont', label: 'Font', type: 'font', required: true, options: SCRIPT_FONTS, default: SCRIPT_FONTS[0].value, sample: 'Since 1981 · Our History', boldField: 'scriptBold' },
+      { name: 'scriptFont', label: 'Font', type: 'font', required: true, options: SCRIPT_FONTS, default: SCRIPT_FONTS[0].value, sample: 'Since 1981 · Our History', boldField: 'scriptBold', sizeField: 'scriptSize', scales: scalesOf(ACCENT_SIZES) },
+      { name: 'scriptSize', label: 'Size', type: 'select', required: true, options: ACCENT_SIZES, default: 'normal', half: true },
       { name: 'scriptBold', label: 'Make it bolder', type: 'boolean', default: false },
       { name: 'h2', type: 'heading', label: 'Handwriting', help: 'The hand-written lettering: committee names, photo captions in the gallery, letters and the “Write to us” form.' },
-      { name: 'handFont', label: 'Font', type: 'font', required: true, options: HAND_FONTS, default: HAND_FONTS[0].value, sample: 'Sukumar Hembram — with best wishes', boldField: 'handBold' },
+      { name: 'handFont', label: 'Font', type: 'font', required: true, options: HAND_FONTS, default: HAND_FONTS[0].value, sample: 'Sukumar Hembram — with best wishes', boldField: 'handBold', sizeField: 'handSize', scales: scalesOf(ACCENT_SIZES) },
+      { name: 'handSize', label: 'Size', type: 'select', required: true, options: ACCENT_SIZES, default: 'normal', half: true },
       { name: 'handBold', label: 'Make it bolder', type: 'boolean', default: false },
       { name: 'h3', type: 'heading', label: 'Committee members’ names', help: 'How each name is written under the role on the Committee page.' },
       { name: 'nameStyle', label: 'Lettering', type: 'select', required: true, options: NAME_STYLES, default: 'hand', half: true },
       { name: 'nameSize', label: 'Size', type: 'select', required: true, options: NAME_SIZES, default: 'normal', half: true },
       { name: 'nameBold', label: 'Make names bolder', type: 'boolean', default: false },
+      { name: 'h7', type: 'heading', label: 'Players’ names', help: 'How each name is written on the player cards — on the Players page and the home page.' },
+      { name: 'playerNameStyle', label: 'Lettering', type: 'select', required: true, options: CARD_NAME_STYLES, default: 'display', half: true },
+      { name: 'playerNameSize', label: 'Size', type: 'select', required: true, options: NAME_SIZES, default: 'normal', half: true },
+      { name: 'playerNameBold', label: 'Make names bolder', type: 'boolean', default: false },
+      { name: 'h8', type: 'heading', label: 'Members’ names', help: 'How each name is written on the cards on the Members page.' },
+      { name: 'memberNameStyle', label: 'Lettering', type: 'select', required: true, options: CARD_NAME_STYLES, default: 'display', half: true },
+      { name: 'memberNameSize', label: 'Size', type: 'select', required: true, options: NAME_SIZES, default: 'normal', half: true },
+      { name: 'memberNameBold', label: 'Make names bolder', type: 'boolean', default: false },
     ],
   },
   {

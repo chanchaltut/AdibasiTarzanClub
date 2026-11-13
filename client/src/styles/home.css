@@ -420,11 +420,33 @@ a:hover .play-badge { transform: translate(-50%, -50%) scale(1.08); }
   background: linear-gradient(180deg, transparent, rgba(29, 12, 5, .78) 45%, rgba(29, 12, 5, .96));
 }
 .player-card__no { grid-row: span 2; font-family: var(--f-display); font-weight: 800; font-size: 58px; line-height: .78; color: var(--gold-soft); }
-.player-card__name { display: flex; flex-direction: column; line-height: .95; }
-.player-card__first { font-family: var(--f-display); font-weight: 500; font-size: 18px; text-transform: uppercase; letter-spacing: .04em; }
-.player-card__last { font-family: var(--f-display); font-weight: 800; font-size: 28px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+.player-card__name { --first: 18px; --last: 28px; --name-scale: 1; --style-scale: 1; display: flex; flex-direction: column; line-height: .95; }
+.player-card__first { font-family: var(--f-display); font-weight: 500; font-size: calc(var(--first) * var(--name-scale) * var(--style-scale)); text-transform: uppercase; letter-spacing: .04em; }
+.player-card__last { font-family: var(--f-display); font-weight: 800; font-size: calc(var(--last) * var(--name-scale) * var(--style-scale)); text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+/* Lettering, size and weight of the names on player and member cards are chosen
+   in the admin panel (Fonts & lettering). Bold capitals unless changed. */
+.player-card__name.names--large { --name-scale: 1.12; }
+.player-card__name.names--xl { --name-scale: 1.24; }
+.player-card__name.is-bold.names--display .player-card__first { font-weight: 700; }
+.player-card__name.is-bold.names--display .player-card__last { -webkit-text-stroke: .025em currentColor; }
+.player-card__name:not(.names--display) { line-height: 1.12; overflow-wrap: anywhere; }
+.player-card__name:not(.names--display) .player-card__first { font-size: calc(var(--last) * var(--name-scale) * var(--style-scale)); }
+.player-card__name:not(.names--display) > span { text-transform: none; letter-spacing: 0; font-weight: 400; }
+.player-card__name.names--hand { --style-scale: .68; line-height: 1.45; }
+.player-card__name.names--hand > span { font-family: var(--f-hand); font-weight: var(--hand-weight); -webkit-text-stroke: var(--hand-stroke) currentColor; }
+.player-card__name.names--hand.is-bold > span { font-weight: var(--hand-bold-weight); -webkit-text-stroke: var(--hand-bold-stroke) currentColor; }
+.player-card__name.names--script { --style-scale: 1.15; line-height: 1; }
+.player-card__name.names--script > span { font-family: var(--f-script); font-weight: var(--script-weight); -webkit-text-stroke: var(--script-stroke) currentColor; }
+.player-card__name.names--script.is-bold > span { font-weight: var(--script-bold-weight); -webkit-text-stroke: var(--script-bold-stroke) currentColor; }
+.player-card__name.names--serif { --style-scale: .8; }
+.player-card__name.names--serif > span { font-family: var(--f-serif); }
+.player-card__name.names--serif.is-bold > span { -webkit-text-stroke: .03em currentColor; }
+.player-card__name.names--print { --style-scale: .7; line-height: 1.2; }
+.player-card__name.names--print > span { font-family: var(--f-body); font-weight: 500; }
+.player-card__name.names--print.is-bold > span { font-weight: 600; -webkit-text-stroke: .02em currentColor; }
 .player-card__last abbr {
-  text-decoration: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+  text-decoration: none; flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+  font-family: var(--f-display); font-weight: 800; -webkit-text-stroke: 0;
   background: var(--gold); color: var(--bark-900); font-size: 13px;
 }
 .player-card__pos { font-family: var(--f-serif); font-style: italic; font-size: 15px; opacity: .78; margin-top: 4px; }
@@ -432,7 +454,7 @@ a:hover .play-badge { transform: translate(-50%, -50%) scale(1.08); }
 @media (max-width: 1024px) { .players__row > li { width: calc((100% - 16px) / 2.4); } }
 @media (max-width: 640px) {
   .players__row > li { width: 76%; }
-  .player-card__last { font-size: 24px; }
+  .player-card__name { --last: 24px; }
 }
 
 /* ─── Content from the website management panel ───────────── */

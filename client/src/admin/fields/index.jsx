@@ -229,7 +229,7 @@ export function Field({ f, value, onChange, data, errors = {}, path = f.name, me
         </FieldFrame>
       );
     case 'font':
-      return <FieldFrame {...common} htmlFor={undefined}><FontField f={f} id={id} value={value} onChange={onChange} bold={Boolean(data?.[f.boldField])} /></FieldFrame>;
+      return <FieldFrame {...common} htmlFor={undefined}><FontField f={f} id={id} value={value} onChange={onChange} bold={Boolean(data?.[f.boldField])} scale={f.scales?.[data?.[f.sizeField]] || 1} /></FieldFrame>;
     case 'ref':
       return <FieldFrame {...common}><RefSelect f={f} id={id} value={value} onChange={onChange} /></FieldFrame>;
     case 'youtube':

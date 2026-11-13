@@ -39,7 +39,7 @@ export function TeamBadge({ code, size = 64 }) {
     <svg className="team-badge" width={size} height={size} viewBox="0 0 64 64" role="img" aria-label={tr(t.name)}>
       <path d="M32 3 56 10v20c0 15-10 25-24 31C18 55 8 45 8 30V10Z" fill={a} stroke={b} strokeWidth="2.5" />
       <path d="M32 9 50 14.5V30c0 11.5-7.5 19.5-18 24.5C21.5 49.5 14 41.5 14 30V14.5Z" fill="none" stroke={b} strokeOpacity=".35" />
-      <text x="32" y="38" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="800" fontSize="19" fill={b} letterSpacing=".5">
+      <text x="32" y="38" textAnchor="middle" style={{ fontFamily: 'var(--f-display)' }} fontWeight="800" fontSize="19" fill={b} letterSpacing=".5">
         {initials}
       </text>
     </svg>
@@ -74,10 +74,10 @@ export function Jersey({ name = '', number = '', className = '' }) {
       </g>
       <path d="M78 18 Q120 34 162 18 Q156 30 120 34 Q84 30 78 18 Z" fill="#D99A2B" />
       <path d={body} fill="none" stroke="#1A0A04" strokeOpacity=".5" strokeWidth="1.5" />
-      <text x="120" y="78" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="700" fontSize="19" letterSpacing="3" fill="#E9BE6A">
+      <text x="120" y="78" textAnchor="middle" style={{ fontFamily: 'var(--f-display)' }} fontWeight="700" fontSize="19" letterSpacing="3" fill="#E9BE6A">
         {name.toUpperCase()}
       </text>
-      <text x="120" y="182" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="800" fontSize="104" fill="#E9BE6A" stroke="#1A0A04" strokeWidth="2.5" paintOrder="stroke">
+      <text x="120" y="182" textAnchor="middle" style={{ fontFamily: 'var(--f-display)' }} fontWeight="800" fontSize="104" fill="#E9BE6A" stroke="#1A0A04" strokeWidth="2.5" paintOrder="stroke">
         {number}
       </text>
     </svg>
@@ -176,7 +176,7 @@ export function WaxSeal({ size = 88, className = '', label = 'ATC' }) {
       <path d={d} fill="url(#wax)" />
       <circle cx="50" cy="50" r="31" fill="none" stroke="#4A100B" strokeWidth="2.5" opacity=".7" />
       <circle cx="50" cy="50" r="27" fill="none" stroke="#C65A44" strokeWidth="1" opacity=".55" />
-      <text x="50" y="57" textAnchor="middle" fontFamily="IM Fell English, serif" fontSize="21" fill="#E38B72" opacity=".9" letterSpacing="1">
+      <text x="50" y="57" textAnchor="middle" style={{ fontFamily: 'var(--f-serif)' }} fontSize="21" fill="#E38B72" opacity=".9" letterSpacing="1">
         {label}
       </text>
       <ellipse cx="38" cy="30" rx="10" ry="5" fill="#fff" opacity=".12" transform="rotate(-30 38 30)" />

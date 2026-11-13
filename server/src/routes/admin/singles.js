@@ -18,7 +18,8 @@ const defFor = (req) => {
 router.get('/:key', async (req, res) => {
   const def = defFor(req);
   const doc = await Single.findOne({ key: def.key }).lean();
-  const data = doc?.data || defaultsFor(def.fields);
+  // Settings saved before a field was added still open with that field's default.
+  const data = { ...defaultsFor(def.fields), ...doc?.data };
   res.json({ item: { ...data, _updatedAt: doc?.updatedAt || null }, media: await mediaFor(data) });
 });
 

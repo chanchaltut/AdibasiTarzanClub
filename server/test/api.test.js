@@ -400,14 +400,27 @@ describe('content editing', () => {
     const bad = await c.put('/api/admin/s/lettering', { ...body.item, handFont: 'comic-sans' });
     assert.equal(bad.status, 400);
     assert.ok(bad.body.details.handFont);
-    const ok = await c.put('/api/admin/s/lettering', { ...body.item, handFont: 'caveat', handBold: true, scriptFont: 'great-vibes', nameStyle: 'serif', nameSize: 'large', nameBold: true });
+    assert.equal(body.item.displayFont, 'barlow-condensed');
+    const ok = await c.put('/api/admin/s/lettering', {
+      ...body.item, handFont: 'caveat', handBold: true, scriptFont: 'great-vibes', nameStyle: 'serif', nameSize: 'large', nameBold: true,
+      displayFont: 'oswald', serifFont: 'eb-garamond', serifSize: 'large', memberNameStyle: 'hand', playerNameSize: 'xl',
+    });
     assert.equal(ok.status, 200, JSON.stringify(ok.body));
     const pub = await client().get('/api/public/content');
-    assert.deepEqual(pub.body.LETTERING, {
+    const { sized, ...serif } = pub.body.LETTERING.serif;
+    assert.deepEqual({ ...pub.body.LETTERING, serif }, {
+      display: { family: 'ATC Oswald' },
+      body: { family: 'Barlow' },
+      serif: { family: 'ATC EB Garamond' },
       script: { family: 'ATC Great Vibes', boldWeight: 400, bold: false },
       hand: { family: 'ATC Caveat', boldWeight: 700, bold: true },
       names: { style: 'serif', size: 'large', bold: true },
+      playerNames: { style: 'display', size: 'xl', bold: false },
+      memberNames: { style: 'hand', size: 'normal', bold: false },
     });
+    // A font at any size but "Normal" comes with its files, to be redrawn at that size.
+    assert.equal(sized.adjust, 114.5);
+    assert.ok(sized.faces.some(([file, , style]) => file === 'eb-garamond-400-italic-latin.woff2' && style === 'italic'));
   });
 
   test('translations appear on the website', async () => {

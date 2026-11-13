@@ -3,9 +3,11 @@ import { useContent } from '../../content/store';
 import { useScroller } from '../../utils/helpers';
 import { Jersey, Photo } from '../ui/Art';
 import { ScrollMeter, SliderControls } from '../ui/Slider';
+import { CARD_NAME_STYLES, nameClasses } from '../layout/Lettering';
 
 export function PlayerCard({ p, i = 0 }) {
   const { t } = useLang();
+  const { LETTERING } = useContent();
   return (
     <Link to="/squad" className={`player-card player-card--${i % 2 ? 'b' : 'a'}`}>
       <span className="player-card__art">
@@ -14,7 +16,7 @@ export function PlayerCard({ p, i = 0 }) {
       </span>
       <span className="player-card__text">
         <span className="player-card__no">{p.no}</span>
-        <span className="player-card__name">
+        <span className={`player-card__name ${nameClasses(LETTERING?.playerNames, CARD_NAME_STYLES, 'display')}`}>
           <span className="player-card__first">{t(p.first)}</span>
           <span className="player-card__last">{t(p.last)}{p.captain && <abbr title={t('Captain')}>C</abbr>}</span>
         </span>

@@ -28,11 +28,14 @@
   --line-dark: rgba(231, 212, 176, 0.12);
   --line-light: rgba(43, 22, 9, 0.14);
 
-  --f-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-  --f-body: 'Barlow', system-ui, sans-serif;
-  --f-serif: 'IM Fell English', Georgia, serif;
-  /* The two decorative fonts can be changed in the admin panel (Settings →
-     Fonts & lettering); components/layout/Lettering.jsx overrides these. */
+  /* Every font can be changed in the admin panel (Settings → Fonts &
+     lettering); components/layout/Lettering.jsx overrides the "-face" values. */
+  --f-display-face: 'Barlow Condensed';
+  --f-body-face: 'Barlow';
+  --f-serif-face: 'IM Fell English';
+  --f-display: var(--f-display-face), 'Arial Narrow', sans-serif;
+  --f-body: var(--f-body-face), system-ui, sans-serif;
+  --f-serif: var(--f-serif-face), Georgia, serif;
   --f-script-face: 'Mrs Saint Delafield';
   --f-hand-face: 'Homemade Apple';
   --f-script: var(--f-script-face), cursive;
@@ -319,16 +322,16 @@ a:hover .photo img, .photo-zoom:hover .photo img { transform: scale(1.045); }
    family gets a partner the browser falls back to per character, so Latin words
    (ATC, numbers) keep the house fonts. Partner fonts load only on /hi and /bn. */
 html:lang(hi) {
-  --f-display: 'Barlow Condensed', 'Anek Devanagari', 'Arial Narrow', sans-serif;
-  --f-body: 'Barlow', 'Hind', system-ui, sans-serif;
-  --f-serif: 'IM Fell English', 'Tiro Devanagari Hindi', Georgia, serif;
+  --f-display: var(--f-display-face), 'Anek Devanagari', 'Arial Narrow', sans-serif;
+  --f-body: var(--f-body-face), 'Hind', system-ui, sans-serif;
+  --f-serif: var(--f-serif-face), 'Tiro Devanagari Hindi', Georgia, serif;
   --f-script: var(--f-script-face), 'Kalam', cursive;
   --f-hand: var(--f-hand-face), 'Kalam', cursive;
 }
 html:lang(bn) {
-  --f-display: 'Barlow Condensed', 'Anek Bangla', 'Arial Narrow', sans-serif;
-  --f-body: 'Barlow', 'Hind Siliguri', system-ui, sans-serif;
-  --f-serif: 'IM Fell English', 'Tiro Bangla', Georgia, serif;
+  --f-display: var(--f-display-face), 'Anek Bangla', 'Arial Narrow', sans-serif;
+  --f-body: var(--f-body-face), 'Hind Siliguri', system-ui, sans-serif;
+  --f-serif: var(--f-serif-face), 'Tiro Bangla', Georgia, serif;
   --f-script: var(--f-script-face), 'Galada', cursive;
   --f-hand: var(--f-hand-face), 'Atma', cursive;
 }
