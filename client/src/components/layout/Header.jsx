@@ -58,7 +58,7 @@ function NavItem({ item, align }) {
         <div className="nav-mega">
           <div className="wrapper nav-mega__inner">
             <div className="nav-mega__title">
-              <span className="script">{t('Our')}</span>
+              <span className="script">{t(item.script || 'Our')}</span>
               <span className="display">{t(item.label)}</span>
             </div>
             {item.mega.map((col) => (
@@ -69,6 +69,13 @@ function NavItem({ item, align }) {
                 </ul>
               </div>
             ))}
+            {item.cta && (
+              <div className="nav-mega__col nav-mega__cta">
+                <p className="nav-mega__head">{t(item.cta.title)}</p>
+                <p>{t(item.cta.text)}</p>
+                <Link to={item.cta.href} className="btn btn--sm nav-mega__cta-btn">{t(item.cta.label)}</Link>
+              </div>
+            )}
           </div>
         </div>
       )}

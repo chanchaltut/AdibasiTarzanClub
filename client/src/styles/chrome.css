@@ -334,3 +334,8 @@
 .footer__partners-logos img { height: 48px; width: auto; max-width: 160px; object-fit: contain; filter: grayscale(1) sepia(.3) brightness(1.7); opacity: .85; transition: filter .3s, opacity .3s; }
 .footer__partners-logos a:hover img { filter: none; opacity: 1; }
 @media (max-width: 840px) { .footer__partners-logos { justify-content: center; } }
+
+/* Mega menu: a "take part" card beside the link columns */
+.nav-mega__cta p:not(.nav-mega__head) { font-size: 15px; line-height: 1.5; color: var(--on-dark-muted); margin-bottom: 16px; max-width: 260px; }
+.nav-mega__col .nav-mega__cta-btn { display: inline-flex; padding: 0 16px; opacity: 1; color: var(--bark-900); }
+.nav-mega__col .nav-mega__cta-btn:hover { color: var(--bark-900); }

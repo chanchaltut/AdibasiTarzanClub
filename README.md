@@ -8,7 +8,9 @@ atc/
 
 The club's office-bearers manage **everything visible on the website** from
 `https://www.adibasitarzanclub.in/admin`, in plain English and from a phone or computer:
-news, matches and results, events, YouTube videos, gallery, players, committee, stories,
+news, matches and results (with postponements and reporting instructions), match updates, events,
+tournaments, club programmes, sign-ups from the website, YouTube videos, gallery (four sections with
+albums), players, committee, members (including In Memoriam), stories,
 home-page cards, partners, honours, history, FAQs, membership plans, club details, every
 page banner, and the Hindi/Bengali translations of all of it.
 

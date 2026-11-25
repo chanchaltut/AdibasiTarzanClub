@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLang } from '../../i18n';
 import { useContent } from '../../content/store';
+import { GALLERY_SECTIONS } from '../../data/gallery';
 import Icon from '../ui/Icon';
 
 const PAGES = [
@@ -12,6 +13,10 @@ const PAGES = [
   { title: 'Members', href: '/members', type: 'Page' },
   { title: 'Membership', href: '/membership', type: 'Page' },
   { title: 'Gallery', href: '/gallery', type: 'Page' },
+  { title: 'The story behind our crest', href: '/crest', type: 'Page' },
+  { title: 'ATC Annual Cup — tournament schedule, teams & fixtures', href: '/tournaments', type: 'Page' },
+  { title: 'Registration & participation', href: '/register', type: 'Page' },
+  { title: 'Match information', href: '/schedule?tab=info', type: 'Page' },
   { title: 'Contact & directions', href: '/contact', type: 'Page' },
 ];
 
@@ -19,7 +24,7 @@ export default function Search({ open, onClose }) {
   const [q, setQ] = useState('');
   const input = useRef(null);
   const { t, name, lang } = useLang();
-  const { NEWS, SQUAD, MEMBERS, EVENTS, VIDEOS } = useContent();
+  const { NEWS, SQUAD, MEMBERS, EVENTS, VIDEOS, TOURNAMENTS, PROGRAMMES } = useContent();
 
   useEffect(() => {
     if (!open) return;
@@ -38,7 +43,10 @@ export default function Search({ open, onClose }) {
     ...MEMBERS.map((m) => ({ title: `${t(m.name)} — ${t(m.kind || 'Member')}`, en: `${m.name} ${m.kind || 'Member'}`, href: '/members', type: 'Member' })),
     ...EVENTS.map((e) => ({ title: t(e.title), en: e.title, href: '/schedule?tab=events', type: 'Event' })),
     ...VIDEOS.map((v) => ({ title: t(v.title), en: v.title, href: '/gallery#videos', type: 'Video' })),
-  ], [lang, NEWS, SQUAD, MEMBERS, EVENTS, VIDEOS]); // eslint-disable-line react-hooks/exhaustive-deps
+    ...TOURNAMENTS.map((x) => ({ title: t(x.name), en: x.name, href: '/tournaments', type: 'Event' })),
+    ...PROGRAMMES.map((x) => ({ title: t(x.title), en: x.title, href: '/register', type: 'Event' })),
+    ...GALLERY_SECTIONS.flatMap((g) => [g.title, ...g.albums].map((a) => ({ title: `${t(a)} — ${t('Gallery')}`, en: `${a} gallery photos`, href: `/gallery?section=${g.id}`, type: 'Page' }))),
+  ], [lang, NEWS, SQUAD, MEMBERS, EVENTS, VIDEOS, TOURNAMENTS, PROGRAMMES]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const results = useMemo(() => {
     const s = q.trim().toLowerCase();

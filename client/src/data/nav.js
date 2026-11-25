@@ -5,22 +5,43 @@
 
 export const NAV_LEFT = [
   {
-    label: 'Events & Tickets',
+    label: 'Events & Participations',
     href: '/schedule',
-    columns: 2,
-    items: [
-      { label: 'First Team Fixtures', href: '/schedule' },
-      { label: 'ATC Annual Cup', href: '/schedule?tab=events' },
-      { label: 'Heritage Night', href: '/schedule?tab=events' },
-      { label: 'Prize Distribution', href: '/schedule?tab=events' },
-      { label: 'Sports Day', href: '/schedule?tab=events' },
-      { label: 'Results', href: '/schedule?tab=results' },
-      { label: 'Notice Board', href: '/schedule?tab=notices' },
-      { label: 'Club Calendar', href: '/schedule?tab=notices' },
+    script: 'ATC',
+    mega: [
+      { title: 'Matches & Tournaments', links: [
+        { label: 'First Team Fixtures', href: '/schedule' },
+        { label: 'Results', href: '/schedule?tab=results' },
+        { label: 'Match Information', href: '/schedule?tab=info' },
+        { label: 'ATC Annual Cup', href: '/tournaments' },
+        { label: 'Tournament Schedule', href: '/tournaments#schedule' },
+        { label: 'Participating Teams', href: '/tournaments#teams' },
+        { label: 'Tournament Fixtures', href: '/tournaments#fixtures' },
+      ] },
+      { title: 'Club Events', links: [
+        { label: 'Sports Day', href: '/schedule?tab=events' },
+        { label: 'Heritage Night', href: '/schedule?tab=events' },
+        { label: 'Prize Distribution', href: '/schedule?tab=events' },
+        { label: 'Club Calendar', href: '/schedule?tab=notices' },
+        { label: 'Notice Board', href: '/schedule?tab=notices' },
+        { label: 'Registration & Participation', href: '/register' },
+      ] },
     ],
+    cta: { title: 'Take part', text: 'Sign up for club events, programmes and the ATC Annual Cup.', label: 'Register now', href: '/register' },
   },
   { label: 'Membership', href: '/membership' },
-  { label: 'Gallery', href: '/gallery' },
+  {
+    label: 'Gallery',
+    href: '/gallery',
+    items: [
+      { label: 'All moments', href: '/gallery' },
+      { label: 'The Football Arena', href: '/gallery?section=football' },
+      { label: 'Celebrations & Club Events', href: '/gallery?section=celebrations' },
+      { label: 'Roots & Heritage', href: '/gallery?section=heritage' },
+      { label: 'The ATC Family', href: '/gallery?section=family' },
+      { label: 'Videos', href: '/gallery#videos' },
+    ],
+  },
   { label: 'Partner With Us', href: '/contact#partners' },
 ];
 
@@ -44,6 +65,7 @@ export const NAV_RIGHT = [
       { label: 'About ATC', href: '/club' },
       { label: 'History', href: '/club#history' },
       { label: 'Our Legacy', href: '/club#legacy' },
+      { label: 'Our Crest', href: '/crest' },
       { label: 'Committee', href: '/committee' },
       { label: 'Members', href: '/members' },
       { label: 'Our Ground', href: '/club#ground' },

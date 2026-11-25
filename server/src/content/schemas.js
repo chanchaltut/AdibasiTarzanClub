@@ -33,12 +33,19 @@ export const SITE_LINKS = [
   { value: '/schedule', label: 'Schedule — fixtures' },
   { value: '/schedule?tab=results', label: 'Schedule — results' },
   { value: '/schedule?tab=events', label: 'Schedule — club events' },
+  { value: '/schedule?tab=info', label: 'Schedule — match information' },
   { value: '/schedule?tab=notices', label: 'Notice Board — letters & calendar' },
+  { value: '/tournaments', label: 'ATC Tournaments — Annual Cup' },
+  { value: '/register', label: 'Registration & participation (sign-up form)' },
   { value: '/squad', label: 'Players' },
   { value: '/squad#youth', label: 'Players — youth' },
   { value: '/committee', label: 'Committee' },
   { value: '/members', label: 'Members' },
   { value: '/gallery', label: 'Gallery' },
+  { value: '/gallery?section=football', label: 'Gallery — The Football Arena' },
+  { value: '/gallery?section=celebrations', label: 'Gallery — Celebrations & Club Events' },
+  { value: '/gallery?section=heritage', label: 'Gallery — Roots & Heritage' },
+  { value: '/gallery?section=family', label: 'Gallery — The ATC Family' },
   { value: '/gallery#videos', label: 'Gallery — videos' },
   { value: '/membership', label: 'Membership' },
   { value: '/club', label: 'The Club' },
@@ -48,6 +55,7 @@ export const SITE_LINKS = [
   { value: '/club#community', label: 'The Club — community' },
   { value: '/club#ground', label: 'The Club — our ground' },
   { value: '/club#faq', label: 'The Club — FAQ' },
+  { value: '/crest', label: 'Our Crest — the story behind it' },
   { value: '/contact', label: 'Contact' },
   { value: '/contact#partners', label: 'Contact — partner with us' },
 ];
@@ -68,6 +76,46 @@ export const ASPECTS = {
 };
 
 const POSITIONS = ['Goalkeeper', 'Defender', 'Midfielder', 'Forward'];
+
+/**
+ * The Gallery — "Moments to Memories" — in four sections, each with its albums,
+ * as the club laid it out. The website shows them in this order
+ * (client/src/data/gallery.js holds the same list for the visitors' side).
+ */
+export const GALLERY_SECTIONS = [
+  {
+    value: 'football',
+    label: 'The Football Arena',
+    albums: ['Matchday Action', 'Team & Squad Photos', 'Away Matches & Participation', 'Training & Practice', 'Dashami Dhamaka', 'Trophies & Achievements', 'Other Sports & Games'],
+  },
+  {
+    value: 'celebrations',
+    label: 'Celebrations & Club Events',
+    albums: ['Kali Puja', 'Puja Preparations', 'Ceremonial Moments', 'Felicitation & Welcome', 'Prize Distribution', 'Club Functions & Special Events'],
+  },
+  {
+    value: 'heritage',
+    label: 'Roots & Heritage',
+    albums: ['Baha Parab', 'Sohrai Parab', 'Traditional Marriage', 'Traditional Dance, Music & Instruments', 'Traditional Attire & Rituals', 'Cultural Programme'],
+  },
+  {
+    value: 'family',
+    label: 'The ATC Family',
+    albums: ['Club Group Photo', 'Men’s & Women’s Group', 'Birthday Celebrations', 'Behind the Scenes & Candid Moments', 'Reunions & Gatherings', 'Old Memories'],
+  },
+];
+
+/** Albums used before the Gallery had sections, and where their photos now belong. */
+export const OLD_ALBUMS = {
+  Matchday: ['football', 'Matchday Action'],
+  Training: ['football', 'Training & Practice'],
+  Youth: ['football', 'Training & Practice'],
+  'Annual Cup': ['football', 'Trophies & Achievements'],
+  'Heritage Night': ['heritage', 'Cultural Programme'],
+  Community: ['family', 'Reunions & Gatherings'],
+};
+
+const MATCH_INFO_KINDS = ['Match update', 'Postponement', 'Team reporting instructions', 'Football notice'];
 
 const order = { name: 'order', type: 'number', hidden: true };
 const published = (label = 'Show on the website') => ({
@@ -122,6 +170,10 @@ export const COLLECTIONS = [
       { name: 'round', label: 'Round', type: 'text', max: 60, placeholder: 'e.g. Matchday 7, Semi-final', t: true, half: true },
       { name: 'venue', label: 'Ground', type: 'combo', required: true, options: ['S. Akhanagar Ground'], default: 'S. Akhanagar Ground', max: 100, t: true },
       { name: 'entry', label: 'Entry for spectators', type: 'select', options: [{ value: '', label: 'Don’t show' }, { value: 'Free entry', label: 'Free entry' }, { value: 'Tickets', label: 'Tickets' }], default: '', help: 'Only shown for home matches.' },
+      { name: 'infoHeading', type: 'heading', label: 'Match information', help: 'Shown with the fixture on the Schedule page.' },
+      { name: 'status', label: 'Status', type: 'select', required: true, default: 'scheduled', options: [{ value: 'scheduled', label: 'On as planned' }, { value: 'postponed', label: 'Postponed' }, { value: 'cancelled', label: 'Cancelled' }], half: true },
+      { name: 'statusNote', label: 'Note about the change (optional)', type: 'text', max: 120, t: true, half: true, placeholder: 'e.g. Rain — new date to be announced' },
+      { name: 'reporting', label: 'Team reporting instructions (optional)', type: 'textarea', max: 400, t: true, help: 'For our players: when and where to report, kit to bring, transport.', placeholder: 'e.g. Report at the club office by 1:00 pm in the home kit. The bus leaves at 1:30 pm.' },
       { name: 'scoreHeading', type: 'heading', label: 'Final score', help: 'Leave empty until the match has been played.' },
       { name: 'homeScore', label: 'Home goals', type: 'number', min: 0, max: 99, integer: true, half: true },
       { name: 'awayScore', label: 'Away goals', type: 'number', min: 0, max: 99, integer: true, half: true },
@@ -144,12 +196,112 @@ export const COLLECTIONS = [
     searchable: ['title', 'desc', 'venue'],
     fields: [
       { name: 'title', label: 'Event name', type: 'text', required: true, max: 100, t: true },
-      { name: 'kind', label: 'Type', type: 'combo', required: true, options: ['Football', 'Culture', 'Club', 'Ceremony', 'Community'], default: 'Club', t: true, half: true },
+      { name: 'kind', label: 'Type', type: 'combo', required: true, options: ['Sports Day', 'Heritage Night', 'Prize Distribution', 'Football', 'Culture', 'Club', 'Ceremony', 'Community'], default: 'Club', t: true, half: true },
       { name: 'date', label: 'Starts (India time)', type: 'datetime', required: true, half: true },
       { name: 'venue', label: 'Where', type: 'combo', required: true, options: ['S. Akhanagar Ground', 'Club Grounds', 'Club Hall'], max: 100, t: true },
       { name: 'desc', label: 'Description', type: 'textarea', max: 400, t: true },
       { name: 'photo', label: 'Photo (optional)', type: 'image', aspect: 'wide' },
+      { name: 'signupHeading', type: 'heading', label: 'Sign-ups', help: 'Let people register for this event on the website. Their names arrive under Sign-ups.' },
+      { name: 'signup', label: 'Accept sign-ups on the website', type: 'boolean', default: false },
+      { name: 'signupBy', label: 'Last date to sign up (optional)', type: 'datetime', when: { field: 'signup', is: true }, half: true, help: 'Leave empty to accept sign-ups until the event starts.' },
       published(),
+    ],
+  },
+  {
+    key: 'matchinfo',
+    label: 'Match Information',
+    singular: 'match update',
+    icon: 'info',
+    group: 'Website content',
+    description: 'Match updates, postponements, team reporting instructions and other football notices. Shown under Schedule → Match Info, newest first.',
+    titleField: 'title',
+    subtitle: ['kind', 'date'],
+    sort: { pinned: -1, date: -1 },
+    publishable: true,
+    searchable: ['title', 'text', 'kind'],
+    fields: [
+      { name: 'title', label: 'Headline', type: 'text', required: true, max: 120, t: true, placeholder: 'e.g. Sunday’s match against Hemtabad moved to 4:00 pm' },
+      { name: 'kind', label: 'Type', type: 'combo', required: true, options: MATCH_INFO_KINDS, default: 'Match update', max: 40, t: true, half: true },
+      { name: 'date', label: 'Date', type: 'datetime', required: true, default: 'now', half: true },
+      { name: 'text', label: 'Details', type: 'textarea', required: true, max: 1000, t: true, help: 'Who, what, when and where — in a few short sentences.' },
+      { name: 'match', label: 'About which match (optional)', type: 'ref', to: 'matches', help: 'Pick the fixture this update is about. It is then linked to the match.' },
+      { name: 'pinned', label: 'Pin to the top', type: 'boolean', default: false },
+      published(),
+    ],
+    refs: ['match'],
+  },
+  {
+    key: 'tournaments',
+    label: 'ATC Tournaments',
+    singular: 'tournament',
+    icon: 'trophy',
+    group: 'Website content',
+    description: 'The ATC Annual Cup and other tournaments the club hosts: schedule, participating teams and fixtures. Shown on the ATC Tournaments page, newest first.',
+    titleField: 'name',
+    subtitle: ['start'],
+    imageField: 'photo',
+    sort: { start: -1 },
+    publishable: true,
+    searchable: ['name', 'about'],
+    fields: [
+      { name: 'name', label: 'Tournament name', type: 'text', required: true, max: 80, t: true, placeholder: 'e.g. ATC Annual Cup 2026' },
+      { name: 'comp', label: 'Competition name used in Matches', type: 'combo', required: true, options: ['ATC Annual Cup'], default: 'ATC Annual Cup', max: 60, help: 'Matches with this competition name, played between the start and end dates, are listed as this tournament’s fixtures and results.' },
+      { name: 'start', label: 'Starts', type: 'datetime', required: true, half: true },
+      { name: 'end', label: 'Final / ends (optional)', type: 'datetime', half: true },
+      { name: 'venue', label: 'Where', type: 'combo', required: true, options: ['S. Akhanagar Ground'], default: 'S. Akhanagar Ground', max: 100, t: true },
+      { name: 'about', label: 'About the tournament', type: 'longtext', max: 3000, t: true, help: 'Format, prize, who can enter. Leave an empty line between paragraphs.' },
+      { name: 'photo', label: 'Photo (optional)', type: 'image', aspect: 'wide' },
+      {
+        name: 'schedule', label: 'Tournament schedule', type: 'list', max: 30, itemLabel: 'Stage',
+        help: 'The stages and their dates, e.g. Registration closes, Group stage, Semi-finals, Final.',
+        fields: [
+          { name: 'stage', label: 'Stage', type: 'text', required: true, max: 60, t: true, half: true, placeholder: 'e.g. Group stage' },
+          { name: 'from', label: 'Date', type: 'datetime', required: true, half: true },
+          { name: 'to', label: 'Until (optional)', type: 'datetime', half: true },
+          { name: 'note', label: 'Note (optional)', type: 'text', max: 100, t: true, half: true },
+        ],
+      },
+      {
+        name: 'teams', label: 'Participating teams', type: 'list', max: 64, itemLabel: 'Team',
+        help: 'Add each team that has entered. New teams are added under Club information → Teams first.',
+        fields: [
+          { name: 'team', label: 'Team', type: 'ref', to: 'teams', required: true, half: true },
+          { name: 'group', label: 'Group (optional)', type: 'text', max: 20, t: true, half: true, placeholder: 'e.g. Group A' },
+        ],
+      },
+      { name: 'resultHeading', type: 'heading', label: 'Result', help: 'Fill in after the final.' },
+      { name: 'winner', label: 'Winner (optional)', type: 'ref', to: 'teams', half: true },
+      { name: 'runnerUp', label: 'Runner-up (optional)', type: 'ref', to: 'teams', half: true },
+      { name: 'entryHeading', type: 'heading', label: 'Team entries', help: 'Let team managers enter the tournament through the website’s sign-up form.' },
+      { name: 'signup', label: 'Accept team entries on the website', type: 'boolean', default: false },
+      { name: 'signupBy', label: 'Last date for entries (optional)', type: 'datetime', when: { field: 'signup', is: true }, half: true },
+      published(),
+    ],
+    refs: ['winner', 'runnerUp'],
+  },
+  {
+    key: 'programmes',
+    label: 'Club Programmes',
+    singular: 'programme',
+    icon: 'compass',
+    group: 'Website content',
+    description: 'Regular club programmes people can join — youth coaching, the cultural troupe, volunteering. Shown on the Registration page with a sign-up button.',
+    titleField: 'title',
+    subtitle: ['when'],
+    imageField: 'photo',
+    orderable: true,
+    publishable: true,
+    searchable: ['title', 'desc'],
+    fields: [
+      { name: 'title', label: 'Programme name', type: 'text', required: true, max: 80, t: true, placeholder: 'e.g. Youth Football Coaching' },
+      { name: 'desc', label: 'What it is', type: 'textarea', required: true, max: 400, t: true },
+      { name: 'when', label: 'When it runs (optional)', type: 'text', max: 80, t: true, half: true, placeholder: 'e.g. Tue, Thu & Sat · 6:30 am' },
+      { name: 'who', label: 'Who can join (optional)', type: 'text', max: 80, t: true, half: true, placeholder: 'e.g. Boys and girls aged 8–17' },
+      { name: 'venue', label: 'Where (optional)', type: 'combo', options: ['S. Akhanagar Ground', 'Club Grounds', 'Club Hall'], max: 100, t: true },
+      { name: 'photo', label: 'Photo (optional)', type: 'image', aspect: 'wide' },
+      { name: 'signup', label: 'Accept sign-ups on the website', type: 'boolean', default: true },
+      published(),
+      order,
     ],
   },
   {
@@ -181,19 +333,27 @@ export const COLLECTIONS = [
     singular: 'photo',
     icon: 'images',
     group: 'Website content',
-    description: 'The photo wall on the Gallery page. You can upload many photos at once.',
+    description: 'Moments to Memories — the photo wall on the Gallery page, in four sections: The Football Arena, Celebrations & Club Events, Roots & Heritage and The ATC Family. You can upload many photos at once.',
     titleField: 'caption',
-    subtitle: ['album'],
+    subtitle: ['section', 'album'],
     imageField: 'photo',
     orderable: true,
     newFirst: true,
     publishable: true,
-    bulkUpload: { imageField: 'photo', titleField: 'caption' },
+    bulkUpload: { imageField: 'photo', titleField: 'caption', pick: ['section', 'album'] },
+    // Photos saved before the sections existed open in the admin already placed (see OLD_ALBUMS).
+    upgrade: (d) => (d.section || !OLD_ALBUMS[d.album] ? d : { ...d, section: OLD_ALBUMS[d.album][0], album: OLD_ALBUMS[d.album][1] }),
     searchable: ['caption', 'album'],
     fields: [
       { name: 'photo', label: 'Photo', type: 'image', required: true, aspect: 'any' },
-      { name: 'caption', label: 'Caption', type: 'text', required: true, max: 120, t: true, placeholder: 'e.g. Matchday, S. Akhanagar' },
-      { name: 'album', label: 'Album (optional)', type: 'combo', options: ['Matchday', 'Training', 'Youth', 'Heritage Night', 'Annual Cup', 'Community'], max: 60, t: true, help: 'Photos with the same album can be filtered together on the Gallery page.' },
+      { name: 'caption', label: 'Caption', type: 'text', required: true, max: 120, t: true, placeholder: 'e.g. Kali Puja night at the club, 2025' },
+      { name: 'section', label: 'Section', type: 'select', required: true, default: 'football', options: GALLERY_SECTIONS.map(({ value, label }) => ({ value, label })), half: true },
+      {
+        name: 'album', label: 'Album', type: 'combo', max: 60, t: true, half: true,
+        options: GALLERY_SECTIONS.flatMap((x) => x.albums),
+        optionsBy: { field: 'section', options: Object.fromEntries(GALLERY_SECTIONS.map((x) => [x.value, x.albums])) },
+        help: 'Pick one of the section’s albums, or type a new one. Visitors can open each album on its own.',
+      },
       published(),
       order,
     ],
@@ -276,9 +436,9 @@ export const COLLECTIONS = [
     singular: 'member',
     icon: 'person',
     group: 'People',
-    description: 'Everyone who belongs to the club but is not a player or an office-bearer. Shown on the Members page, in this order.',
+    description: 'Everyone who belongs to the club but is not a player or an office-bearer. Shown on the Members page, in this order: first those remembered In Memoriam, then the active Club Members.',
     titleField: 'name',
-    subtitle: ['kind', 'since'],
+    subtitle: ['kind', 'since', 'years'],
     imageField: 'photo',
     orderable: true,
     publishable: true,
@@ -288,6 +448,10 @@ export const COLLECTIONS = [
       { name: 'kind', label: 'Type of member', type: 'combo', required: true, options: ['Member', 'Life Member', 'Founding Member', 'Patron', 'Well-wisher'], default: 'Member', max: 40, t: true, half: true, help: 'Pick one or type your own. Visitors can filter the list by this.' },
       { name: 'since', label: 'Member since (optional)', type: 'text', max: 4, pattern: '^[0-9]{4}$', patternHelp: 'Write a year like 2012', placeholder: 'e.g. 2012', half: true },
       { name: 'photo', label: 'Photo (optional)', type: 'image', aspect: 'square', help: 'Shown on a card like the players’ — put the focus point on the face. Without one, the members’ shirt is shown.' },
+      { name: 'memoriamHeading', type: 'heading', label: 'In memoriam', help: 'For founding members and others who are no longer with us. They are shown first, in their own “In Memoriam — Forever Remembered, Never Forgotten” section.' },
+      { name: 'memoriam', label: 'In memoriam (no longer with us)', type: 'boolean', default: false },
+      { name: 'years', label: 'Years (optional)', type: 'text', max: 20, when: { field: 'memoriam', is: true }, half: true, placeholder: 'e.g. 1948 – 2019' },
+      { name: 'tribute', label: 'A line of remembrance (optional)', type: 'text', max: 120, t: true, when: { field: 'memoriam', is: true }, half: true, placeholder: 'e.g. One of the eleven who started the club in 1981' },
       published(),
       order,
     ],
@@ -478,7 +642,38 @@ export const COLLECTIONS = [
       { name: 'isClub', type: 'boolean', hidden: true, default: false },
     ],
   },
+  {
+    key: 'registrations',
+    label: 'Sign-ups',
+    singular: 'sign-up',
+    icon: 'check',
+    group: 'Sign-ups',
+    // Private: never sent to the website, never translated, never triggers a website refresh.
+    private: true,
+    description: 'People who signed up on the website’s Registration page for an event, a club programme or a tournament. Newest first. Only the club can see this list. Call or message each person, then set the status.',
+    titleField: (d) => `${d.name || '?'} — ${d.target || ''}`,
+    subtitle: ['status', 'kindOf', 'createdAt'],
+    sort: { createdAt: -1 },
+    searchable: ['name', 'phone', 'place', 'target', 'team'],
+    fields: [
+      { name: 'status', label: 'Status', type: 'select', required: true, default: 'new', options: [{ value: 'new', label: 'New — not contacted yet' }, { value: 'contacted', label: 'Contacted' }, { value: 'confirmed', label: 'Confirmed' }, { value: 'declined', label: 'Not this time' }], half: true },
+      { name: 'kindOf', label: 'Signed up for', type: 'select', required: true, default: 'event', options: [{ value: 'event', label: 'A club event' }, { value: 'programme', label: 'A club programme' }, { value: 'tournament', label: 'A tournament (team entry)' }], half: true },
+      { name: 'target', label: 'Event, programme or tournament', type: 'text', required: true, max: 120 },
+      { name: 'targetId', type: 'text', hidden: true },
+      { name: 'name', label: 'Name', type: 'text', required: true, max: 80, half: true },
+      { name: 'phone', label: 'Phone / WhatsApp', type: 'text', required: true, max: 20, pattern: '^[+0-9 ()-]{7,20}$', patternHelp: 'Write a phone number, e.g. 98765 43210', half: true },
+      { name: 'place', label: 'Village / town', type: 'text', max: 80, half: true },
+      { name: 'people', label: 'How many people', type: 'number', min: 1, max: 200, integer: true, half: true },
+      { name: 'team', label: 'Team name (tournament entries)', type: 'text', max: 80, when: { field: 'kindOf', is: 'tournament' } },
+      { name: 'age', label: 'Age (optional)', type: 'number', min: 3, max: 110, integer: true, half: true, when: { field: 'kindOf', is: 'programme' } },
+      { name: 'message', label: 'Message', type: 'textarea', max: 600 },
+      { name: 'note', label: 'Notes for the committee (not shown to anyone else)', type: 'textarea', max: 600 },
+    ],
+  },
 ];
+
+/** The fields a visitor fills in on the website's sign-up form (everything else is for the committee). */
+export const PUBLIC_SIGNUP_FIELDS = ['kindOf', 'name', 'phone', 'place', 'people', 'team', 'age', 'message'];
 
 // ─── Single pages of settings ─────────────────────────────────
 const PAGE_BANNERS = [
@@ -487,11 +682,17 @@ const PAGE_BANNERS = [
   ['news', 'News page'],
   ['squad', 'Players page'],
   ['committee', 'Committee page'],
-  ['members', 'Members page', { optional: true }],
+  ['members', 'Members page', { optional: true, fallback: 'Committee' }],
   ['gallery', 'Gallery page'],
   ['membership', 'Membership page'],
   ['contact', 'Contact page'],
+  ['tournaments', 'ATC Tournaments page', { optional: true, fallback: 'Schedule' }],
+  ['register', 'Registration & participation page', { optional: true, fallback: 'Schedule' }],
+  ['crest', 'Our Crest page', { optional: true, fallback: 'Club' }],
 ];
+
+/** Pages that have a banner, in the order the website reads them. */
+export const BANNER_PAGES = PAGE_BANNERS.map(([key]) => key);
 
 export const SINGLES = [
   {
@@ -537,8 +738,8 @@ export const SINGLES = [
     group: 'Settings',
     description: 'The big photo and words at the top of each page, and the fixed photos on the home and club pages.',
     fields: [
-      ...PAGE_BANNERS.flatMap(([p, label, { optional = false } = {}]) => [
-        { name: `${p}Heading`, type: 'heading', label, ...(optional && { help: 'Without a photo here, this page uses the Committee page banner.' }) },
+      ...PAGE_BANNERS.flatMap(([p, label, { optional = false, fallback } = {}]) => [
+        { name: `${p}Heading`, type: 'heading', label, ...(optional && { help: `Without a photo here, this page uses the ${fallback} page banner.` }) },
         { name: `${p}Photo`, label: optional ? 'Banner photo (optional)' : 'Banner photo', type: 'image', aspect: 'banner', required: !optional },
         { name: `${p}Script`, label: 'Hand-written line', type: 'text', max: 30, t: true, half: true },
         { name: `${p}Intro`, label: 'Introduction', type: 'textarea', max: 200, t: true, half: true },
@@ -643,6 +844,18 @@ export function schemaForAdmin() {
     aspects: ASPECTS,
     siteLinks: SITE_LINKS,
   };
+}
+
+/**
+ * Fill choices an item doesn't have yet with their defaults — for items saved before a
+ * field existed (e.g. a match's status) and for API calls that leave them out.
+ */
+export function withDefaults(def, item) {
+  const out = def.upgrade ? def.upgrade({ ...item }) : { ...item };
+  for (const f of def.fields) {
+    if (f.type === 'select' && f.required && f.default !== undefined && (out[f.name] === undefined || out[f.name] === null || out[f.name] === '')) out[f.name] = f.default;
+  }
+  return out;
 }
 
 /** Human title of a stored item, for lists, activity log and messages. */

@@ -1,6 +1,6 @@
 # Progress — Adibasi Tarzan Club website management
 
-_Last updated: 2 Nov 2026_
+_Last updated: 25 Nov 2026_
 
 ## Status at a glance
 
@@ -99,6 +99,18 @@ Also to do:
 - Server: new `file` field type, `FileAsset` model, `POST /api/admin/files` (real-PDF check), PDFs on Cloudinary under `atc/documents` (first-page preview) or `server/uploads` locally. 32/32 tests.
 - ⚠️ Cloudinary: switch on *Settings → Security → Allow delivery of PDF and ZIP files* (shared account), otherwise PDFs won’t open.
 - Legacy default text is from the client’s WhatsApp message; photo is a SAMPLE placeholder.
+
+## Client request — 25 Nov 2026 (built, not committed)
+- **Members → In Memoriam** (admin: People → Members → “In memoriam”, with optional years and a line of remembrance): shown first as “In Memoriam — Founding Members — Forever Remembered, Never Forgotten” (sepia, gold-framed cards), then “Club Members (Active Members)” with the type filter.
+- **Our Crest** (`/crest`, linked from Club → Our Crest and the founding card on the Club page): the club’s full “Story Behind Our Crest” — 12 numbered parts with markers on the crest image, the two colours, the message and closing line, plus a short crest FAQ. Text lives in `client/src/data/crest.js` (fixed artwork, so not in the admin); Hindi and Bengali included. “Tumdah” in the client’s text was written as “Tumdak” to match the heading.
+- **Gallery — Moments to Memories**: four sections (The Football Arena, Celebrations & Club Events, Roots & Heritage, The ATC Family) with the club’s albums. Admin: each photo has a Section and an Album (album suggestions follow the section); “Upload many photos” asks for section + album once per batch. Older photos are placed automatically (Matchday → Matchday Action, Training/Youth → Training & Practice, Annual Cup → Trophies & Achievements, Heritage Night → Cultural Programme, Community → Reunions & Gatherings). “Pashami Dhamaka” in the note was read as **Dashami Dhamaka**.
+- **Events & Participations** (menu, was “Events & Tickets”): Matches & Tournaments (fixtures, results, match information, ATC Annual Cup, tournament schedule, participating teams, tournament fixtures) and Club Events (Sports Day, Heritage Night, Prize Distribution, club calendar, notice board, registration).
+  - Matches: status (on / postponed / cancelled) + note, and team reporting instructions.
+  - New admin lists: **Match Information** (updates, postponements, reporting instructions), **ATC Tournaments** (`/tournaments`: schedule, teams by group, winner/runner-up, fixtures taken from Matches by competition name and dates), **Club Programmes** (youth coaching, cultural troupe, volunteers).
+  - **Registration & Participation** (`/register`): sign up for an open event (events have “Accept sign-ups”), a club programme, or a tournament team entry. Saved on the server (`POST /api/public/register`: own-site origin only, rate-limited, hidden bot trap) into the private admin list **Sign-ups** (status, committee notes); the dashboard shows new sign-ups. Not sent to the website, not translated, no website refresh. If the server can’t be reached the form offers to send by email.
+- Banners for the three new pages are optional under Settings → Page banners.
+- Local SEO: new pages in sitemap / llms.txt / llms-full.txt; SportsEvent (tournament with matches as sub-events, competitors, entry offers), postponed/cancelled event status, Service (programmes), ImageGallery per section, crest ImageObject + FAQPage, In Memoriam people; new local Q&A (tournament in Kaliyaganj, how to sign up, founding members).
+- Tests: 41/41 (7 new: sections, gallery placement, In Memoriam, sign-ups incl. cross-site and bot refusal, match options).
 
 ## Possible later additions (not built)
 - Editable site-wide share image (og:image) and page SEO descriptions in the admin.

@@ -112,6 +112,11 @@ export default function Dashboard() {
         </div>
       </header>
 
+      {data.newSignups > 0 && (
+        <Notice kind="info" title={`${data.newSignups === 1 ? 'Someone has' : `${data.newSignups} people have`} signed up on the website`}>
+          <p><Link to="/c/registrations">Open Sign-ups</Link> to see who, call or message them, then set each one’s status.</p>
+        </Notice>
+      )}
       {data.needScore.length > 0 && (
         <Notice kind="warn" title={`${data.needScore.length === 1 ? 'A match needs' : `${data.needScore.length} matches need`} a final score`}>
           <ul className="a-plainlist">

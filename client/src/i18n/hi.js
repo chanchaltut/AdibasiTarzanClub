@@ -696,4 +696,378 @@ export default {
   'Year by *year*': 'साल *दर साल*',
   Shared: 'बराबरी',
   'Read our legacy': 'हमारी विरासत पढ़ें',
+
+  // ─── Events & participations, tournaments, sign-ups, members, gallery, crest ───
+  'Events & Participations': 'आयोजन व भागीदारी',
+  'Matches & Tournaments': 'मैच व टूर्नामेंट',
+  'Match Information': 'मैच की जानकारी',
+  'Match information': 'मैच की जानकारी',
+  'Match Info': 'मैच जानकारी',
+  'Tournament Schedule': 'टूर्नामेंट कार्यक्रम',
+  'Participating Teams': 'भाग लेने वाली टीमें',
+  'Tournament Fixtures': 'टूर्नामेंट के मैच',
+  'Registration & Participation': 'पंजीकरण व भागीदारी',
+  'Registration & participation': 'पंजीकरण व भागीदारी',
+  'Take part': 'भाग लें',
+  'Sign up for club events, programmes and the ATC Annual Cup.':
+    'क्लब आयोजनों, कार्यक्रमों और ATC वार्षिक कप के लिए नाम लिखवाएँ।',
+  'Register now': 'अभी पंजीकरण करें',
+  'Videos': 'वीडियो',
+  'Our Crest': 'हमारा प्रतीक चिह्न',
+  'The story behind our crest': 'हमारे प्रतीक चिह्न की कहानी',
+  'ATC Annual Cup — tournament schedule, teams & fixtures': 'ATC वार्षिक कप — टूर्नामेंट कार्यक्रम, टीमें और मैच',
+  'ATC Tournaments': 'ATC टूर्नामेंट',
+  'Postponed': 'स्थगित',
+  'Cancelled': 'रद्द',
+  'Team reporting instructions': 'टीम के लिए रिपोर्टिंग निर्देश',
+  'Match update': 'मैच अपडेट',
+  'Postponement': 'स्थगन',
+  'Football notice': 'फ़ुटबॉल सूचना',
+  'Pinned': 'सबसे ऊपर',
+  'vs': 'बनाम',
+  'New date to be announced': 'नई तारीख़ बाद में बताई जाएगी',
+  'Match updates, postponements and team reporting instructions will be posted here.':
+    'मैच अपडेट, स्थगन और टीम के रिपोर्टिंग निर्देश यहाँ लगाए जाएँगे।',
+  'The ATC Annual Cup: tournament schedule, participating teams and fixtures.':
+    'ATC वार्षिक कप: टूर्नामेंट कार्यक्रम, भाग लेने वाली टीमें और मैच।',
+  'Sign up for an upcoming club event or a club programme.':
+    'आने वाले क्लब आयोजन या किसी क्लब कार्यक्रम के लिए नाम लिखवाएँ।',
+  'Matchday 10': 'मैचडे 10',
+  'Matchday 10 against Kunore Sporting postponed': 'कुनोर स्पोर्टिंग के ख़िलाफ़ मैचडे 10 स्थगित',
+  'The home match against Kunore Sporting on 6 December is postponed at the request of the district association. The new date will be posted here.':
+    'ज़िला संघ के अनुरोध पर 6 दिसंबर को कुनोर स्पोर्टिंग के ख़िलाफ़ होने वाला घरेलू मैच स्थगित कर दिया गया है। नई तारीख़ यहाँ बताई जाएगी।',
+  'Reporting time for the Hemtabad away match': 'हेमताबाद में होने वाले मैच के लिए रिपोर्टिंग समय',
+  'All selected players report at the club office by 12:30 pm on Saturday in the away kit. The team travels together.':
+    'सभी चुने गए खिलाड़ी शनिवार दोपहर 12:30 बजे तक अवे किट में क्लब कार्यालय पहुँचें। टीम साथ में रवाना होगी।',
+  'Report at the club office by 12:30 pm with boots and shin guards. The team leaves together at 1:00 pm.':
+    'दोपहर 12:30 बजे तक जूते और शिन गार्ड के साथ क्लब कार्यालय पहुँचें। टीम 1:00 बजे साथ में रवाना होगी।',
+  'Report at the club office by 12:30 pm in the away kit.': 'दोपहर 12:30 बजे तक अवे किट में क्लब कार्यालय पहुँचें।',
+  'ATC Sports Day': 'ATC खेल दिवस',
+  'Races, games and team events for every age, from the youngest children to the veterans.':
+    'हर उम्र के लिए दौड़, खेल और टीम प्रतियोगिताएँ — सबसे छोटे बच्चों से लेकर वरिष्ठों तक।',
+  'Adibasi Tarzan Club fixtures, results, match updates and postponements, team reporting instructions and club events — Sports Day, Heritage Night and Prize Distribution at S. Akhanagar Ground, Kaliyaganj.':
+    'आदिवासी टार्ज़न क्लब के मैच, नतीजे, मैच अपडेट और स्थगन, टीम के रिपोर्टिंग निर्देश और क्लब आयोजन — एस. आखानगर मैदान, कालियागंज में खेल दिवस, विरासत संध्या और पुरस्कार वितरण।',
+  '{n} team': '{n} टीम',
+  '{n} teams': '{n} टीमें',
+  'Winner': 'विजेता',
+  'Runner-up': 'उपविजेता',
+  'Enter a team': 'टीम का नाम दर्ज कराएँ',
+  'Fixtures & results': 'मैच और नतीजे',
+  'Tournament *schedule*': 'टूर्नामेंट *कार्यक्रम*',
+  'Participating *teams*': 'भाग लेने वाली *टीमें*',
+  'Tournament *fixtures*': 'टूर्नामेंट के *मैच*',
+  'All times are Indian Standard Time.': 'सभी समय भारतीय मानक समय में हैं।',
+  'Starts': 'शुरुआत',
+  'Other editions': 'दूसरे संस्करण',
+  'Team registration closes': 'टीम पंजीकरण बंद',
+  'Group stage': 'ग्रुप चरण',
+  'Semi-finals': 'सेमीफ़ाइनल',
+  'Final': 'फ़ाइनल',
+  'Group A': 'ग्रुप A',
+  'Group B': 'ग्रुप B',
+  'The next ATC Annual Cup will be announced here.': 'अगले ATC वार्षिक कप की घोषणा यहाँ होगी।',
+  'The tournament schedule will be published soon.': 'टूर्नामेंट का कार्यक्रम जल्द प्रकाशित होगा।',
+  'Participating teams will be listed once entries close.':
+    'प्रविष्टियाँ बंद होने के बाद भाग लेने वाली टीमों की सूची यहाँ होगी।',
+  'Tournament fixtures will be published after the draw.': 'ड्रॉ के बाद टूर्नामेंट के मैच प्रकाशित होंगे।',
+  'The ATC Annual Cup is the club’s flagship knockout football tournament, open to clubs across Uttar Dinajpur and played at S. Akhanagar Ground, Kaliyaganj.':
+    'ATC वार्षिक कप क्लब का प्रमुख नॉकआउट फ़ुटबॉल टूर्नामेंट है, जो पूरे उत्तर दिनाजपुर के क्लबों के लिए खुला है और एस. आखानगर मैदान, कालियागंज में खेला जाता है।',
+  'The 2026 edition marks forty-five years of the club. Group matches are free to watch.':
+    '2026 का संस्करण क्लब के पैंतालीस साल पूरे होने का प्रतीक है। ग्रुप मैच मुफ़्त में देखे जा सकते हैं।',
+  'The ATC Annual Cup at S. Akhanagar Ground: schedule, participating teams, fixtures and results.':
+    'एस. आखानगर मैदान पर ATC वार्षिक कप: कार्यक्रम, भाग लेने वाली टीमें, मैच और नतीजे।',
+  'ATC Annual Cup — Football Tournament in Kaliyaganj': 'ATC वार्षिक कप — कालियागंज का फ़ुटबॉल टूर्नामेंट',
+  'The ATC Annual Cup football tournament hosted by Adibasi Tarzan Club at S. Akhanagar Ground, Kaliyaganj, Uttar Dinajpur: tournament schedule, participating teams, fixtures and results.':
+    'आदिवासी टार्ज़न क्लब द्वारा एस. आखानगर मैदान, कालियागंज, उत्तर दिनाजपुर में आयोजित ATC वार्षिक कप फ़ुटबॉल टूर्नामेंट: टूर्नामेंट कार्यक्रम, भाग लेने वाली टीमें, मैच और नतीजे।',
+  'Football tournament hosted by Adibasi Tarzan Club at S. Akhanagar Ground, Kaliyaganj.':
+    'एस. आखानगर मैदान, कालियागंज में आदिवासी टार्ज़न क्लब द्वारा आयोजित फ़ुटबॉल टूर्नामेंट।',
+  'Team entry': 'टीम प्रविष्टि',
+  'Join in': 'जुड़िए',
+  'Sign up for upcoming club events, regular club programmes and the ATC Annual Cup.':
+    'आने वाले क्लब आयोजनों, क्लब के नियमित कार्यक्रमों और ATC वार्षिक कप के लिए नाम लिखवाएँ।',
+  'Take *part*': 'हिस्सा *लें*',
+  'Sign up for an upcoming club event, join one of the club’s regular programmes, or enter a team in an ATC tournament. The club will call or message you to confirm.':
+    'आने वाले क्लब आयोजन के लिए नाम लिखवाएँ, क्लब के किसी नियमित कार्यक्रम से जुड़ें, या ATC टूर्नामेंट में टीम उतारें। पुष्टि के लिए क्लब आपको फ़ोन या संदेश करेगा।',
+  'Upcoming club events': 'आने वाले क्लब आयोजन',
+  'Sign up for an upcoming club event or programme day.':
+    'आने वाले क्लब आयोजन या कार्यक्रम के दिन के लिए नाम लिखवाएँ।',
+  'Club programmes': 'क्लब कार्यक्रम',
+  'Sign up for a specific club programme that runs through the year.':
+    'साल भर चलने वाले किसी ख़ास क्लब कार्यक्रम के लिए नाम लिखवाएँ।',
+  'Tournament entries': 'टूर्नामेंट प्रविष्टियाँ',
+  'Enter your team in an ATC tournament.': 'अपनी टीम को ATC टूर्नामेंट में उतारें।',
+  'Tournament': 'टूर्नामेंट',
+  'Tournaments': 'टूर्नामेंट',
+  'Club programme': 'क्लब कार्यक्रम',
+  'Club events': 'क्लब आयोजन',
+  'Sign up': 'नाम लिखवाएँ',
+  'Sign up by {date}': '{date} तक नाम लिखवाएँ',
+  'Sign-up form': 'पंजीकरण फ़ॉर्म',
+  'I am signing up for': 'मैं इसके लिए नाम लिखवा रहा/रही हूँ',
+  'Choose…': 'चुनें…',
+  'Team name': 'टीम का नाम',
+  'e.g. Kaliyaganj Youth Club': 'जैसे कालियागंज यूथ क्लब',
+  'Manager’s name': 'मैनेजर का नाम',
+  'Phone / WhatsApp': 'फ़ोन / व्हाट्सऐप',
+  'e.g. S. Akhanagar': 'जैसे एस. आखानगर',
+  'How many people': 'कितने लोग',
+  'Age (optional)': 'उम्र (वैकल्पिक)',
+  'Anything we should know?': 'कुछ और बताना चाहें?',
+  'Your details are seen only by the club committee and used only to contact you about this sign-up.':
+    'आपकी जानकारी सिर्फ़ क्लब कमेटी देखती है और इसका उपयोग सिर्फ़ इसी पंजीकरण के बारे में आपसे संपर्क करने के लिए होता है।',
+  'Send sign-up': 'पंजीकरण भेजें',
+  'Sending…': 'भेजा जा रहा है…',
+  'Thank you!': 'धन्यवाद!',
+  'Your sign-up for {target} has reached the club. Someone from the committee will call or message you soon.':
+    '{target} के लिए आपका पंजीकरण क्लब तक पहुँच गया है। कमेटी से कोई जल्द ही आपको फ़ोन या संदेश करेगा।',
+  'Sign up someone else': 'किसी और का नाम लिखवाएँ',
+  'Please choose what you are signing up for.': 'कृपया चुनें कि आप किसके लिए नाम लिखवा रहे हैं।',
+  'Please check the form.': 'कृपया फ़ॉर्म जाँच लें।',
+  'The sign-up could not be sent just now.': 'पंजीकरण अभी नहीं भेजा जा सका।',
+  'Send it by email instead': 'इसके बदले ईमेल से भेजें',
+  'There are no sign-ups open right now. New events and programmes are announced on the Schedule and the Notice Board.':
+    'अभी कोई पंजीकरण खुला नहीं है। नए आयोजन और कार्यक्रम कार्यक्रम-सूची और सूचना पट्ट पर घोषित होते हैं।',
+  'See club events': 'क्लब आयोजन देखें',
+  'Some details need attention.': 'कुछ जानकारी पर ध्यान देना है।',
+  'This is required': 'यह ज़रूरी है',
+  'Write a phone number, e.g. 98765 43210': 'फ़ोन नंबर लिखें, जैसे 98765 43210',
+  'Please write your team’s name': 'कृपया अपनी टीम का नाम लिखें',
+  'Too many sign-ups from this connection. Please wait a few minutes and try again.':
+    'इस कनेक्शन से बहुत ज़्यादा पंजीकरण हुए। कृपया कुछ मिनट रुककर फिर कोशिश करें।',
+  'Youth Football Coaching': 'युवा फ़ुटबॉल प्रशिक्षण',
+  'Volunteers': 'स्वयंसेवक',
+  'Tue, Thu & Sat · 6:30 am': 'मंगल, गुरु व शनि · सुबह 6:30',
+  'Boys and girls, under-13 and under-17': 'लड़के और लड़कियाँ, अंडर-13 और अंडर-17',
+  'Morning coaching for under-13 and under-17 players at the ground. Bring water, boots if you have them, and a parent’s signature.':
+    'मैदान पर अंडर-13 और अंडर-17 खिलाड़ियों के लिए सुबह का प्रशिक्षण। पानी, जूते (अगर हों) और माता-पिता के हस्ताक्षर साथ लाएँ।',
+  'Singers, dancers and players of the madal and dhamsa': 'गायक, नर्तक और मादल व धमसा बजाने वाले',
+  'Traditional music, dance and stories of our Adibasi roots, rehearsed for Heritage Night and club celebrations.':
+    'हमारी आदिवासी जड़ों का पारंपरिक संगीत, नृत्य और कहानियाँ — विरासत संध्या और क्लब के उत्सवों के लिए अभ्यास।',
+  'Everyone from S. Akhanagar and nearby villages': 'एस. आखानगर और आसपास के गाँवों के सभी लोग',
+  'Help on matchdays, at the Annual Cup, Kali Puja, Sports Day and Heritage Night.':
+    'मैच के दिनों में, वार्षिक कप, काली पूजा, खेल दिवस और विरासत संध्या पर मदद करें।',
+  'Registration & Participation — Sign Up for Club Events': 'पंजीकरण व भागीदारी — क्लब आयोजनों के लिए नाम लिखवाएँ',
+  'Sign up for Adibasi Tarzan Club events and programmes in S. Akhanagar, Kaliyaganj — Sports Day, youth football coaching, the cultural troupe, volunteering and ATC Annual Cup team entries.':
+    'एस. आखानगर, कालियागंज में आदिवासी टार्ज़न क्लब के आयोजनों और कार्यक्रमों के लिए नाम लिखवाएँ — खेल दिवस, युवा फ़ुटबॉल प्रशिक्षण, सांस्कृतिक दल, स्वयंसेवा और ATC वार्षिक कप के लिए टीम प्रविष्टि।',
+  'Founding Members': 'संस्थापक सदस्य',
+  'In Memoriam': 'स्मृति में',
+  'In memoriam': 'स्मृति में',
+  'Forever Remembered, Never Forgotten': 'सदा याद रहेंगे, कभी भुलाए नहीं जाएँगे',
+  'Active Members': 'सक्रिय सदस्य',
+  'Club Members & In Memoriam': 'क्लब के सदस्य और स्मृति में',
+  'The members of Adibasi Tarzan Club, S. Akhanagar, Kaliyaganj — the founding members remembered In Memoriam, and the active life members, members, patrons and well-wishers who stand behind the club.':
+    'आदिवासी टार्ज़न क्लब, एस. आखानगर, कालियागंज के सदस्य — स्मृति में याद किए जाने वाले संस्थापक सदस्य, और क्लब के साथ खड़े सक्रिय आजीवन सदस्य, सदस्य, संरक्षक और शुभचिंतक।',
+  '{name} — {role}, Adibasi Tarzan Club (ATC), S. Akhanagar, Kaliyaganj. Remembered by the club: In Memoriam.':
+    '{name} — {role}, आदिवासी टार्ज़न क्लब (ATC), एस. आखानगर, कालियागंज। क्लब की स्मृति में।',
+  'Who are the founding members of Adibasi Tarzan Club?': 'आदिवासी टार्ज़न क्लब के संस्थापक सदस्य कौन हैं?',
+  'Adibasi Tarzan Club was founded in {founded} in S. Akhanagar, Kaliyaganj. The founding members named on the Members page are: {list}.':
+    'आदिवासी टार्ज़न क्लब की स्थापना {founded} में एस. आखानगर, कालियागंज में हुई। सदस्य पृष्ठ पर दर्ज संस्थापक सदस्य हैं: {list}।',
+  'Those who are no longer with us are remembered there In Memoriam — forever remembered, never forgotten.':
+    'जो अब हमारे बीच नहीं हैं, उन्हें वहाँ "स्मृति में" याद किया गया है — सदा याद रहेंगे, कभी भुलाए नहीं जाएँगे।',
+  'Is there a football tournament in Kaliyaganj?': 'क्या कालियागंज में कोई फ़ुटबॉल टूर्नामेंट होता है?',
+  'Yes. Adibasi Tarzan Club hosts the ATC Annual Cup, a football tournament for clubs across Uttar Dinajpur, at {ground}, Kaliyaganj.':
+    'हाँ। आदिवासी टार्ज़न क्लब {ground}, कालियागंज में ATC वार्षिक कप आयोजित करता है — पूरे उत्तर दिनाजपुर के क्लबों के लिए फ़ुटबॉल टूर्नामेंट।',
+  'The latest edition is the {name}, with {n} participating teams.':
+    'सबसे नया संस्करण {name} है, जिसमें {n} टीमें भाग ले रही हैं।',
+  'The latest edition is the {name}.': 'सबसे नया संस्करण {name} है।',
+  'The tournament schedule, participating teams and fixtures are on the ATC Tournaments page of this website.':
+    'टूर्नामेंट का कार्यक्रम, भाग लेने वाली टीमें और मैच इस वेबसाइट के ATC टूर्नामेंट पृष्ठ पर हैं।',
+  'How do I sign up for a club event or programme at Adibasi Tarzan Club?':
+    'आदिवासी टार्ज़न क्लब के किसी आयोजन या कार्यक्रम के लिए नाम कैसे लिखवाएँ?',
+  'Use the Registration & Participation page of this website: choose the event, programme or tournament, write your name and phone number, and the club committee will call or message you to confirm.':
+    'इस वेबसाइट का पंजीकरण व भागीदारी पृष्ठ खोलें: आयोजन, कार्यक्रम या टूर्नामेंट चुनें, अपना नाम और फ़ोन नंबर लिखें — पुष्टि के लिए क्लब कमेटी आपको फ़ोन या संदेश करेगी।',
+  'Programmes open for sign-ups: {list}.': 'जिन कार्यक्रमों के लिए नाम लिखवाए जा रहे हैं: {list}।',
+  'The Football Arena': 'फ़ुटबॉल का मैदान',
+  'Celebrations & Club Events': 'उत्सव और क्लब आयोजन',
+  'Roots & Heritage': 'जड़ें और विरासत',
+  'The ATC Family': 'ATC परिवार',
+  'Matchday Action': 'मैच के दिन का रोमांच',
+  'Team & Squad Photos': 'टीम और स्क्वॉड की तस्वीरें',
+  'Away Matches & Participation': 'बाहर के मैच और भागीदारी',
+  'Training & Practice': 'प्रशिक्षण और अभ्यास',
+  'Dashami Dhamaka': 'दशमी धमाका',
+  'Trophies & Achievements': 'ट्रॉफ़ियाँ और उपलब्धियाँ',
+  'Other Sports & Games': 'दूसरे खेल',
+  'Kali Puja': 'काली पूजा',
+  'Puja Preparations': 'पूजा की तैयारियाँ',
+  'Ceremonial Moments': 'समारोह के पल',
+  'Felicitation & Welcome': 'सम्मान और स्वागत',
+  'Club Functions & Special Events': 'क्लब समारोह और विशेष आयोजन',
+  'Baha Parab': 'बाहा परब',
+  'Sohrai Parab': 'सोहराय परब',
+  'Traditional Marriage': 'पारंपरिक विवाह',
+  'Traditional Dance, Music & Instruments': 'पारंपरिक नृत्य, संगीत और वाद्य',
+  'Traditional Attire & Rituals': 'पारंपरिक पहनावा और रीति-रिवाज',
+  'Cultural Programme': 'सांस्कृतिक कार्यक्रम',
+  'Club Group Photo': 'क्लब की सामूहिक तस्वीर',
+  'Men’s & Women’s Group': 'पुरुष और महिला समूह',
+  'Birthday Celebrations': 'जन्मदिन के जश्न',
+  'Behind the Scenes & Candid Moments': 'पर्दे के पीछे और सहज पल',
+  'Reunions & Gatherings': 'मिलन और जमावड़े',
+  'Old Memories': 'पुरानी यादें',
+  'Moments to Memories': 'पलों से यादों तक',
+  'Moments *to Memories*': 'पलों से *यादों तक*',
+  'Gallery sections': 'गैलरी के हिस्से',
+  'All moments': 'सभी पल',
+  '{n} photo': '{n} तस्वीर',
+  '{n} photos': '{n} तस्वीरें',
+  'Coming soon': 'जल्द आ रहा है',
+  'See all {n} photos': 'सभी {n} तस्वीरें देखें',
+  'More albums coming soon': 'और एल्बम जल्द आएँगे',
+  'Matchdays, squads, away trips, training and the Dashami Dhamaka — football at S. Akhanagar and beyond.':
+    'मैच के दिन, स्क्वॉड, बाहर के दौरे, प्रशिक्षण और दशमी धमाका — एस. आखानगर और उससे आगे का फ़ुटबॉल।',
+  'Kali Puja and its preparations, ceremonies, felicitations, prize distributions and club functions.':
+    'काली पूजा और उसकी तैयारियाँ, समारोह, सम्मान, पुरस्कार वितरण और क्लब के कार्यक्रम।',
+  'Baha and Sohrai Parab, traditional marriage, dance, music, instruments, attire and rituals of our Adibasi community.':
+    'बाहा और सोहराय परब, पारंपरिक विवाह, नृत्य, संगीत, वाद्य, पहनावा और हमारे आदिवासी समाज के रीति-रिवाज।',
+  'Group photos, birthdays, candid moments, reunions and old memories of the people who make the club.':
+    'क्लब को बनाने वाले लोगों की सामूहिक तस्वीरें, जन्मदिन, सहज पल, मिलन और पुरानी यादें।',
+  'Football, celebrations, heritage and the ATC family — moments from S. Akhanagar, kept as memories.':
+    'फ़ुटबॉल, उत्सव, विरासत और ATC परिवार — एस. आखानगर के पल, यादों के रूप में सहेजे हुए।',
+  'Gallery — Moments to Memories': 'गैलरी — पलों से यादों तक',
+  'Photos of Adibasi Tarzan Club, S. Akhanagar, Kaliyaganj: the football arena and Dashami Dhamaka, Kali Puja and club events, Baha and Sohrai Parab and Adibasi heritage, and the ATC family.':
+    'आदिवासी टार्ज़न क्लब, एस. आखानगर, कालियागंज की तस्वीरें: फ़ुटबॉल का मैदान और दशमी धमाका, काली पूजा और क्लब आयोजन, बाहा और सोहराय परब व आदिवासी विरासत, और ATC परिवार।',
+  'The Symbol of Our Identity': 'हमारी पहचान का प्रतीक',
+  'The Story Behind Our Crest': 'हमारे प्रतीक चिह्न की कहानी',
+  'Established in 1981 | S. Akhanagar, Kaliyaganj, Uttar Dinajpur, West Bengal':
+    'स्थापना 1981 | एस. आखानगर, कालियागंज, उत्तर दिनाजपुर, पश्चिम बंगाल',
+  'Every crest tells a story, but ours carries the identity of an entire community, the history of a club, the pride of our heritage, and the spirit of generations brought together through football and unity.':
+    'हर प्रतीक चिह्न एक कहानी कहता है, पर हमारा प्रतीक पूरे समाज की पहचान, एक क्लब का इतिहास, हमारी विरासत का गर्व और उन पीढ़ियों का जज़्बा समेटे हुए है जिन्हें फ़ुटबॉल और एकता ने एक साथ जोड़ा।',
+  'The crest of Adibasi Tarzan Club is more than a logo or a decorative emblem. It is a representation of who we are, where we come from, what we believe in, and what we wish to carry forward. Every figure, symbol, colour, and inscription has its own significance, reflecting our roots, culture, sporting spirit, and collective identity.':
+    'आदिवासी टार्ज़न क्लब का प्रतीक चिह्न सिर्फ़ एक लोगो या सजावटी निशान नहीं है। यह दिखाता है कि हम कौन हैं, कहाँ से आए हैं, किसमें विश्वास करते हैं और क्या आगे ले जाना चाहते हैं। इसकी हर आकृति, हर चिह्न, हर रंग और हर लिखावट का अपना अर्थ है, जो हमारी जड़ों, संस्कृति, खेल भावना और सामूहिक पहचान को दर्शाता है।',
+  'It was created to give our club a distinctive identity—one that represents our heritage with pride, honours our beginnings, and reminds every generation of the values that bind us together.':
+    'इसे हमारे क्लब को एक अलग पहचान देने के लिए बनाया गया — ऐसी पहचान जो गर्व से हमारी विरासत को दर्शाए, हमारी शुरुआत का सम्मान करे और हर पीढ़ी को उन मूल्यों की याद दिलाए जो हमें एक साथ बाँधते हैं।',
+  'The parts of the crest': 'प्रतीक चिह्न के हिस्से',
+  'Tap a number to read about that part of the crest.':
+    'प्रतीक चिह्न के किसी हिस्से के बारे में पढ़ने के लिए उसका नंबर दबाएँ।',
+  'The crest of Adibasi Tarzan Club: Tarzan holding a football in front of the jungle with a bow, arrows and quiver, the Tumdak and Tamak drums, the Bengali inscription, ATC, “Estd. 1981” and S. Akhanagar, Kaliyaganj, U/D on a shield':
+    'आदिवासी टार्ज़न क्लब का प्रतीक चिह्न: जंगल के सामने फ़ुटबॉल थामे टार्ज़न, धनुष, तीर और तरकश, तुमदाक और तामाक ढोल, बांग्ला लिखावट, ATC, “स्थापना 1981” और एस. आखानगर, कालियागंज, उ. दि. — एक ढाल पर',
+  'Estd. 1981': 'स्थापना 1981',
+  'The Foundation of Our Legacy': 'हमारी विरासत की नींव',
+  'The year 1981 marks the establishment of Adibasi Tarzan Club and the beginning of a journey built upon passion, dedication, friendship, and a shared vision.':
+    'वर्ष 1981 आदिवासी टार्ज़न क्लब की स्थापना और उस सफ़र की शुरुआत का प्रतीक है जो जुनून, समर्पण, दोस्ती और एक साझा सपने पर बना।',
+  'It honours the efforts of those who laid the foundation of our club and reminds us of the legacy passed down through generations. It is not merely a year written on our crest, but a symbol of our history, our beginnings, and the responsibility we carry to preserve and strengthen what was built before us.':
+    'यह उन लोगों के प्रयासों का सम्मान है जिन्होंने हमारे क्लब की नींव रखी, और हमें पीढ़ियों से चली आ रही विरासत की याद दिलाता है। यह हमारे प्रतीक चिह्न पर लिखा सिर्फ़ एक साल नहीं, बल्कि हमारे इतिहास, हमारी शुरुआत और उस ज़िम्मेदारी का प्रतीक है कि जो हमसे पहले बनाया गया, उसे हम सँभालें और मज़बूत करें।',
+  'The Jungle & Trees': 'जंगल और पेड़',
+  'Our Roots, Origin and Journey': 'हमारी जड़ें, उत्पत्ति और सफ़र',
+  'The trees and jungle in the background represent our origin, our ancestral roots, and our connection with the natural world from which our identity emerged.':
+    'पृष्ठभूमि के पेड़ और जंगल हमारी उत्पत्ति, हमारी पुश्तैनी जड़ों और उस प्रकृति से हमारे रिश्ते को दर्शाते हैं जिससे हमारी पहचान बनी।',
+  'Tarzan’s emergence from the jungle symbolizes a journey towards awareness, growth, progress, and a more united society. It reflects the idea of moving forward with knowledge, understanding, and strength while remaining deeply connected to our roots.':
+    'जंगल से टार्ज़न का निकलना जागरूकता, विकास, प्रगति और एक अधिक एकजुट समाज की ओर सफ़र का प्रतीक है। यह ज्ञान, समझ और शक्ति के साथ आगे बढ़ने और फिर भी अपनी जड़ों से गहराई से जुड़े रहने के विचार को दर्शाता है।',
+  'The jungle reminds us that no matter how much we evolve, how far we advance, or how modern we become, we must never forget where we belong and the heritage from which we have grown.':
+    'जंगल हमें याद दिलाता है कि हम कितना भी बदलें, कितना भी आगे बढ़ें या कितने भी आधुनिक हो जाएँ, हमें कभी नहीं भूलना चाहिए कि हम कहाँ के हैं और किस विरासत से पले-बढ़े हैं।',
+  'We move forward with time, but we never move away from our roots.':
+    'हम समय के साथ आगे बढ़ते हैं, पर अपनी जड़ों से कभी दूर नहीं होते।',
+  'Tarzan': 'टार्ज़न',
+  'The Identity and Spirit of Our Club': 'हमारे क्लब की पहचान और जज़्बा',
+  'Tarzan stands at the heart of our crest, representing the identity of Adibasi Tarzan Club. He symbolizes courage, strength, bravery, resilience, confidence, determination, and the spirit of facing challenges together.':
+    'टार्ज़न हमारे प्रतीक चिह्न के केंद्र में खड़ा है और आदिवासी टार्ज़न क्लब की पहचान है। वह साहस, शक्ति, वीरता, धैर्य, आत्मविश्वास, दृढ़ संकल्प और मिलकर चुनौतियों का सामना करने के जज़्बे का प्रतीक है।',
+  'Holding a football represents our passion and love for the game, while his powerful presence reflects a community that has grown, evolved, and embraced progress without forgetting its original identity.':
+    'उसके हाथ में फ़ुटबॉल खेल के प्रति हमारे जुनून और प्रेम को दर्शाता है, और उसकी दमदार मौजूदगी उस समाज को दिखाती है जो बढ़ा, बदला और प्रगति को अपनाया — अपनी मूल पहचान को भूले बिना।',
+  'Tarzan is not simply a figure from the jungle. He represents our club’s character—a strength that stands firm, an identity that remains proud, and a spirit that continues to move forward.':
+    'टार्ज़न सिर्फ़ जंगल का एक किरदार नहीं है। वह हमारे क्लब के चरित्र का प्रतीक है — ऐसी शक्ति जो अडिग रहती है, ऐसी पहचान जो गर्व से भरी है, और ऐसा जज़्बा जो लगातार आगे बढ़ता है।',
+  'The Bow, Arrows & Quiver': 'धनुष, तीर और तरकश',
+  'Our Heritage and Strength': 'हमारी विरासत और शक्ति',
+  'The bow, arrows, and quiver resting upon Tarzan’s shoulder represent our tribal heritage, ancestral traditions, courage, readiness, and strength.':
+    'टार्ज़न के कंधे पर टिके धनुष, तीर और तरकश हमारी आदिवासी विरासत, पुश्तैनी परंपराओं, साहस, तत्परता और शक्ति को दर्शाते हैं।',
+  'These elements remind us of the history, way of life, and cultural identity of tribal communities. They symbolize our connection with our ancestors, respect for our traditions, and the pride with which we carry our heritage into the future.':
+    'ये हमें आदिवासी समाजों के इतिहास, जीवन-शैली और सांस्कृतिक पहचान की याद दिलाते हैं। ये हमारे पूर्वजों से हमारे रिश्ते, हमारी परंपराओं के प्रति सम्मान और उस गर्व का प्रतीक हैं जिसके साथ हम अपनी विरासत को भविष्य में ले जाते हैं।',
+  'They are a reminder that progress should never mean forgetting our cultural identity.':
+    'ये याद दिलाते हैं कि प्रगति का मतलब अपनी सांस्कृतिक पहचान भूल जाना कभी नहीं होना चाहिए।',
+  'Tumdak & Tamak': 'तुमदाक और तामाक',
+  'The Rhythm of Our Culture': 'हमारी संस्कृति की लय',
+  'The Tumdak and Tamak (Nagada), represented alongside the traditional bow and arrow within the crest, symbolize our tribal culture, musical traditions, community life, and cultural pride.':
+    'प्रतीक चिह्न में पारंपरिक धनुष-बाण के साथ दिखाए गए तुमदाक और तामाक (नगाड़ा) हमारी आदिवासी संस्कृति, संगीत परंपराओं, सामुदायिक जीवन और सांस्कृतिक गर्व के प्रतीक हैं।',
+  'Their rhythms are deeply connected with celebrations, festivals, gatherings, and the collective spirit of our people. They represent the sound of our traditions, the joy of our culture, and the rhythm that brings our community together.':
+    'इनकी थाप हमारे उत्सवों, त्योहारों, मेल-मिलाप और हमारे लोगों की सामूहिक भावना से गहराई से जुड़ी है। ये हमारी परंपराओं की आवाज़, हमारी संस्कृति का आनंद और वह लय हैं जो हमारे समाज को एक साथ लाती है।',
+  'They remind us that our heritage is not simply something inherited from the past—it is something we must keep alive, celebrate, and pass on to future generations.':
+    'ये याद दिलाते हैं कि हमारी विरासत सिर्फ़ अतीत से मिली चीज़ नहीं है — इसे हमें जीवित रखना है, इसका उत्सव मनाना है और आने वाली पीढ़ियों तक पहुँचाना है।',
+  'The Bengali Inscription': 'बांग्ला लिखावट',
+  'Our Regional Identity': 'हमारी क्षेत्रीय पहचान',
+  'The Bengali inscription within our crest represents our regional identity and our connection to West Bengal, our locality, and the community from which Adibasi Tarzan Club emerged.':
+    'हमारे प्रतीक चिह्न में बांग्ला लिखावट हमारी क्षेत्रीय पहचान और पश्चिम बंगाल, हमारे इलाक़े और उस समाज से हमारे रिश्ते को दर्शाती है जिससे आदिवासी टार्ज़न क्लब का जन्म हुआ।',
+  'It reflects our belonging to our land, our village, and our people. It gives our crest a local identity and reminds us that the club’s journey is deeply connected to the place we call home.':
+    'यह हमारी धरती, हमारे गाँव और हमारे लोगों से हमारे अपनेपन को दर्शाती है। यह हमारे प्रतीक चिह्न को स्थानीय पहचान देती है और याद दिलाती है कि क्लब का सफ़र उस जगह से गहराई से जुड़ा है जिसे हम घर कहते हैं।',
+  'The Football': 'फ़ुटबॉल',
+  'Our Sporting Spirit & Common Bond': 'हमारी खेल भावना और साझा बंधन',
+  'The football represents the passion that brought us together and continues to unite us. It stands for teamwork, discipline, dedication, sportsmanship, friendship, and the determination to grow together.':
+    'फ़ुटबॉल उस जुनून का प्रतीक है जिसने हमें एक साथ लाया और आज भी जोड़े रखता है। यह टीमवर्क, अनुशासन, समर्पण, खेल भावना, दोस्ती और साथ मिलकर बढ़ने के संकल्प का प्रतीक है।',
+  'Football is more than a game for us. It is a bond between generations, a reason for friendships, a source of shared memories, and a common ground where people come together regardless of differences.':
+    'हमारे लिए फ़ुटबॉल एक खेल से कहीं बढ़कर है। यह पीढ़ियों के बीच का बंधन, दोस्ती की वजह, साझा यादों का स्रोत और ऐसा साझा मैदान है जहाँ लोग अपने मतभेद भुलाकर साथ आते हैं।',
+  'It reminds us that true success is not built upon individual talent alone, but through collective effort, trust, cooperation, and unity.':
+    'यह हमें याद दिलाता है कि सच्ची सफलता सिर्फ़ व्यक्तिगत प्रतिभा से नहीं, बल्कि सामूहिक प्रयास, भरोसे, सहयोग और एकता से बनती है।',
+  'One Name, One Identity': 'एक नाम, एक पहचान',
+  'ATC stands for Adibasi Tarzan Club. These three letters bring together our full identity, our members, our history, our heritage, and our shared sense of belonging.':
+    'ATC का अर्थ है आदिवासी टार्ज़न क्लब। ये तीन अक्षर हमारी पूरी पहचान, हमारे सदस्यों, हमारे इतिहास, हमारी विरासत और हमारे साझा अपनेपन को एक साथ समेटते हैं।',
+  'It represents one club, one community, and one common spirit—a name carried with pride by everyone who has been part of our journey.':
+    'यह एक क्लब, एक समाज और एक साझा भावना का प्रतीक है — ऐसा नाम जिसे हमारे सफ़र का हिस्सा रहा हर व्यक्ति गर्व से साथ रखता है।',
+  'The Circular Symbol between Estd. & 1981': '“स्थापना” और 1981 के बीच का गोल चिह्न',
+  'Unity and Togetherness': 'एकता और एकजुटता',
+  'The circular symbol placed between ESTD. and 1981 represents unity, togetherness, and collective strength.':
+    'ESTD. और 1981 के बीच रखा गोल चिह्न एकता, एकजुटता और सामूहिक शक्ति का प्रतीक है।',
+  'Its interconnected form reflects the idea that individuals become stronger when they stand together, support one another, and work towards a common purpose.':
+    'इसका आपस में जुड़ा रूप इस विचार को दर्शाता है कि लोग तब और मज़बूत होते हैं जब वे साथ खड़े हों, एक-दूसरे का साथ दें और एक साझा लक्ष्य के लिए काम करें।',
+  'It symbolizes the bond between our members, generations, and community—a reminder that our strength does not lie in one individual, but in all of us standing together.':
+    'यह हमारे सदस्यों, पीढ़ियों और समाज के बीच के बंधन का प्रतीक है — याद दिलाता है कि हमारी शक्ति किसी एक व्यक्ति में नहीं, बल्कि हम सबके साथ खड़े होने में है।',
+  'One Community. One Unity. One Strength.': 'एक समाज। एक एकता। एक शक्ति।',
+  'The Shield': 'ढाल',
+  'Strength, Protection & Pride': 'शक्ति, सुरक्षा और गर्व',
+  'The shield is the foundation that brings every element of our crest together within one emblem. It symbolizes resilience, solidarity, protection, dignity, and the determination to uphold our club’s identity and values.':
+    'ढाल वह आधार है जो हमारे प्रतीक चिह्न के हर हिस्से को एक निशान में जोड़ती है। यह धैर्य, एकजुटता, सुरक्षा, गरिमा और हमारे क्लब की पहचान व मूल्यों को बनाए रखने के संकल्प का प्रतीक है।',
+  'It represents a club that stands firm through challenges, honours its history, protects its heritage, and remains united in spirit.':
+    'यह ऐसे क्लब का प्रतीक है जो चुनौतियों में अडिग रहता है, अपने इतिहास का सम्मान करता है, अपनी विरासत की रक्षा करता है और भावना में एकजुट रहता है।',
+  'The shield gives our identity its form—a symbol of strength that holds our history, culture, sporting passion, and unity together.':
+    'ढाल हमारी पहचान को आकार देती है — शक्ति का ऐसा प्रतीक जो हमारे इतिहास, संस्कृति, खेल के जुनून और एकता को एक साथ थामे रखता है।',
+  'The Colours': 'रंग',
+  'Pride in Our Identity': 'अपनी पहचान पर गर्व',
+  'The colours of our crest give it a distinctive character and reflect the pride, dignity, strength, and heritage of our club.':
+    'हमारे प्रतीक चिह्न के रंग उसे एक अलग पहचान देते हैं और हमारे क्लब के गर्व, गरिमा, शक्ति और विरासत को दर्शाते हैं।',
+  'Maroon': 'मैरून',
+  'Courage & Passion': 'साहस और जुनून',
+  'Maroon represents courage, determination, passion, and the strong spirit that drives our community forward.':
+    'मैरून साहस, दृढ़ संकल्प, जुनून और उस मज़बूत भावना का प्रतीक है जो हमारे समाज को आगे बढ़ाती है।',
+  'Blue': 'नीला',
+  'Confidence & Progress': 'आत्मविश्वास और प्रगति',
+  'Blue represents confidence, stability, hope, and a forward-looking spirit. It reflects our belief in growth, progress, and the future of our club.':
+    'नीला आत्मविश्वास, स्थिरता, आशा और आगे देखने वाली सोच का प्रतीक है। यह विकास, प्रगति और हमारे क्लब के भविष्य में हमारे विश्वास को दर्शाता है।',
+  'Together, these colours create an identity that reflects our heritage, strength, passion, and ambition.':
+    'साथ मिलकर ये रंग ऐसी पहचान बनाते हैं जो हमारी विरासत, शक्ति, जुनून और महत्वाकांक्षा को दर्शाती है।',
+  'S. Akhanagar, Kaliyaganj, U/D': 'एस. आखानगर, कालियागंज, उ. दि.',
+  'Our Home': 'हमारा घर',
+  'The bottom banner identifies our locality and connects the crest to the home of Adibasi Tarzan Club.':
+    'नीचे की पट्टी हमारे इलाक़े की पहचान बताती है और प्रतीक चिह्न को आदिवासी टार्ज़न क्लब के घर से जोड़ती है।',
+  'It represents our village, our community, our people, and the place from which our journey began and continues. It reminds us that no matter where our journey takes us, our identity will always remain connected to our home and our roots.':
+    'यह हमारे गाँव, हमारे समाज, हमारे लोगों और उस जगह का प्रतीक है जहाँ से हमारा सफ़र शुरू हुआ और जारी है। यह याद दिलाती है कि हमारा सफ़र हमें कहीं भी ले जाए, हमारी पहचान हमेशा हमारे घर और हमारी जड़ों से जुड़ी रहेगी।',
+  'The Message Behind Our Crest': 'हमारे प्रतीक चिह्न का संदेश',
+  'Our crest brings together our history, tribal heritage, cultural traditions, sporting passion, and community identity in one emblem.':
+    'हमारा प्रतीक चिह्न हमारे इतिहास, आदिवासी विरासत, सांस्कृतिक परंपराओं, खेल के जुनून और सामुदायिक पहचान को एक निशान में समेटता है।',
+  'Tarzan represents our strength and identity. The jungle reminds us of our origin. Our tribal symbols honour our culture and traditions. The football represents the passion that unites us. The year 1981 honours our foundation. The shield holds all these elements together, while the symbols of unity remind us that our greatest strength has always been standing together.':
+    'टार्ज़न हमारी शक्ति और पहचान है। जंगल हमें हमारी उत्पत्ति की याद दिलाता है। हमारे आदिवासी चिह्न हमारी संस्कृति और परंपराओं का सम्मान करते हैं। फ़ुटबॉल उस जुनून का प्रतीक है जो हमें जोड़ता है। वर्ष 1981 हमारी नींव का सम्मान करता है। ढाल इन सबको एक साथ थामे रखती है, और एकता के चिह्न याद दिलाते हैं कि हमारी सबसे बड़ी शक्ति हमेशा साथ खड़े रहना ही रही है।',
+  'It reminds us that our past gives us roots, our culture gives us pride, our sports bring us together, and our unity gives us strength.':
+    'यह याद दिलाता है कि हमारा अतीत हमें जड़ें देता है, हमारी संस्कृति हमें गर्व देती है, हमारे खेल हमें साथ लाते हैं और हमारी एकता हमें शक्ति देती है।',
+  'Our crest is not merely a symbol we wear. It is a legacy we inherit, an identity we honour, and a spirit we carry forward.':
+    'हमारा प्रतीक चिह्न सिर्फ़ पहनने का निशान नहीं है। यह विरासत है जो हमें मिली, पहचान है जिसका हम सम्मान करते हैं, और भावना है जिसे हम आगे ले जाते हैं।',
+  'One Heritage. One Identity. One Club. One Spirit — Since 1981.':
+    'एक विरासत। एक पहचान। एक क्लब। एक भावना — 1981 से।',
+  'About *the crest*': 'प्रतीक चिह्न *के बारे में*',
+  'Read the [story of the club] since 1981.': '1981 से [क्लब की कहानी] पढ़ें।',
+  'Every figure, symbol, colour and inscription on our crest has its own meaning.':
+    'हमारे प्रतीक चिह्न की हर आकृति, हर चिह्न, हर रंग और हर लिखावट का अपना अर्थ है।',
+  'What does the Adibasi Tarzan Club crest mean?': 'आदिवासी टार्ज़न क्लब के प्रतीक चिह्न का क्या अर्थ है?',
+  'The crest of Adibasi Tarzan Club (ATC), S. Akhanagar, Kaliyaganj, brings together the club’s history, tribal heritage, cultural traditions, sporting passion and community identity. Tarzan stands for the club’s strength and identity, the jungle for its origin, the bow, arrows, Tumdak and Tamak for Adibasi culture, the football for the passion that unites it, and “Estd. 1981” for its foundation — all held together by the shield.':
+    'आदिवासी टार्ज़न क्लब (ATC), एस. आखानगर, कालियागंज का प्रतीक चिह्न क्लब के इतिहास, आदिवासी विरासत, सांस्कृतिक परंपराओं, खेल के जुनून और सामुदायिक पहचान को एक साथ लाता है। टार्ज़न क्लब की शक्ति और पहचान है, जंगल उसकी उत्पत्ति, धनुष-बाण और तुमदाक-तामाक आदिवासी संस्कृति, फ़ुटबॉल उसे जोड़ने वाला जुनून, और “स्थापना 1981” उसकी नींव — इन सबको ढाल एक साथ थामे रखती है।',
+  'What are the colours of Adibasi Tarzan Club?': 'आदिवासी टार्ज़न क्लब के रंग कौन-से हैं?',
+  'The crest’s colours are maroon, for courage and passion, and blue, for confidence and progress, set in the gold and brown of the shield.':
+    'प्रतीक चिह्न के रंग हैं मैरून — साहस और जुनून के लिए, और नीला — आत्मविश्वास और प्रगति के लिए, जो ढाल के सुनहरे और भूरे रंग में सजे हैं।',
+  'What are the Tumdak and Tamak on the ATC crest?': 'ATC के प्रतीक चिह्न पर तुमदाक और तामाक क्या हैं?',
+  'The Tumdak and Tamak (Nagada) are traditional drums of the Adibasi community. On the crest they stand for tribal culture, music, festivals and the rhythm that brings the community of S. Akhanagar together.':
+    'तुमदाक और तामाक (नगाड़ा) आदिवासी समाज के पारंपरिक ढोल हैं। प्रतीक चिह्न पर ये आदिवासी संस्कृति, संगीत, त्योहारों और उस लय के प्रतीक हैं जो एस. आखानगर के समाज को एक साथ लाती है।',
+  'When was Adibasi Tarzan Club established?': 'आदिवासी टार्ज़न क्लब की स्थापना कब हुई?',
+  'Adibasi Tarzan Club was established in 1981 in S. Akhanagar, Kaliyaganj, Uttar Dinajpur, West Bengal. The year is written on the crest as “Estd. 1981”.':
+    'आदिवासी टार्ज़न क्लब की स्थापना 1981 में एस. आखानगर, कालियागंज, उत्तर दिनाजपुर, पश्चिम बंगाल में हुई। प्रतीक चिह्न पर यह साल “Estd. 1981” के रूप में लिखा है।',
+  'The crest of Adibasi Tarzan Club, S. Akhanagar, Kaliyaganj — established 1981':
+    'आदिवासी टार्ज़न क्लब, एस. आखानगर, कालियागंज का प्रतीक चिह्न — स्थापना 1981',
+  'Our Crest — The Story Behind the ATC Crest': 'हमारा प्रतीक चिह्न — ATC प्रतीक चिह्न की कहानी',
+  'What every part of the Adibasi Tarzan Club crest means: Estd. 1981, the jungle, Tarzan, the bow and arrows, the Tumdak and Tamak, the Bengali inscription, the football, ATC, the shield and the maroon and blue colours.':
+    'आदिवासी टार्ज़न क्लब के प्रतीक चिह्न के हर हिस्से का अर्थ: स्थापना 1981, जंगल, टार्ज़न, धनुष-बाण, तुमदाक और तामाक, बांग्ला लिखावट, फ़ुटबॉल, ATC, ढाल और मैरून व नीले रंग।',
 };

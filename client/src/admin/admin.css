@@ -473,3 +473,7 @@ select.a-input { appearance: none; padding-right: 36px; background: #fff url("da
 .a-filefield__icon { display: grid; place-items: center; width: 48px; height: 56px; border-radius: 8px; background: #FBEFE9; color: #A4321D; flex: none; }
 .a-filefield__info { display: grid; gap: 2px; flex: 1 1 200px; min-width: 0; }
 .a-filefield__info strong { overflow-wrap: anywhere; }
+
+/* Gallery: choose the section and album once for a whole batch of uploads */
+.a-bulk-pick { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; flex-basis: 100%; padding: 12px 14px; border-radius: 10px; background: rgba(217, 154, 43, .08); }
+.a-bulk-pick .a-field { flex: 1 1 220px; }

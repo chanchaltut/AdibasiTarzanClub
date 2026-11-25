@@ -12,7 +12,7 @@ import Single from '../models/Single.js';
 import { buildLettering } from './fonts.js';
 import Translation from '../models/Translation.js';
 import { contentModel } from '../models/content.js';
-import { COLLECTIONS, SINGLES } from './schemas.js';
+import { BANNER_PAGES, COLLECTIONS, GALLERY_SECTIONS, OLD_ALBUMS, SINGLES } from './schemas.js';
 import { fileIdsIn, mediaIdsIn } from './validate.js';
 import { cropPixels, fileUrls, shareImageUrl, urlPattern } from '../services/storage.js';
 import { contentChanged } from '../services/rebuild.js';
@@ -30,7 +30,8 @@ const compact = (o) => Object.fromEntries(Object.entries(o).filter(([, v]) => v 
 /** Load every published item and the media they use. */
 export async function loadAll({ includeHidden = false } = {}) {
   const lists = {};
-  await Promise.all(COLLECTIONS.map(async (def) => {
+  // Private lists (sign-ups) never leave the admin panel.
+  await Promise.all(COLLECTIONS.filter((def) => !def.private).map(async (def) => {
     const filter = def.publishable && !includeHidden ? { published: { $ne: false } } : {};
     lists[def.key] = await contentModel(def.key).find(filter).sort(sortFor(def)).lean();
   }));
@@ -112,6 +113,14 @@ function buildLegacy(l, img) {
   });
 }
 
+/** Which Gallery section and album a photo belongs to (photos from before the sections existed included). */
+const SECTION_IDS = new Set(GALLERY_SECTIONS.map((x) => x.value));
+function galleryPlace(g) {
+  const old = OLD_ALBUMS[g.album];
+  const section = SECTION_IDS.has(g.section) ? g.section : old?.[0] || 'football';
+  return { section, album: old && !g.section ? old[1] : g.album };
+}
+
 export async function buildBundle() {
   const { lists, singles, mediaMap, fileMap, updatedAt } = await loadAll();
   const img = makeImage(mediaMap);
@@ -135,6 +144,9 @@ export async function buildBundle() {
       round: m.round,
       venue: m.venue,
       entry: m.entry,
+      status: m.status && m.status !== 'scheduled' ? m.status : undefined,
+      statusNote: m.statusNote,
+      reporting: m.reporting,
       score: Number.isFinite(m.homeScore) && Number.isFinite(m.awayScore) ? [m.homeScore, m.awayScore] : undefined,
     }));
 
@@ -156,7 +168,7 @@ export async function buildBundle() {
       socials: compact({ facebook: s.facebook, instagram: s.instagram, youtube: s.youtube }),
     },
     RIBBON: { enabled: s.ribbonOn !== false && Boolean(s.ribbonText), text: s.ribbonText || '', cta: s.ribbonCta || '', href: s.ribbonLink || '/' },
-    PAGES: Object.fromEntries(['club', 'schedule', 'news', 'squad', 'committee', 'members', 'gallery', 'membership', 'contact'].map((k) => [k, pageBanner(k)])),
+    PAGES: Object.fromEntries(BANNER_PAGES.map((k) => [k, pageBanner(k)])),
     SLOTS: compact({
       homeMembership: img(p.homeMembership),
       homeCalendar: img(p.homeCalendar),
@@ -168,7 +180,35 @@ export async function buildBundle() {
     TEAMS,
     FIXTURES: matches.filter((m) => !m.score).sort((a, b) => a.date.localeCompare(b.date)),
     RESULTS: matches.filter((m) => m.score).sort((a, b) => b.date.localeCompare(a.date)),
-    EVENTS: lists.events.map((e) => compact({ id: id(e), title: e.title, kind: e.kind, date: iso(e.date), venue: e.venue, desc: e.desc, photo: img(e.photo) })),
+    EVENTS: lists.events.map((e) => compact({
+      id: id(e), title: e.title, kind: e.kind, date: iso(e.date), venue: e.venue, desc: e.desc, photo: img(e.photo),
+      signup: e.signup || undefined, signupBy: e.signup ? iso(e.signupBy) : undefined,
+    })),
+    MATCH_INFO: lists.matchinfo.map((x) => compact({
+      id: id(x), title: x.title, kind: x.kind, date: iso(x.date), text: x.text, pinned: x.pinned || undefined,
+      match: x.match && matches.some((m) => m.id === String(x.match)) ? String(x.match) : undefined,
+    })),
+    TOURNAMENTS: lists.tournaments.map((x) => compact({
+      id: id(x),
+      name: x.name,
+      comp: x.comp,
+      start: iso(x.start),
+      end: iso(x.end),
+      venue: x.venue,
+      about: paragraphs(x.about),
+      photo: img(x.photo),
+      schedule: (x.schedule || []).filter((st) => st.stage && st.from)
+        .map((st) => compact({ stage: st.stage, from: iso(st.from), to: iso(st.to), note: st.note }))
+        .sort((a, b) => a.from.localeCompare(b.from)),
+      teams: (x.teams || []).filter((tm) => TEAMS[String(tm.team)]).map((tm) => compact({ team: String(tm.team), group: tm.group })),
+      winner: TEAMS[String(x.winner)] ? String(x.winner) : undefined,
+      runnerUp: TEAMS[String(x.runnerUp)] ? String(x.runnerUp) : undefined,
+      signup: x.signup || undefined,
+      signupBy: x.signup ? iso(x.signupBy) : undefined,
+    })).filter((x) => x.start),
+    PROGRAMMES: lists.programmes.map((x) => compact({
+      id: id(x), title: x.title, desc: x.desc, when: x.when, who: x.who, venue: x.venue, photo: img(x.photo), signup: x.signup !== false || undefined,
+    })),
     PROMOS: lists.promos.map((x) => compact({
       id: id(x),
       title: x.title,
@@ -201,13 +241,16 @@ export async function buildBundle() {
       id: id(pl), no: pl.no, first: pl.first, last: pl.last, pos: pl.pos, squad: pl.squad || 'first-team', captain: pl.captain || undefined, featured: pl.featured || undefined, photo: img(pl.photo),
     })),
     COMMITTEE: lists.committee.map((c) => compact({ id: id(c), role: c.role, name: c.name, photo: img(c.photo) })),
-    MEMBERS: lists.members.map((m) => compact({ id: id(m), name: m.name, kind: m.kind, since: m.since, photo: img(m.photo) })),
+    MEMBERS: lists.members.map((m) => compact({
+      id: id(m), name: m.name, kind: m.kind, since: m.since, photo: img(m.photo),
+      memoriam: m.memoriam || undefined, years: m.memoriam ? m.years : undefined, tribute: m.memoriam ? m.tribute : undefined,
+    })),
     HONOURS: lists.honours.map((h) => ({ comp: h.comp, count: h.count, unit: h.unit, icon: h.icon || 'cup' })),
     TIMELINE: lists.timeline.map((t) => ({ year: t.year, title: t.title, text: t.text })),
     FAQ: lists.faqs.filter((f) => f.page !== 'membership').map((f) => ({ q: f.q, a: f.a })),
     MEMBER_FAQ: lists.faqs.filter((f) => f.page === 'membership').map((f) => ({ q: f.q, a: f.a })),
     MEMBERSHIP_TIERS: lists.tiers.map((t) => compact({ name: t.name, price: t.price, perks: t.perks || [], featured: t.featured || undefined })),
-    GALLERY: lists.gallery.map((g) => compact({ id: id(g), photo: img(g.photo), cap: g.caption, album: g.album })).filter((g) => g.photo),
+    GALLERY: lists.gallery.map((g) => compact({ id: id(g), photo: img(g.photo), cap: g.caption, ...galleryPlace(g) })).filter((g) => g.photo),
     VIDEOS: lists.videos.map((v) => {
       const yt = /[?&]v=([A-Za-z0-9_-]{11})/.exec(v.url || '')?.[1];
       return yt && compact({ id: id(v), youtubeId: yt, title: v.title, desc: v.desc, date: iso(v.date), thumb: `https://i.ytimg.com/vi/${yt}/hqdefault.jpg` });
@@ -287,7 +330,7 @@ export async function translatableStrings() {
     }
   };
   for (const def of COLLECTIONS) {
-    for (const doc of lists[def.key]) {
+    for (const doc of lists[def.key] || []) {
       const title = typeof def.titleField === 'string' ? doc[def.titleField] : '';
       walk(def.fields, doc, `${def.label}${title ? ` · ${String(title).slice(0, 50)}` : ''}`);
     }

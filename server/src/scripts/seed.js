@@ -106,11 +106,28 @@ const teams = await insert('teams', codes.map((code) => {
 const teamId = Object.fromEntries(codes.map((code, i) => [code, teams[i]._id]));
 await contentModel('teams').updateMany({ _id: { $in: codes.filter((c) => D.TEAMS[c].isClub).map((c) => teamId[c]) } }, { $set: { isClub: true, locked: true } });
 
-await insert('matches', [...D.FIXTURES, ...D.RESULTS].map((m) => ({
+const allMatches = [...D.FIXTURES, ...D.RESULTS];
+const matchDocs = await insert('matches', allMatches.map((m) => ({
   home: String(teamId[m.home]), away: String(teamId[m.away]), date: m.date, comp: m.comp, round: m.round, venue: m.venue, entry: m.entry,
+  status: m.status || 'scheduled', statusNote: m.statusNote, reporting: m.reporting,
   homeScore: m.score?.[0], awayScore: m.score?.[1], published: true,
 })));
-await insert('events', D.EVENTS.map((e) => ({ title: e.title, kind: e.kind, date: e.date, venue: e.venue, desc: e.desc, photo: img(e.photo), published: true })));
+const matchId = Object.fromEntries(allMatches.map((m, i) => [m.id, String(matchDocs[i]._id)]));
+await insert('matchinfo', D.MATCH_INFO.map((x) => ({
+  title: x.title, kind: x.kind, date: x.date, text: x.text, match: x.match ? matchId[x.match] : undefined, pinned: Boolean(x.pinned), published: true,
+})));
+await insert('events', D.EVENTS.map((e) => ({
+  title: e.title, kind: e.kind, date: e.date, venue: e.venue, desc: e.desc, photo: img(e.photo), signup: Boolean(e.signup), signupBy: e.signupBy, published: true,
+})));
+await insert('tournaments', D.TOURNAMENTS.map((x) => ({
+  name: x.name, comp: x.comp, start: x.start, end: x.end, venue: x.venue, about: (x.about || []).join('\n\n'), photo: img(x.photo),
+  schedule: x.schedule, teams: x.teams.map((tm) => ({ team: String(teamId[tm.team]), group: tm.group })),
+  winner: x.winner ? String(teamId[x.winner]) : undefined, runnerUp: x.runnerUp ? String(teamId[x.runnerUp]) : undefined,
+  signup: Boolean(x.signup), signupBy: x.signupBy, published: true,
+})));
+await insert('programmes', D.PROGRAMMES.map((x) => ({
+  title: x.title, desc: x.desc, when: x.when, who: x.who, venue: x.venue, photo: img(x.photo), signup: x.signup !== false, published: true,
+})));
 await insert('news', D.NEWS.map((n) => ({
   title: n.title, slug: n.slug, desc: n.desc, tag: n.tag, date: n.date, photo: img(n.photo), body: n.body.join('\n\n'), featured: Boolean(n.featured), published: true,
 })));
@@ -133,7 +150,12 @@ await insert('faqs', [
   ...D.MEMBER_FAQ.map((f) => ({ q: f.q, a: f.a, page: 'membership', published: true })),
 ]);
 await insert('tiers', D.MEMBERSHIP_TIERS.map((t) => ({ name: t.name, price: t.price, perks: t.perks, featured: Boolean(t.featured) })));
-await insert('gallery', D.GALLERY.map((g) => ({ photo: img(g.photo), caption: g.cap, album: g.album, published: true })));
+await insert('gallery', D.GALLERY.map((g) => ({ photo: img(g.photo), caption: g.cap, section: g.section, album: g.album, published: true })));
+if (D.MEMBERS.length) {
+  await insert('members', D.MEMBERS.map((m) => ({
+    name: m.name, kind: m.kind || 'Member', since: m.since, photo: img(m.photo), memoriam: Boolean(m.memoriam), years: m.years, tribute: m.tribute, published: true,
+  })));
+}
 
 console.log('\n✓ Done. Next: create your admin account with  npm run create-admin\n');
 await mongoose.disconnect();

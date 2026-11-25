@@ -52,3 +52,4 @@ export const loginLimiter = limiter(15 * 60_000, 20, 'Too many sign-in attempts 
 export const adminLimiter = limiter(60_000, 600, 'Slow down a little — too many actions in one minute.');
 export const uploadLimiter = limiter(10 * 60_000, 300, 'Too many uploads in a short time. Please wait a few minutes.');
 export const publicLimiter = limiter(60_000, 300, 'Too many requests. Please try again in a minute.');
+export const signupLimiter = limiter(10 * 60_000, 12, 'Too many sign-ups from this connection. Please wait a few minutes and try again.');

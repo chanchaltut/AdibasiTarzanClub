@@ -4,7 +4,7 @@ import { useAuth } from './auth';
 import { useSchema } from './schema';
 import { Icon } from './ui';
 
-const GROUP_ORDER = ['Website content', 'People', 'Home page', 'Club information', 'Settings'];
+const GROUP_ORDER = ['Sign-ups', 'Website content', 'People', 'Home page', 'Club information', 'Settings'];
 
 function SideNav({ onNavigate }) {
   const schema = useSchema();

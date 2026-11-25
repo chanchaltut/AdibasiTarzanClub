@@ -493,6 +493,128 @@ describe('content editing', () => {
   });
 });
 
+describe('events & participations, gallery sections, members', () => {
+  const c = client();
+  const soon = (days) => new Date(Date.now() + days * 864e5).toISOString();
+  let eventId; let programmeId; let tournamentId;
+
+  before(async () => {
+    await c.post('/api/auth/login', { email: 'owner@atc.test', password: 'brown and gold forever' });
+    const ev = await c.post('/api/admin/c/events', { title: 'Sports Day test', kind: 'Sports Day', date: soon(10), venue: 'S. Akhanagar Ground', signup: true, published: true });
+    assert.equal(ev.status, 201, JSON.stringify(ev.body));
+    eventId = ev.body.item._id;
+    const pg = await c.post('/api/admin/c/programmes', { title: 'Youth coaching test', desc: 'Mornings at the ground.', signup: true, published: true });
+    assert.equal(pg.status, 201, JSON.stringify(pg.body));
+    programmeId = pg.body.item._id;
+    const teams = (await c.get('/api/admin/c/teams/options')).body.options;
+    const tm = await c.post('/api/admin/c/tournaments', {
+      name: 'ATC Annual Cup Test', comp: 'ATC Annual Cup', start: soon(20), end: soon(40), venue: 'S. Akhanagar Ground', signup: true, published: true,
+      schedule: [{ stage: 'Final', from: soon(40) }, { stage: 'Opening match', from: soon(20) }],
+      teams: [{ team: teams[0].value, group: 'Group A' }, { team: teams[1].value, group: 'Group A' }],
+    });
+    assert.equal(tm.status, 201, JSON.stringify(tm.body));
+    tournamentId = tm.body.item._id;
+  });
+
+  test('seeded sections reach the website: match info, tournaments, programmes, gallery sections', async () => {
+    const { body } = await client().get('/api/public/content');
+    assert.ok(body.MATCH_INFO.length >= 2);
+    assert.ok(body.MATCH_INFO.some((x) => x.match && body.FIXTURES.some((f) => f.id === x.match)), 'match updates link to their fixture');
+    assert.ok(body.FIXTURES.some((f) => f.status === 'postponed' && f.statusNote));
+    assert.ok(body.FIXTURES.some((f) => f.reporting));
+    assert.ok(body.PROGRAMMES.length >= 3);
+    const cup = body.TOURNAMENTS.find((x) => x.id === tournamentId);
+    assert.deepEqual(cup.schedule.map((st) => st.stage), ['Opening match', 'Final'], 'stages sorted by date');
+    assert.equal(cup.teams.length, 2);
+    assert.ok(body.GALLERY.every((g) => ['football', 'celebrations', 'heritage', 'family'].includes(g.section)));
+    for (const k of ['football', 'celebrations', 'heritage', 'family', 'tournaments', 'register', 'crest']) assert.ok(k in body.PAGES || ['football', 'celebrations', 'heritage', 'family'].includes(k));
+    assert.ok(!('REGISTRATIONS' in body) && !JSON.stringify(body).includes('kindOf'), 'sign-ups are never public');
+  });
+
+  test('gallery photos from before the sections get a section and the new album name', async () => {
+    const Gallery = mongoose.model('C_gallery');
+    const photo = { src: '/photos/match-action.webp' };
+    const { insertedId } = await Gallery.collection.insertOne({ photo, caption: 'Old photo', album: 'Heritage Night', published: true, order: 99 });
+    const opened = await c.get(`/api/admin/c/gallery/${insertedId}`);
+    assert.deepEqual([opened.body.item.section, opened.body.item.album], ['heritage', 'Cultural Programme'], 'opens in the admin already placed');
+    const bad = await c.post('/api/admin/c/gallery', { photo, caption: 'No section', section: 'nowhere' });
+    assert.equal(bad.status, 400);
+    const ok = await c.post('/api/admin/c/gallery', { photo, caption: 'Kali Puja night', section: 'celebrations', album: 'Kali Puja', published: true });
+    assert.equal(ok.status, 201, JSON.stringify(ok.body));
+    const { body } = await client().get('/api/public/content');
+    const old = body.GALLERY.find((g) => g.cap === 'Old photo');
+    assert.equal(old.section, 'heritage');
+    assert.equal(old.album, 'Cultural Programme');
+    const puja = body.GALLERY.find((g) => g.cap === 'Kali Puja night');
+    assert.deepEqual([puja.section, puja.album], ['celebrations', 'Kali Puja']);
+  });
+
+  test('members remembered In Memoriam are marked, with their years', async () => {
+    const r = await c.post('/api/admin/c/members', { name: 'Founder Test', kind: 'Founding Member', memoriam: true, years: '1950 – 2018', tribute: 'One of the first', published: true });
+    assert.equal(r.status, 201, JSON.stringify(r.body));
+    const a = await c.post('/api/admin/c/members', { name: 'Active Test', kind: 'Member', years: 'ignored', published: true });
+    assert.equal(a.status, 201);
+    const { body } = await client().get('/api/public/content');
+    const f = body.MEMBERS.find((m) => m.name === 'Founder Test');
+    assert.deepEqual([f.memoriam, f.years, f.tribute], [true, '1950 – 2018', 'One of the first']);
+    const m = body.MEMBERS.find((x) => x.name === 'Active Test');
+    assert.equal(m.memoriam, undefined);
+    assert.equal(m.years, undefined, 'years only kept for members in memoriam');
+  });
+
+  test('a visitor signs up for an event; it lands in Sign-ups, never on the website', async () => {
+    const visitor = client();
+    const r = await visitor.post('/api/public/register', { kindOf: 'event', targetId: eventId, name: 'Rina Murmu', phone: '98765 43210', place: 'S. Akhanagar', people: 3 });
+    assert.equal(r.status, 201, JSON.stringify(r.body));
+    assert.equal(r.body.target, 'Sports Day test');
+    assert.equal(r.headers.get('access-control-allow-origin'), ORIGIN);
+    const list = await c.get('/api/admin/c/registrations');
+    const item = list.body.items.find((x) => x.name === 'Rina Murmu');
+    assert.ok(item);
+    assert.deepEqual([item.status, item.kindOf, item.target, item.people], ['new', 'event', 'Sports Day test', 3]);
+    const dash = await c.get('/api/admin/dashboard');
+    assert.ok(dash.body.newSignups >= 1);
+  });
+
+  test('sign-ups: programmes, tournaments need a team name, closed or unknown targets are refused', async () => {
+    const v = client();
+    const p = await v.post('/api/public/register', { kindOf: 'programme', targetId: programmeId, name: 'Young Player', phone: '+91 90000 00000', age: 12 });
+    assert.equal(p.status, 201, JSON.stringify(p.body));
+    const noTeam = await v.post('/api/public/register', { kindOf: 'tournament', targetId: tournamentId, name: 'Manager', phone: '90000 00001' });
+    assert.equal(noTeam.status, 400);
+    assert.ok(noTeam.body.details.team);
+    const team = await v.post('/api/public/register', { kindOf: 'tournament', targetId: tournamentId, name: 'Manager', phone: '90000 00001', team: 'Kunore Sporting' });
+    assert.equal(team.status, 201, JSON.stringify(team.body));
+    const badPhone = await v.post('/api/public/register', { kindOf: 'event', targetId: eventId, name: 'X', phone: 'call me' });
+    assert.equal(badPhone.status, 400);
+    assert.ok(badPhone.body.details.phone);
+    await c.patch(`/api/admin/c/events/${eventId}`, { published: false });
+    const hidden = await v.post('/api/public/register', { kindOf: 'event', targetId: eventId, name: 'Late', phone: '90000 00002' });
+    assert.equal(hidden.status, 400);
+    assert.ok(hidden.body.details.targetId);
+    const wrongKind = await v.post('/api/public/register', { kindOf: 'event', targetId: programmeId, name: 'Mixed', phone: '90000 00003' });
+    assert.equal(wrongKind.status, 400);
+  });
+
+  test('sign-ups from other websites are refused; bots filling the hidden box are ignored', async () => {
+    const other = await client().post('/api/public/register', { kindOf: 'programme', targetId: programmeId, name: 'Spam', phone: '90000 00009' }, { origin: 'https://evil.example' });
+    assert.equal(other.status, 403);
+    const before = (await c.get('/api/admin/c/registrations')).body.total;
+    const bot = await client().post('/api/public/register', { kindOf: 'programme', targetId: programmeId, name: 'Bot', phone: '90000 00010', website: 'http://spam' });
+    assert.equal(bot.status, 201);
+    assert.equal((await c.get('/api/admin/c/registrations')).body.total, before);
+    const preflight = await fetch(`${base}/api/public/register`, { method: 'OPTIONS', headers: { origin: ORIGIN, 'access-control-request-method': 'POST', 'access-control-request-headers': 'content-type' } });
+    assert.equal(preflight.headers.get('access-control-allow-origin'), ORIGIN);
+  });
+
+  test('match ref options name the teams and date', async () => {
+    const { body } = await c.get('/api/admin/c/matches/options');
+    assert.ok(body.options.length > 0);
+    assert.ok(body.options.every((o) => !o.label.includes('?')), JSON.stringify(body.options[0]));
+    assert.match(body.options[0].label, / vs .+ · \d{1,2} \w{3} \d{4}$/);
+  });
+});
+
 describe('people and permissions', () => {
   const owner = client();
   const editor = client();

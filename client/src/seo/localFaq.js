@@ -13,7 +13,7 @@ const real = (name) => Boolean(name) && name !== 'To be announced';
 
 /** `tr(text, vars)` translates into the page language. Items are already translated (`done`). */
 export function localFaq(content, tr) {
-  const { CLUB, COMMITTEE = [], SQUAD = [], MEMBERS = [], HONOURS = [] } = content;
+  const { CLUB, COMMITTEE = [], SQUAD = [], MEMBERS = [], HONOURS = [], TOURNAMENTS = [], PROGRAMMES = [] } = content;
   const founded = CLUB.founded;
   const years = Math.floor((new Date().getFullYear() - founded) / 5) * 5;
   const address = (CLUB.address || []).map((l) => tr(l)).join(', ');
@@ -23,6 +23,9 @@ export function localFaq(content, tr) {
   const officers = COMMITTEE.filter((c) => real(c.name)).map((c) => `${tr(c.name)} (${tr(c.role)})`).join(', ');
   const firstTeam = SQUAD.filter((p) => (p.squad || 'first-team') === 'first-team');
   const captain = firstTeam.find((p) => p.captain);
+  const founders = MEMBERS.filter((m) => m.memoriam || /found/i.test(m.kind || ''));
+  const cup = TOURNAMENTS[0];
+  const programmes = PROGRAMMES.filter((x) => x.signup).map((x) => tr(x.title)).join(', ');
 
   const items = [
     {
@@ -50,6 +53,30 @@ export function localFaq(content, tr) {
         tr('Every player, office-bearer and member is named on the Players, Committee and Members pages.'),
       ],
     },
+    founders.length > 0 && {
+      q: tr('Who are the founding members of Adibasi Tarzan Club?'),
+      a: [
+        tr('Adibasi Tarzan Club was founded in {founded} in S. Akhanagar, Kaliyaganj. The founding members named on the Members page are: {list}.', { founded, list: founders.map((m) => tr(m.name)).join(', ') }),
+        founders.some((m) => m.memoriam) && tr('Those who are no longer with us are remembered there In Memoriam — forever remembered, never forgotten.'),
+      ],
+    },
+    {
+      q: tr('Is there a football tournament in Kaliyaganj?'),
+      a: [
+        tr('Yes. Adibasi Tarzan Club hosts the ATC Annual Cup, a football tournament for clubs across Uttar Dinajpur, at {ground}, Kaliyaganj.', { ground }),
+        cup && (cup.teams?.length
+          ? tr('The latest edition is the {name}, with {n} participating teams.', { name: tr(cup.name), n: cup.teams.length })
+          : tr('The latest edition is the {name}.', { name: tr(cup.name) })),
+        tr('The tournament schedule, participating teams and fixtures are on the ATC Tournaments page of this website.'),
+      ],
+    },
+    {
+      q: tr('How do I sign up for a club event or programme at Adibasi Tarzan Club?'),
+      a: [
+        tr('Use the Registration & Participation page of this website: choose the event, programme or tournament, write your name and phone number, and the club committee will call or message you to confirm.'),
+        programmes && tr('Programmes open for sign-ups: {list}.', { list: programmes }),
+      ],
+    },
     {
       q: tr('How can I join a football club in Kaliyaganj?'),
       a: [
@@ -57,5 +84,5 @@ export function localFaq(content, tr) {
       ],
     },
   ];
-  return items.map((f) => ({ q: f.q, a: f.a.filter(Boolean).join(' '), done: true }));
+  return items.filter(Boolean).map((f) => ({ q: f.q, a: f.a.filter(Boolean).join(' '), done: true }));
 }

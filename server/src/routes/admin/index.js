@@ -31,7 +31,7 @@ router.get('/schema', (req, res) => {
 
 router.get('/dashboard', async (req, res) => {
   const now = new Date();
-  const [counts, mediaAgg, recent, strings, saved, users, needScore, nextMatch] = await Promise.all([
+  const [counts, mediaAgg, recent, strings, saved, users, needScore, nextMatch, newSignups] = await Promise.all([
     Promise.all(COLLECTIONS.map(async (def) => [def.key, await contentModel(def.key).estimatedDocumentCount()])),
     Media.aggregate([{ $group: { _id: null, count: { $sum: 1 }, bytes: { $sum: '$bytes' }, original: { $sum: '$originalBytes' } } }]),
     Activity.find().sort({ at: -1 }).limit(12).lean(),
@@ -40,6 +40,7 @@ router.get('/dashboard', async (req, res) => {
     User.countDocuments({ active: true }),
     contentModel('matches').find({ date: { $lt: new Date(now - 2 * 36e5) }, homeScore: { $exists: false }, published: { $ne: false } }).sort({ date: -1 }).limit(10).lean(),
     contentModel('matches').findOne({ date: { $gt: now }, published: { $ne: false } }).sort({ date: 1 }).lean(),
+    contentModel('registrations').countDocuments({ status: 'new' }),
   ]);
   const done = new Map(saved.map((t) => [t.en, t]));
   // The panel also knows the translations built into the website and finishes the count.
@@ -58,6 +59,7 @@ router.get('/dashboard', async (req, res) => {
     needScore: needScore.map((m) => ({ id: String(m._id), title: matchTitle(m), date: m.date })),
     nextMatch: nextMatch ? { id: String(nextMatch._id), title: matchTitle(nextMatch), date: nextMatch.date } : null,
     website: rebuildStatus(),
+    newSignups,
   });
 });
 

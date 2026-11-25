@@ -12,6 +12,11 @@ import YouTubeField from './YouTubeField';
 
 export const optionList = (f) => (f.options || []).map((o) => (typeof o === 'string' ? { value: o, label: o } : o));
 
+/** A combo whose suggestions depend on another field (e.g. gallery albums for the chosen section). */
+const withOptionsFor = (f, data) => (f.optionsBy
+  ? { ...f, options: f.optionsBy.options[data?.[f.optionsBy.field]] || f.options }
+  : f);
+
 /** Is this field hidden by a "only show when…" rule? */
 export const isHidden = (f, data) => Boolean(f.when) && data?.[f.when.field] !== f.when.is;
 
@@ -181,7 +186,7 @@ export function Field({ f, value, onChange, data, errors = {}, path = f.name, me
 
   switch (f.type) {
     case 'text': case 'combo': case 'link': case 'url': case 'email':
-      return <FieldFrame {...common} counter={<Counter value={value} max={f.max} />}><TextInput f={f} id={id} value={value} onChange={onChange} /></FieldFrame>;
+      return <FieldFrame {...common} counter={<Counter value={value} max={f.max} />}><TextInput f={withOptionsFor(f, data)} id={id} value={value} onChange={onChange} /></FieldFrame>;
     case 'slug':
       return <FieldFrame {...common}><SlugInput f={f} id={id} value={value} onChange={onChange} data={data} /></FieldFrame>;
     case 'textarea': case 'longtext':

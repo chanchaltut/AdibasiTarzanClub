@@ -10,14 +10,18 @@
 import { getContent } from '../content/store';
 import { imgUrl } from '../content/image';
 import { localFaq } from './localFaq';
+import { CREST_FAQ, CREST_IMAGE, CREST_INTRO, CREST_MESSAGE, CREST_PARTS } from '../data/crest';
+import { GALLERY_SECTIONS, sectionOf } from '../data/gallery';
+import { eventOpen, tournamentMatches, tournamentOpen } from '../utils/tournaments';
 import { LANG_CODES, LANGS, langFromPath, localePath, stripLang, translate } from '../i18n';
 
 // The content these functions describe. Every exported function calls sync() first, so it
 // always works from whatever the site currently shows (server content, saved copy or defaults).
 let CLUB; let EVENTS; let FAQ; let FIXTURES; let HONOURS; let MEMBERSHIP_TIERS; let NEWS; let RESULTS; let SQUAD; let TEAMS; let TIMELINE; let GALLERY; let COMMITTEE; let MEMBERS;
+let MATCH_INFO; let TOURNAMENTS; let PROGRAMMES;
 function sync() {
   ({
-    CLUB, EVENTS, FAQ, FIXTURES, HONOURS, MEMBERSHIP_TIERS, NEWS, RESULTS, SQUAD, TEAMS, TIMELINE, GALLERY, COMMITTEE, MEMBERS,
+    CLUB, EVENTS, FAQ, FIXTURES, HONOURS, MEMBERSHIP_TIERS, NEWS, RESULTS, SQUAD, TEAMS, TIMELINE, GALLERY, COMMITTEE, MEMBERS, MATCH_INFO, TOURNAMENTS, PROGRAMMES,
   } = getContent());
 }
 
@@ -74,9 +78,21 @@ const PAGES = {
   },
   '/schedule': {
     title: 'Fixtures, Results & Club Events',
-    description: 'Upcoming Adibasi Tarzan Club fixtures, latest results and club events — District League, the ATC Annual Cup, Heritage Night and more at S. Akhanagar Ground.',
+    description: 'Adibasi Tarzan Club fixtures, results, match updates and postponements, team reporting instructions and club events — Sports Day, Heritage Night and Prize Distribution at S. Akhanagar Ground, Kaliyaganj.',
     crumb: 'Schedule',
     type: 'CollectionPage',
+  },
+  '/tournaments': {
+    title: 'ATC Annual Cup — Football Tournament in Kaliyaganj',
+    description: 'The ATC Annual Cup football tournament hosted by Adibasi Tarzan Club at S. Akhanagar Ground, Kaliyaganj, Uttar Dinajpur: tournament schedule, participating teams, fixtures and results.',
+    crumb: 'ATC Tournaments',
+    type: 'CollectionPage',
+  },
+  '/register': {
+    title: 'Registration & Participation — Sign Up for Club Events',
+    description: 'Sign up for Adibasi Tarzan Club events and programmes in S. Akhanagar, Kaliyaganj — Sports Day, youth football coaching, the cultural troupe, volunteering and ATC Annual Cup team entries.',
+    crumb: 'Registration & Participation',
+    type: 'WebPage',
   },
   '/news': {
     title: 'Latest News',
@@ -97,14 +113,14 @@ const PAGES = {
     type: 'WebPage',
   },
   '/members': {
-    title: 'Club Members',
-    description: 'The members of Adibasi Tarzan Club — the life members, founding members, patrons and well-wishers of S. Akhanagar, Kaliyaganj who stand behind the club.',
+    title: 'Club Members & In Memoriam',
+    description: 'The members of Adibasi Tarzan Club, S. Akhanagar, Kaliyaganj — the founding members remembered In Memoriam, and the active life members, members, patrons and well-wishers who stand behind the club.',
     crumb: 'Members',
     type: 'WebPage',
   },
   '/gallery': {
-    title: 'Photo Gallery',
-    description: 'Photos from Adibasi Tarzan Club matchdays, youth sessions, floodlit training and club life at S. Akhanagar Ground, Kaliyaganj.',
+    title: 'Gallery — Moments to Memories',
+    description: 'Photos of Adibasi Tarzan Club, S. Akhanagar, Kaliyaganj: the football arena and Dashami Dhamaka, Kali Puja and club events, Baha and Sohrai Parab and Adibasi heritage, and the ATC family.',
     crumb: 'Gallery',
     type: 'ImageGallery',
   },
@@ -113,6 +129,12 @@ const PAGES = {
     description: 'Join Adibasi Tarzan Club as a Supporter, Member or Life Member. Vote at the AGM, get priority seats at the Annual Cup final and stand with S. Akhanagar.',
     crumb: 'Membership',
     type: 'WebPage',
+  },
+  '/crest': {
+    title: 'Our Crest — The Story Behind the ATC Crest',
+    description: 'What every part of the Adibasi Tarzan Club crest means: Estd. 1981, the jungle, Tarzan, the bow and arrows, the Tumdak and Tamak, the Bengali inscription, the football, ATC, the shield and the maroon and blue colours.',
+    crumb: 'Our Crest',
+    type: ['AboutPage', 'FAQPage'],
   },
   '/contact': {
     title: 'Contact & Partnerships',
@@ -138,6 +160,11 @@ const LOCAL_KEYWORDS = [
   'Adibasi football club in West Bengal',
   'youth football training in Kaliyaganj',
   'football tournament in Kaliyaganj',
+  'football tournament in Uttar Dinajpur',
+  'ATC Annual Cup Kaliyaganj',
+  'Adibasi culture in Kaliyaganj',
+  'Sohrai and Baha Parab in Uttar Dinajpur',
+  'Kali Puja in S. Akhanagar',
 ];
 
 // ─── People ───────────────────────────────────────────────────
@@ -167,7 +194,11 @@ const playerNode = (p, tr, url) => personNode({
   team: squadOf(p) === 'first-team',
 }, tr);
 const officerNode = (c, tr, url) => personNode({ name: tr(c.name), role: tr(c.role), photo: c.photo, url }, tr);
-const memberNode = (m, tr, url) => personNode({ name: tr(m.name), role: tr(m.kind || 'Member'), photo: m.photo, url }, tr);
+const memberNode = (m, tr, url) => {
+  const node = personNode({ name: tr(m.name), role: tr(m.kind || 'Member'), photo: m.photo, url }, tr);
+  if (m.memoriam) node.description = tr('{name} — {role}, Adibasi Tarzan Club (ATC), S. Akhanagar, Kaliyaganj. Remembered by the club: In Memoriam.', { name: node.name, role: tr(m.kind || 'Member') });
+  return node;
+};
 
 const peopleList = (name, people) => ({
   '@type': 'ItemList',
@@ -204,7 +235,7 @@ const organization = () => ({
     { '@type': 'State', name: 'West Bengal' },
   ],
   keywords: LOCAL_KEYWORDS.join(', '),
-  knowsAbout: ['Football', 'Youth football coaching', 'Adivasi culture and heritage', 'Community sport', 'Football tournaments'],
+  knowsAbout: ['Football', 'Youth football coaching', 'Adivasi culture and heritage', 'Community sport', 'Football tournaments', 'Baha Parab', 'Sohrai Parab', 'Tumdak and Tamak drums'],
   contactPoint: {
     '@type': 'ContactPoint', contactType: 'customer support', email: CLUB.email, areaServed: 'IN', availableLanguage: ['English', 'Bengali'],
   },
@@ -273,7 +304,7 @@ const matchEvent = (m, tr, url) => {
     sport: 'Football',
     startDate: m.date,
     endDate: plus2h(m.date),
-    eventStatus: 'https://schema.org/EventScheduled',
+    eventStatus: `https://schema.org/${{ postponed: 'EventPostponed', cancelled: 'EventCancelled' }[m.status] || 'EventScheduled'}`,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     location: place(m.venue, tr),
     homeTeam: teamRef(m.home),
@@ -300,7 +331,44 @@ const clubEvent = (e, tr, url) => ({
   organizer: { '@id': ID.org },
   image: photoUrl(e.photo) || abs(SITE.image.src),
   url: `${url}?tab=events`,
+  ...(eventOpen(e) && { offers: { '@type': 'Offer', url: abs('/register'), availability: 'https://schema.org/InStock', ...(e.signupBy && { validThrough: e.signupBy }) } }),
 });
+
+/** A tournament, its matches as sub-events and its teams as competitors. */
+const tournamentEvent = (x, tr, url) => {
+  const { fixtures, results } = tournamentMatches(x, getContent());
+  return {
+    '@type': 'SportsEvent',
+    '@id': `${abs('/tournaments')}#${x.id}`,
+    name: tr(x.name),
+    description: (x.about || []).map(tr).join(' ') || tr('Football tournament hosted by Adibasi Tarzan Club at S. Akhanagar Ground, Kaliyaganj.'),
+    sport: 'Football',
+    startDate: x.start,
+    ...(x.end && { endDate: x.end }),
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: place(x.venue, tr),
+    organizer: { '@id': ID.org },
+    image: photoUrl(x.photo) || abs(SITE.image.src),
+    url,
+    ...(x.teams.length && { competitor: x.teams.map((tm) => teamRef(tm.team)) }),
+    ...([...fixtures, ...results].length && { subEvent: [...fixtures, ...results].map((m) => matchEvent(m, tr, url)) }),
+    ...(tournamentOpen(x) && { offers: { '@type': 'Offer', name: tr('Team entry'), url: abs('/register'), availability: 'https://schema.org/InStock', ...(x.signupBy && { validThrough: x.signupBy }) } }),
+  };
+};
+
+const programmeNode = (x, tr) => ({
+  '@type': 'Service',
+  name: tr(x.title),
+  description: tr(x.desc),
+  provider: { '@id': ID.org },
+  areaServed: [{ '@type': 'City', name: 'Kaliyaganj' }, { '@type': 'AdministrativeArea', name: 'Uttar Dinajpur district' }],
+  ...(x.venue && { availableChannel: { '@type': 'ServiceChannel', serviceLocation: place(x.venue, tr) } }),
+  ...(x.photo && { image: photoUrl(x.photo) }),
+  url: abs('/register'),
+});
+
+const faqEntities = (items) => items.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } }));
 
 const breadcrumb = (url, trail, lang) => ({
   '@type': 'BreadcrumbList',
@@ -369,15 +437,82 @@ function pageExtras(path, lang) {
         ? { page: { mainEntity: peopleList('Adibasi Tarzan Club committee and office-bearers', officers.map((c) => officerNode(c, tr, url))) } }
         : {};
     }
-    case '/members':
+    case '/members': {
+      const remembered = MEMBERS.filter((m) => m.memoriam);
+      const active = MEMBERS.filter((m) => !m.memoriam);
       return MEMBERS.length
-        ? { page: { mainEntity: peopleList('Adibasi Tarzan Club members', MEMBERS.map((m) => memberNode(m, tr, url))) } }
+        ? {
+          page: {
+            mainEntity: [
+              ...(remembered.length ? [peopleList('Adibasi Tarzan Club — In Memoriam, founding members', remembered.map((m) => memberNode(m, tr, `${url}#in-memoriam`)))] : []),
+              ...(active.length ? [peopleList('Adibasi Tarzan Club members (active)', active.map((m) => memberNode(m, tr, `${url}#club-members`)))] : []),
+            ],
+          },
+        }
         : {};
-    case '/gallery':
+    }
+    case '/gallery': {
+      const image = (g) => ({
+        '@type': 'ImageObject',
+        contentUrl: photoUrl(g.photo),
+        caption: [tr(g.cap), g.album && tr(g.album)].filter(Boolean).join(' — '),
+        creditText: CLUB.name,
+        copyrightNotice: `© ${CLUB.name}`,
+        contentLocation: { '@type': 'Place', name: 'S. Akhanagar, Kaliyaganj, Uttar Dinajpur, West Bengal' },
+      });
       return {
         page: {
-          image: GALLERY.slice(0, 60).map((g) => ({ '@type': 'ImageObject', contentUrl: photoUrl(g.photo), caption: tr(g.cap), creditText: CLUB.name, copyrightNotice: `© ${CLUB.name}` })),
+          hasPart: GALLERY_SECTIONS.map((sec) => {
+            const shots = GALLERY.filter((g) => sectionOf(g) === sec.id);
+            return {
+              '@type': 'ImageGallery',
+              name: `${tr(sec.title)} — ${tr(CLUB.name)}`,
+              description: tr(sec.blurb),
+              url: abs(localePath(lang, `/gallery?section=${sec.id}`)),
+              keywords: sec.albums.map(tr).join(', '),
+              ...(shots.length && { image: shots.slice(0, 30).map(image) }),
+            };
+          }),
         },
+      };
+    }
+    case '/tournaments':
+      return TOURNAMENTS.length
+        ? { page: { mainEntity: { '@type': 'ItemList', name: 'ATC tournaments', itemListElement: TOURNAMENTS.map((x, i) => ({ '@type': 'ListItem', position: i + 1, item: tournamentEvent(x, tr, url) })) } } }
+        : {};
+    case '/register': {
+      const items = [
+        ...EVENTS.filter(eventOpen).map((e) => clubEvent(e, tr, abs(localePath(lang, '/schedule')))),
+        ...PROGRAMMES.filter((x) => x.signup).map((x) => programmeNode(x, tr)),
+        ...TOURNAMENTS.filter(tournamentOpen).map((x) => tournamentEvent(x, tr, abs(localePath(lang, '/tournaments')))),
+      ];
+      return items.length
+        ? { page: { mainEntity: { '@type': 'ItemList', name: 'Open for sign-ups at Adibasi Tarzan Club', itemListElement: items.map((item, i) => ({ '@type': 'ListItem', position: i + 1, item })) } } }
+        : {};
+    }
+    case '/crest':
+      return {
+        page: {
+          mainEntity: faqEntities(CREST_FAQ.map((f) => ({ q: tr(f.q), a: tr(f.a) }))),
+          primaryImageOfPage: { '@id': `${url}#crest` },
+        },
+        nodes: [{
+          '@type': 'ImageObject',
+          '@id': `${url}#crest`,
+          contentUrl: abs(CREST_IMAGE.src),
+          width: CREST_IMAGE.width,
+          height: CREST_IMAGE.height,
+          name: tr(CREST_INTRO.title),
+          caption: tr('The crest of Adibasi Tarzan Club, S. Akhanagar, Kaliyaganj — established 1981'),
+          description: CREST_PARTS.map((p) => `${tr(p.label)}: ${tr(p.title)}`).join('; '),
+          creditText: CLUB.name,
+          copyrightNotice: `© ${CLUB.name}`,
+          about: { '@id': ID.org },
+        }, {
+          '@type': 'ItemList',
+          name: 'Parts of the Adibasi Tarzan Club crest and what they mean',
+          itemListElement: CREST_PARTS.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: `${tr(p.label)} — ${tr(p.title)}`, description: tr(p.body[0]), url: `${url}#${p.id}` })),
+        }],
       };
     case '/membership':
       return {
@@ -622,7 +757,22 @@ const squadLine = (players) => ['Goalkeeper', 'Defender', 'Midfielder', 'Forward
   .join('\n');
 
 const committeeLines = () => COMMITTEE.filter((c) => named(c.name)).map((c) => `- ${c.role}: ${c.name}`);
-const memberLines = () => MEMBERS.map((m) => `- ${m.name} — ${m.kind || 'Member'}${m.since ? `, since ${m.since}` : ''}`);
+const memberLines = () => MEMBERS.filter((m) => !m.memoriam).map((m) => `- ${m.name} — ${m.kind || 'Member'}${m.since ? `, since ${m.since}` : ''}`);
+const memoriamLines = () => MEMBERS.filter((m) => m.memoriam).map((m) => `- ${m.name} — ${m.kind || 'Member'}${m.years ? ` (${m.years})` : ''}${m.tribute ? `: ${m.tribute}` : ''}`);
+
+const tournamentLines = () => TOURNAMENTS.map((x) => {
+  const { fixtures, results } = tournamentMatches(x, getContent());
+  return [
+    `### ${x.name}`,
+    '',
+    `${fmtDate(x.start)}${x.end ? ` to ${fmtDate(x.end)}` : ''} · ${x.venue} · ${abs('/tournaments')}`,
+    ...(x.about?.length ? ['', ...x.about] : []),
+    ...(x.schedule?.length ? ['', 'Schedule:', ...x.schedule.map((st) => `- ${st.stage}: ${fmtDate(st.from)}${st.to ? ` to ${fmtDate(st.to)}` : ''}${st.note ? ` (${st.note})` : ''}`)] : []),
+    ...(x.teams.length ? ['', `Participating teams: ${x.teams.map((tm) => `${TEAMS[tm.team]?.name}${tm.group ? ` (${tm.group})` : ''}`).join(', ')}`] : []),
+    ...(x.winner ? ['', `Winner: ${TEAMS[x.winner]?.name}${x.runnerUp ? `; runner-up: ${TEAMS[x.runnerUp]?.name}` : ''}`] : []),
+    ...([...fixtures, ...results].length ? ['', 'Matches:', ...[...fixtures, ...results].map(matchLine)] : []),
+  ].join('\n');
+}).join('\n\n');
 
 /** Short "who is at the club" lines for llms.txt. */
 function peopleSummary() {
@@ -631,7 +781,8 @@ function peopleSummary() {
   return [
     ...committeeLines(),
     ...(first.length ? [`- First team: ${first.length} players${captain ? `, captained by ${captain.first} ${captain.last}` : ''} — ${abs('/squad')}`] : []),
-    ...(MEMBERS.length ? [`- Members: ${MEMBERS.length} named club members — ${abs('/members')}`] : []),
+    ...(MEMBERS.some((m) => !m.memoriam) ? [`- Members: ${MEMBERS.filter((m) => !m.memoriam).length} named active club members — ${abs('/members')}`] : []),
+    ...(MEMBERS.some((m) => m.memoriam) ? [`- In Memoriam: ${MEMBERS.filter((m) => m.memoriam).map((m) => m.name).join(', ')} — remembered founding members, ${abs('/members#in-memoriam')}`] : []),
     `- Everyone listed on ${abs('/squad')}, ${abs('/committee')} and ${abs('/members')} belongs to ${CLUB.name}.`,
   ];
 }
@@ -653,13 +804,16 @@ ${KEY_FACTS().join('\n')}
 
 ${page('/', 'Home')}
 ${page('/club', 'About the club')}
-${page('/schedule', 'Fixtures, results & events')}
+${page('/schedule', 'Events & participations: fixtures, results, match information & club events')}
+${page('/tournaments', 'ATC Tournaments — the ATC Annual Cup')}
+${page('/register', 'Registration & participation')}
 ${page('/squad', 'First team squad')}
 ${page('/news', 'News')}
 ${page('/membership', 'Membership')}
 ${page('/committee', 'Committee')}
 ${page('/members', 'Members')}
-${page('/gallery', 'Gallery')}
+${page('/gallery', 'Gallery — Moments to Memories')}
+${page('/crest', 'The story behind our crest')}
 ${page('/contact', 'Contact & partnerships')}
 
 ## People
@@ -676,7 +830,7 @@ ${NEWS.map((n) => `- [${n.title}](${abs(`/news/${n.slug}`)}): ${n.desc}`).join('
 
 ## Optional
 
-- [Full text for language models](${abs('/llms-full.txt')}): fixtures, results, squad, history, FAQ and news in one file
+- [Full text for language models](${abs('/llms-full.txt')}): fixtures, results, tournaments, squad, members, crest story, history, FAQ and news in one file
 - [Sitemap](${abs('/sitemap.xml')})
 - The site is also available in Hindi (${abs('/hi')}) and Bengali (${abs('/bn')}).
 
@@ -704,29 +858,41 @@ ${TIMELINE.map((t) => `- ${t.year} — ${t.title}: ${t.text}`).join('\n')}
 
 ${HONOURS.map((h) => `- ${h.comp}: ${h.count} ${h.unit.toLowerCase()}`).join('\n')}
 
+## Our crest
+
+${CREST_INTRO.body[0]} (${abs('/crest')})
+
+${CREST_PARTS.map((p, i) => `${i + 1}. ${p.label} — ${p.title}: ${p.body[0]}${p.colours ? ` ${p.colours.map((c) => `${c.name} — ${c.meaning}.`).join(' ')}` : ''}`).join('\n')}
+
+${CREST_MESSAGE.closing}
+
 ## Upcoming fixtures
 
-${FIXTURES.map(matchLine).join('\n')}
+${FIXTURES.map((m) => `${matchLine(m)}${m.status ? ` — ${m.status.toUpperCase()}${m.statusNote ? `: ${m.statusNote}` : ''}` : ''}`).join('\n')}
 
 ## Recent results
 
 ${RESULTS.map(matchLine).join('\n')}
 
-## Club events
+${section('Match information', MATCH_INFO.map((x) => `- ${fmtDate(x.date)} — ${x.kind}: ${x.title}. ${x.text}`).join('\n'))}## Club events
 
-${EVENTS.map((e) => `- ${fmtDate(e.date)}, ${fmtTime(e.date)} IST — ${e.title} (${e.venue})${e.desc ? `: ${e.desc}` : ''}`).join('\n')}
+${EVENTS.map((e) => `- ${fmtDate(e.date)}, ${fmtTime(e.date)} IST — ${e.title} (${e.venue})${e.desc ? `: ${e.desc}` : ''}${eventOpen(e) ? ` Sign up: ${abs('/register')}` : ''}`).join('\n')}
+
+${section('ATC tournaments', tournamentLines())}${section('Club programmes (sign up at /register)', PROGRAMMES.map((x) => `- ${x.title}${x.when ? ` (${x.when})` : ''}${x.who ? ` — ${x.who}` : ''}: ${x.desc}`).join('\n'))}## Gallery sections
+
+${GALLERY_SECTIONS.map((g) => `- ${g.title}: ${g.albums.join(', ')} — ${abs(`/gallery?section=${g.id}`)}`).join('\n')}
 
 ## First team squad
 
 ${squadLine(SQUAD.filter((p) => squadOf(p) === 'first-team'))}
 
-${section('Youth (U-17) squad', squadLine(SQUAD.filter((p) => squadOf(p) === 'youth')))}${section('Veterans squad', squadLine(SQUAD.filter((p) => squadOf(p) === 'veterans')))}${section('Committee and office-bearers', committeeLines().join('\n'))}${section(`Members of ${CLUB.name}`, memberLines().join('\n'))}## Membership
+${section('Youth (U-17) squad', squadLine(SQUAD.filter((p) => squadOf(p) === 'youth')))}${section('Veterans squad', squadLine(SQUAD.filter((p) => squadOf(p) === 'veterans')))}${section('Committee and office-bearers', committeeLines().join('\n'))}${section('In Memoriam — founding members, forever remembered', memoriamLines().join('\n'))}${section(`Members of ${CLUB.name} (active)`, memberLines().join('\n'))}## Membership
 
 ${MEMBERSHIP_TIERS.map((t) => `- ${t.name} (${t.price}): ${t.perks.join('; ')}`).join('\n')}
 
 ## Frequently asked questions
 
-${[...FAQ, ...localFaq(getContent(), (text, vars) => translate('en', text, vars))].map((f) => `### ${f.q}\n\n${f.a}`).join('\n\n')}
+${[...FAQ, ...localFaq(getContent(), (text, vars) => translate('en', text, vars)), ...CREST_FAQ].map((f) => `### ${f.q}\n\n${f.a}`).join('\n\n')}
 
 ## News
 

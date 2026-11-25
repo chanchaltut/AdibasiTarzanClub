@@ -142,6 +142,7 @@ export default function Club() {
               <Crest size={160} alt={t('Adibasi Tarzan Club crest')} />
               <p className="founding__line script">{t('Est. 1981')}</p>
               <p className="founding__place serif">{t('S. Akhanagar · Kaliyaganj · Uttar Dinajpur')}</p>
+              <Link to="/crest" className="founding__more link-arrow">{t('The story behind our crest')} <Icon name="arrow" size={16} /></Link>
               <WaxSeal size={78} className="founding__seal" />
             </div>
           </div>

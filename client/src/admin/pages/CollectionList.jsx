@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { api } from '../api';
 import { useSchema } from '../schema';
 import { fmtDate, fmtDateTime } from '../format';
-import { optionList } from '../fields';
+import { Field, optionList } from '../fields';
 import { useUploader } from '../fields/Uploader';
 import { Badge, Button, Empty, Icon, IconButton, Loading, Notice, useFeedback } from '../ui';
 import NotFound from './NotFound';
@@ -16,6 +16,7 @@ function subtitle(def, item, refs) {
     const f = def.fields.find((x) => x.name === name);
     const v = item[name];
     if (v === undefined || v === null || v === '') return null;
+    if (name === 'createdAt') return `received ${fmtDateTime(v)}`;
     if (!f) return String(v);
     if (f.type === 'datetime') return f.name === 'date' && def.key !== 'news' ? fmtDateTime(v) : fmtDate(v);
     if (f.type === 'select') return optionList(f).find((o) => o.value === v)?.label || v;
@@ -35,7 +36,10 @@ function BulkUpload({ def, onDone }) {
   const { upload, progress, busy } = useUploader();
   const { toast } = useFeedback();
   const [creating, setCreating] = useState(null);
-  const { imageField, titleField } = def.bulkUpload;
+  const { imageField, titleField, pick = [] } = def.bulkUpload;
+  // Fields chosen once for the whole batch (e.g. the gallery section and album).
+  const pickFields = pick.map((name) => def.fields.find((f) => f.name === name)).filter(Boolean);
+  const [picked, setPicked] = useState(() => Object.fromEntries(pickFields.map((f) => [f.name, f.default ?? ''])));
 
   const run = async (files) => {
     const { items } = await upload(files);
@@ -45,7 +49,7 @@ function BulkUpload({ def, onDone }) {
     for (const m of items) {
       const caption = (m.originalName || 'Photo').replace(/\.[a-z0-9]+$/i, '').replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 100) || 'Photo';
       try {
-        await api(`/admin/c/${def.key}`, { method: 'POST', body: { [imageField]: { media: m.id }, [titleField]: /^(img|dsc|pxl|photo|image|whatsapp)\b/i.test(caption) ? 'Photo' : caption, published: true } });
+        await api(`/admin/c/${def.key}`, { method: 'POST', body: { ...picked, [imageField]: { media: m.id }, [titleField]: /^(img|dsc|pxl|photo|image|whatsapp)\b/i.test(caption) ? 'Photo' : caption, published: true } });
         ok += 1;
       } catch (err) {
         toast(`${m.originalName}: ${err.message}`, 'error');
@@ -59,6 +63,19 @@ function BulkUpload({ def, onDone }) {
 
   return (
     <>
+      {pickFields.length > 0 && (
+        <div className="a-bulk-pick" aria-label="Where the uploaded photos go">
+          {pickFields.map((f) => (
+            <Field
+              key={f.name}
+              f={{ ...f, required: f.type === 'select', help: undefined, label: `Upload into — ${f.label.toLowerCase()}` }}
+              value={picked[f.name]}
+              data={picked}
+              onChange={(v) => setPicked((p) => ({ ...p, [f.name]: v, ...(f.name === 'section' && { album: '' }) }))}
+            />
+          ))}
+        </div>
+      )}
       <Button variant="primary" icon="upload" onClick={() => input.current?.click()} busy={busy || Boolean(creating)}>Upload many photos</Button>
       <input ref={input} type="file" accept="image/*" multiple hidden onChange={(e) => { run(e.target.files); e.target.value = ''; }} />
       {(busy || creating) && (

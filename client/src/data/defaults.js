@@ -69,7 +69,10 @@ const PAGES = {
   squad: { photo: PHOTO.tackle, script: 'The first XI', intro: 'The squad wearing the brown and gold in the 2026–27 season.' },
   committee: { photo: PHOTO.ballShadow, script: '2026–27', intro: 'The office-bearers who run the club on behalf of its members.' },
   members: { photo: PHOTO.ballShadow, script: 'One family', intro: 'The members who stand behind the club, season after season.' },
-  gallery: { photo: { url: PHOTO.boot, pos: '50% 70%' }, script: 'In pictures', intro: 'Moments from the ground, the training pitch and the club grounds.' },
+  gallery: { photo: { url: PHOTO.boot, pos: '50% 70%' }, script: 'Moments to Memories', intro: 'Football, celebrations, heritage and the ATC family — moments from S. Akhanagar, kept as memories.' },
+  tournaments: { photo: PHOTO.ballPitch, script: 'Matches & Tournaments', intro: 'The ATC Annual Cup at S. Akhanagar Ground: schedule, participating teams, fixtures and results.' },
+  register: { photo: PHOTO.training, script: 'Join in', intro: 'Sign up for upcoming club events, regular club programmes and the ATC Annual Cup.' },
+  crest: { photo: PHOTO.pitch, script: 'Since 1981', intro: 'Every figure, symbol, colour and inscription on our crest has its own meaning.' },
   membership: { photo: PHOTO.tunnel, script: 'Join the family', intro: 'Stand with the club that has stood for S. Akhanagar since 1981.' },
   contact: { photo: PHOTO.ball, script: 'Write to us', intro: 'The club office is open most evenings at the ground. Letters, calls and visits are all welcome.' },
 };
@@ -98,9 +101,16 @@ const TEAMS = {
 // ─── Fixtures & results (SAMPLE) ──────────────────────────────
 const FIXTURES = [
   { id: 'f1', home: 'ATC', away: 'RTF', date: '2026-10-26T15:30:00+05:30', comp: 'District League', round: 'Matchday 7', venue: 'S. Akhanagar Ground', entry: 'Free entry' },
-  { id: 'f2', home: 'ITU', away: 'ATC', date: '2026-11-02T15:00:00+05:30', comp: 'District League', round: 'Matchday 8', venue: 'Itahar Stadium' },
+  { id: 'f2', home: 'ITU', away: 'ATC', date: '2026-11-02T15:00:00+05:30', comp: 'District League', round: 'Matchday 8', venue: 'Itahar Stadium', reporting: 'Report at the club office by 12:30 pm with boots and shin guards. The team leaves together at 1:00 pm.' },
   { id: 'f3', home: 'ATC', away: 'KYC', date: '2026-11-15T14:00:00+05:30', comp: 'ATC Annual Cup', round: 'Opening match', venue: 'S. Akhanagar Ground', entry: 'Tickets' },
-  { id: 'f4', home: 'HSC', away: 'ATC', date: '2026-11-29T14:30:00+05:30', comp: 'District League', round: 'Matchday 9', venue: 'Hemtabad Ground' },
+  { id: 'f4', home: 'HSC', away: 'ATC', date: '2026-11-29T14:30:00+05:30', comp: 'District League', round: 'Matchday 9', venue: 'Hemtabad Ground', reporting: 'Report at the club office by 12:30 pm in the away kit.' },
+  { id: 'f5', home: 'ATC', away: 'KSP', date: '2026-12-06T14:30:00+05:30', comp: 'District League', round: 'Matchday 10', venue: 'S. Akhanagar Ground', status: 'postponed', statusNote: 'New date to be announced' },
+];
+
+// ─── Match information (SAMPLE) ───────────────────────────────
+const MATCH_INFO = [
+  { id: 'mi1', title: 'Matchday 10 against Kunore Sporting postponed', kind: 'Postponement', date: '2026-11-24T18:00:00+05:30', match: 'f5', text: 'The home match against Kunore Sporting on 6 December is postponed at the request of the district association. The new date will be posted here.' },
+  { id: 'mi2', title: 'Reporting time for the Hemtabad away match', kind: 'Team reporting instructions', date: '2026-11-23T19:00:00+05:30', match: 'f4', text: 'All selected players report at the club office by 12:30 pm on Saturday in the away kit. The team travels together.' },
 ];
 
 const RESULTS = [
@@ -114,7 +124,42 @@ const EVENTS = [
   { id: 'e1', title: 'ATC Annual Cup 2026', kind: 'Football', date: '2026-11-15T09:00:00+05:30', venue: 'S. Akhanagar Ground', desc: 'Our flagship knockout tournament, open to clubs across Uttar Dinajpur.' },
   { id: 'e2', title: 'Heritage Night', kind: 'Culture', date: '2026-11-22T18:00:00+05:30', venue: 'Club Grounds', desc: 'An evening of traditional music, dance and stories under the lanterns.' },
   { id: 'e3', title: 'Annual General Meeting', kind: 'Club', date: '2026-12-01T10:00:00+05:30', venue: 'Club Hall', desc: 'Accounts, elections and the plan for the year ahead. All members welcome.' },
-  { id: 'e4', title: 'Prize Distribution Ceremony', kind: 'Ceremony', date: '2026-12-20T14:00:00+05:30', venue: 'Club Grounds', desc: 'Honouring the players, volunteers and families who carried the season.' },
+  { id: 'e4', title: 'Prize Distribution Ceremony', kind: 'Prize Distribution', date: '2026-12-20T14:00:00+05:30', venue: 'Club Grounds', desc: 'Honouring the players, volunteers and families who carried the season.' },
+  { id: 'e5', title: 'ATC Sports Day', kind: 'Sports Day', date: '2027-01-26T08:00:00+05:30', venue: 'S. Akhanagar Ground', desc: 'Races, games and team events for every age, from the youngest children to the veterans.', signup: true, signupBy: '2027-01-20T20:00:00+05:30' },
+];
+
+// ─── ATC tournaments (SAMPLE schedule and teams) ──────────────
+const TOURNAMENTS = [
+  {
+    id: 't1',
+    name: 'ATC Annual Cup 2026',
+    comp: 'ATC Annual Cup',
+    start: '2026-11-15T09:00:00+05:30',
+    end: '2026-12-13T17:00:00+05:30',
+    venue: 'S. Akhanagar Ground',
+    about: [
+      'The ATC Annual Cup is the club’s flagship knockout football tournament, open to clubs across Uttar Dinajpur and played at S. Akhanagar Ground, Kaliyaganj.',
+      'The 2026 edition marks forty-five years of the club. Group matches are free to watch.',
+    ],
+    schedule: [
+      { stage: 'Team registration closes', from: '2026-11-01T20:00:00+05:30' },
+      { stage: 'Opening match', from: '2026-11-15T14:00:00+05:30' },
+      { stage: 'Group stage', from: '2026-11-15T09:00:00+05:30', to: '2026-11-30T17:00:00+05:30' },
+      { stage: 'Semi-finals', from: '2026-12-06T14:00:00+05:30' },
+      { stage: 'Final', from: '2026-12-13T14:00:00+05:30' },
+    ],
+    teams: [
+      { team: 'ATC', group: 'Group A' }, { team: 'KYC', group: 'Group A' }, { team: 'RTF', group: 'Group A' },
+      { team: 'ITU', group: 'Group B' }, { team: 'HSC', group: 'Group B' }, { team: 'BFC', group: 'Group B' },
+    ],
+  },
+];
+
+// ─── Club programmes people can join (SAMPLE details) ─────────
+const PROGRAMMES = [
+  { id: 'pg1', title: 'Youth Football Coaching', desc: 'Morning coaching for under-13 and under-17 players at the ground. Bring water, boots if you have them, and a parent’s signature.', when: 'Tue, Thu & Sat · 6:30 am', who: 'Boys and girls, under-13 and under-17', venue: 'S. Akhanagar Ground', signup: true },
+  { id: 'pg2', title: 'Cultural Troupe', desc: 'Traditional music, dance and stories of our Adibasi roots, rehearsed for Heritage Night and club celebrations.', who: 'Singers, dancers and players of the madal and dhamsa', venue: 'Club Grounds', signup: true },
+  { id: 'pg3', title: 'Volunteers', desc: 'Help on matchdays, at the Annual Cup, Kali Puja, Sports Day and Heritage Night.', who: 'Everyone from S. Akhanagar and nearby villages', signup: true },
 ];
 
 // ─── Home: events & tickets carousel ──────────────────────────
@@ -308,18 +353,18 @@ const MEMBERSHIP_TIERS = [
 
 // ─── Gallery (SAMPLE captions) ────────────────────────────────
 const GALLERY = [
-  { id: 'g1', photo: PHOTO.action, cap: 'Matchday, S. Akhanagar', album: 'Matchday' },
-  { id: 'g2', photo: PHOTO.youth, cap: 'Youth session', album: 'Youth' },
-  { id: 'g3', photo: PHOTO.strike, cap: 'Shooting practice', album: 'Training' },
-  { id: 'g4', photo: PHOTO.night, cap: 'Under the lights', album: 'Training' },
-  { id: 'g5', photo: PHOTO.tackle, cap: 'Every ball counts', album: 'Matchday' },
-  { id: 'g6', photo: PHOTO.kick, cap: 'Warm-up', album: 'Training' },
-  { id: 'g7', photo: PHOTO.pitch, cap: 'Fresh lines' },
-  { id: 'g8', photo: PHOTO.balls, cap: 'New match balls' },
-  { id: 'g9', photo: PHOTO.boot, cap: 'Boots on', album: 'Matchday' },
-  { id: 'g10', photo: PHOTO.net, cap: 'Back of the net', album: 'Matchday' },
-  { id: 'g11', photo: PHOTO.training, cap: 'First touch', album: 'Training' },
-  { id: 'g12', photo: PHOTO.goalNight, cap: 'Late session', album: 'Training' },
+  { id: 'g1', photo: PHOTO.action, cap: 'Matchday, S. Akhanagar', section: 'football', album: 'Matchday Action' },
+  { id: 'g2', photo: PHOTO.youth, cap: 'Youth session', section: 'football', album: 'Training & Practice' },
+  { id: 'g3', photo: PHOTO.strike, cap: 'Shooting practice', section: 'football', album: 'Training & Practice' },
+  { id: 'g4', photo: PHOTO.night, cap: 'Under the lights', section: 'football', album: 'Training & Practice' },
+  { id: 'g5', photo: PHOTO.tackle, cap: 'Every ball counts', section: 'football', album: 'Matchday Action' },
+  { id: 'g6', photo: PHOTO.kick, cap: 'Warm-up', section: 'football', album: 'Training & Practice' },
+  { id: 'g7', photo: PHOTO.pitch, cap: 'Fresh lines', section: 'family', album: 'Behind the Scenes & Candid Moments' },
+  { id: 'g8', photo: PHOTO.balls, cap: 'New match balls', section: 'family', album: 'Behind the Scenes & Candid Moments' },
+  { id: 'g9', photo: PHOTO.boot, cap: 'Boots on', section: 'football', album: 'Matchday Action' },
+  { id: 'g10', photo: PHOTO.net, cap: 'Back of the net', section: 'football', album: 'Matchday Action' },
+  { id: 'g11', photo: PHOTO.training, cap: 'First touch', section: 'football', album: 'Training & Practice' },
+  { id: 'g12', photo: PHOTO.goalNight, cap: 'Late session', section: 'football', album: 'Training & Practice' },
 ];
 
 // ─── Our Legacy: the Married vs Unmarried match at Dussehra ───
@@ -353,7 +398,10 @@ export default {
   TEAMS,
   FIXTURES,
   RESULTS,
+  MATCH_INFO,
   EVENTS,
+  TOURNAMENTS,
+  PROGRAMMES,
   PROMOS,
   STORIES,
   EXPLORE,

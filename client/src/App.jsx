@@ -11,6 +11,9 @@ import Members from './pages/Members';
 import Gallery from './pages/Gallery';
 import Membership from './pages/Membership';
 import Contact from './pages/Contact';
+import Tournaments from './pages/Tournaments';
+import Register from './pages/Register';
+import Crest from './pages/Crest';
 import NotFound from './pages/NotFound';
 import { LANGS } from './i18n';
 import { useContent } from './content/store';
@@ -34,6 +37,9 @@ export function AppRoutes() {
           <Route path="gallery" element={<Gallery />} />
           <Route path="membership" element={<Membership />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="tournaments" element={<Tournaments />} />
+          <Route path="register" element={<Register />} />
+          <Route path="crest" element={<Crest />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       ))}

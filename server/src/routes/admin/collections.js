@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import Media from '../../models/Media.js';
 import { contentModel } from '../../models/content.js';
-import { COLLECTION_MAP, titleOf } from '../../content/schemas.js';
+import { COLLECTION_MAP, titleOf, withDefaults } from '../../content/schemas.js';
 import { defaultsFor, mediaIdsIn, validateFields } from '../../content/validate.js';
 import { contentUpdated, sortFor } from '../../content/bundle.js';
 import { assertMediaExist, checkRefs, incomingRefs, mediaFor, refTitles, thumbFor } from '../../content/helpers.js';
@@ -9,6 +9,9 @@ import { record } from '../../services/audit.js';
 import { HttpError, badRequest, conflict, escapeRegex, isObjectId, notFound, slugify } from '../../utils/http.js';
 
 const router = Router();
+
+/** Tell the website something changed — except for private lists (sign-ups), which it never shows. */
+const changed = (def) => { if (!def.private) contentUpdated(); };
 
 function defFor(req) {
   const def = COLLECTION_MAP[req.params.type];
@@ -114,7 +117,12 @@ router.get('/:type', async (req, res) => {
 router.get('/:type/options', async (req, res) => {
   const def = defFor(req);
   const docs = await contentModel(def.key).find().sort(sortFor(def)).limit(1000).lean();
-  res.json({ options: docs.map((d) => ({ value: String(d._id), label: titleOf(def, d) })) });
+  const refs = def.fields.some((f) => f.type === 'ref') ? await refTitles(def) : {};
+  // Matches are told apart by their date ("ATC vs Raiganj · 26 Oct 2026").
+  const when = (d) => (d.date && def.key === 'matches'
+    ? ` · ${new Date(d.date).toLocaleDateString('en-GB', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', year: 'numeric' })}`
+    : '');
+  res.json({ options: docs.map((d) => ({ value: String(d._id), label: titleOf(def, d, refs) + when(d) })) });
 });
 
 router.get('/:type/new', async (req, res) => {
@@ -125,7 +133,7 @@ router.get('/:type/new', async (req, res) => {
 router.get('/:type/:id', async (req, res) => {
   const def = defFor(req);
   const doc = await loadDoc(def, req.params.id);
-  const item = plain(doc);
+  const item = withDefaults(def, plain(doc));
   res.json({ item, media: await mediaFor(item), title: titleOf(def, item, def.refs ? await refTitles(def) : {}) });
 });
 
@@ -133,7 +141,7 @@ router.get('/:type/:id', async (req, res) => {
 router.post('/:type', async (req, res) => {
   const def = defFor(req);
   const Model = contentModel(def.key);
-  const { data } = await validateOrThrow(def, req.body);
+  const { data } = await validateOrThrow(def, withDefaults(def, req.body || {}));
 
   if (def.orderable) {
     const edge = await Model.findOne().sort({ order: def.newFirst ? 1 : -1 }).select('order').lean();
@@ -142,7 +150,7 @@ router.post('/:type', async (req, res) => {
   const doc = await Model.create({ ...data, createdBy: req.user._id, updatedBy: req.user._id });
   const refs = def.refs ? await refTitles(def) : {};
   record(req, { action: 'added', area: def.key, areaLabel: def.label, itemId: doc._id, itemTitle: titleOf(def, doc, refs) });
-  contentUpdated();
+  changed(def);
   const item = plain(doc);
   res.status(201).json({ item, media: await mediaFor(item) });
 });
@@ -166,7 +174,7 @@ router.put('/:type/:id', async (req, res) => {
   await doc.save();
   const refs = def.refs ? await refTitles(def) : {};
   record(req, { action: 'edited', area: def.key, areaLabel: def.label, itemId: doc._id, itemTitle: titleOf(def, doc, refs) });
-  contentUpdated();
+  changed(def);
   const item = plain(doc);
   res.json({ item, media: await mediaFor(item) });
 });
@@ -180,7 +188,7 @@ router.patch('/:type/:id', async (req, res) => {
   doc.updatedBy = req.user._id;
   await doc.save();
   record(req, { action: doc.published ? 'showed' : 'hid', area: def.key, areaLabel: def.label, itemId: doc._id, itemTitle: titleOf(def, doc, def.refs ? await refTitles(def) : {}) });
-  contentUpdated();
+  changed(def);
   res.json({ item: plain(doc) });
 });
 
@@ -199,7 +207,7 @@ router.post('/:type/:id/move', async (req, res) => {
   all.splice(target, 0, item);
   const ops = all.map((d, i) => (d.order === i ? null : { updateOne: { filter: { _id: d._id }, update: { $set: { order: i } } } })).filter(Boolean);
   if (ops.length) await Model.bulkWrite(ops);
-  contentUpdated();
+  changed(def);
   res.json({ ok: true, order: all.map((d) => String(d._id)) });
 });
 
@@ -217,7 +225,7 @@ router.delete('/:type/:id', async (req, res) => {
   const title = titleOf(def, doc, refs);
   await doc.deleteOne();
   record(req, { action: 'deleted', area: def.key, areaLabel: def.label, itemId: doc._id, itemTitle: title });
-  contentUpdated();
+  changed(def);
   res.json({ ok: true });
 });
 
