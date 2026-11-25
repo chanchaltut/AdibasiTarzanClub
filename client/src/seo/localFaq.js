@@ -23,7 +23,7 @@ export function localFaq(content, tr) {
   const officers = COMMITTEE.filter((c) => real(c.name)).map((c) => `${tr(c.name)} (${tr(c.role)})`).join(', ');
   const firstTeam = SQUAD.filter((p) => (p.squad || 'first-team') === 'first-team');
   const captain = firstTeam.find((p) => p.captain);
-  const founders = MEMBERS.filter((m) => m.memoriam || /found/i.test(m.kind || ''));
+  const founders = MEMBERS.filter((m) => /found/i.test(m.kind || ''));
   const cup = TOURNAMENTS[0];
   const programmes = PROGRAMMES.filter((x) => x.signup).map((x) => tr(x.title)).join(', ');
 

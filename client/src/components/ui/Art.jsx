@@ -119,6 +119,62 @@ export function MemberJersey({ className = '' }) {
   );
 }
 
+/**
+ * The shirt for members who have passed away: plain white (the colour of mourning), no sash,
+ * a black armband on the sleeve and the crest. Decorative: the card carries the name.
+ */
+export function MemorialJersey({ className = '' }) {
+  const id = `r${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
+  const body = 'M78 18 L120 58 L162 18 L212 38 L236 92 L200 108 L190 96 L190 236 Q120 246 50 236 L50 96 L40 108 L4 92 L28 38 Z';
+  return (
+    <svg className={`jersey jersey--memorial ${className}`} viewBox="0 0 240 250" aria-hidden="true" focusable="false">
+      <defs>
+        <clipPath id={`${id}c`}><path d={body} /></clipPath>
+        <linearGradient id={`${id}s`} x1="0" x2="1">
+          <stop offset="0" stopColor="#2B1609" stopOpacity=".32" />
+          <stop offset=".26" stopColor="#2B1609" stopOpacity="0" />
+          <stop offset=".74" stopColor="#2B1609" stopOpacity="0" />
+          <stop offset="1" stopColor="#2B1609" stopOpacity=".32" />
+        </linearGradient>
+      </defs>
+      <g clipPath={`url(#${id}c)`}>
+        <rect width="240" height="250" fill="#F4EEE2" />
+        {/* black mourning band on the left sleeve */}
+        <path d="M14 64 L44 78 L36 98 L6 84 Z" fill="#141414" />
+        <path d="M14 64 L44 78" stroke="#D99A2B" strokeWidth="1.4" opacity=".7" />
+        <rect width="240" height="250" fill={`url(#${id}s)`} />
+      </g>
+      <path d="M78 18 L120 58 L162 18" fill="none" stroke="#2B1609" strokeWidth="8" strokeLinejoin="miter" />
+      <path d="M84.5 17 L120 51 L155.5 17" fill="none" stroke="#D99A2B" strokeWidth="1.4" />
+      <image href="/brand/crest.webp?v=2" x="98" y="92" width="44" height="44" />
+      <path d={body} fill="none" stroke="#1A0A04" strokeOpacity=".4" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
+/** A marigold garland hung across the top of a memorial card, as on a remembered portrait. */
+export function Garland({ className = '' }) {
+  // Flowers along a gentle curve from corner to corner.
+  const flowers = Array.from({ length: 17 }, (_, i) => {
+    const t = i / 16;
+    const x = 6 + t * 188;
+    const y = 8 + Math.sin(t * Math.PI) * 30;
+    return { x, y, gold: i % 2 === 0 };
+  });
+  return (
+    <svg className={`garland ${className}`} viewBox="0 0 200 52" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path d="M6 8 Q100 68 194 8" fill="none" stroke="#3E5A1E" strokeWidth="1.6" />
+      {flowers.map((f, i) => (
+        <g key={i} transform={`translate(${f.x} ${f.y})`}>
+          <circle r="6.2" fill={f.gold ? '#E8891C' : '#F2B630'} />
+          <circle r="3.6" cx="-.8" cy="-.8" fill={f.gold ? '#F2A13A' : '#F7CB5A'} />
+          <circle r="1.3" fill="#8A3F16" />
+        </g>
+      ))}
+    </svg>
+  );
+}
+
 /** A madal drum, for heritage content. */
 export function Drum({ className = '' }) {
   const { t } = useLang();

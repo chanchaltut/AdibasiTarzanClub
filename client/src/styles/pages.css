@@ -471,11 +471,15 @@
 .memoriam__head .h2 { margin: 8px 0 0; color: var(--parchment-light); }
 .memoriam__line { font-size: clamp(30px, 3.4vw, 46px); color: var(--gold); line-height: 1.1; margin-top: 4px; }
 .members-grid--memoriam { justify-content: center; grid-template-columns: repeat(auto-fit, minmax(170px, 220px)); }
-/* Sepia photo in a thin gold frame, a dried sprig in the corner */
+/* Remembered members: sepia photo or the white memorial shirt, a gold frame and a marigold garland */
 .member-tile--memoriam { background: radial-gradient(circle at 50% 34%, rgba(233, 190, 106, .14), transparent 62%), var(--grain-dark), #1A0C06; }
-.member-tile--memoriam .player-card__art { filter: grayscale(1) sepia(.35) contrast(1.05) brightness(.92); }
+.member-tile--memoriam .player-card__photo { filter: grayscale(1) sepia(.35) contrast(1.05) brightness(.92); }
 .member-tile--memoriam::after { box-shadow: inset 0 0 0 1px rgba(233, 190, 106, .5), inset 0 0 0 6px rgba(26, 12, 6, .9), inset 0 0 0 7px rgba(233, 190, 106, .28); }
-.member-tile__sprig { position: absolute; z-index: 4; width: 22%; top: 3%; right: 3%; transform: rotate(18deg); opacity: .9; pointer-events: none; }
+.player-card.member-tile--memoriam:hover .jersey { transform: translateX(-50%); }
+.member-tile__garland { position: absolute; z-index: 4; left: 4%; right: 4%; top: 1.5%; width: 92%; height: 24%; pointer-events: none; filter: drop-shadow(0 3px 3px rgba(0, 0, 0, .45)); }
+.memoriam__intro { margin: 14px auto 0; max-width: 520px; font-style: italic; font-size: 18px; line-height: 1.5; color: var(--on-dark-muted); }
+.memoriam__group + .memoriam__group { margin-top: 44px; }
+.memoriam__group-title { text-align: center; font-size: 26px; color: var(--gold-soft); margin-bottom: 18px; }
 .member-tile__tribute { margin-top: 6px; font-family: var(--f-serif); font-style: italic; font-size: clamp(11px, 4.6cqw, 14px); line-height: 1.3; color: rgba(241, 228, 200, .78); }
 .members-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; margin-bottom: 22px; }
 .members-title .h2 { margin: 0; }

@@ -444,7 +444,7 @@ function pageExtras(path, lang) {
         ? {
           page: {
             mainEntity: [
-              ...(remembered.length ? [peopleList('Adibasi Tarzan Club — In Memoriam, founding members', remembered.map((m) => memberNode(m, tr, `${url}#in-memoriam`)))] : []),
+              ...(remembered.length ? [peopleList('Adibasi Tarzan Club — In Memoriam', remembered.map((m) => memberNode(m, tr, `${url}#in-memoriam`)))] : []),
               ...(active.length ? [peopleList('Adibasi Tarzan Club members (active)', active.map((m) => memberNode(m, tr, `${url}#club-members`)))] : []),
             ],
           },
@@ -782,7 +782,7 @@ function peopleSummary() {
     ...committeeLines(),
     ...(first.length ? [`- First team: ${first.length} players${captain ? `, captained by ${captain.first} ${captain.last}` : ''} — ${abs('/squad')}`] : []),
     ...(MEMBERS.some((m) => !m.memoriam) ? [`- Members: ${MEMBERS.filter((m) => !m.memoriam).length} named active club members — ${abs('/members')}`] : []),
-    ...(MEMBERS.some((m) => m.memoriam) ? [`- In Memoriam: ${MEMBERS.filter((m) => m.memoriam).map((m) => m.name).join(', ')} — remembered founding members, ${abs('/members#in-memoriam')}`] : []),
+    ...(MEMBERS.some((m) => m.memoriam) ? [`- In Memoriam: ${MEMBERS.filter((m) => m.memoriam).map((m) => m.name).join(', ')} — members who have passed away, remembered by the club, ${abs('/members#in-memoriam')}`] : []),
     `- Everyone listed on ${abs('/squad')}, ${abs('/committee')} and ${abs('/members')} belongs to ${CLUB.name}.`,
   ];
 }
@@ -886,7 +886,7 @@ ${GALLERY_SECTIONS.map((g) => `- ${g.title}: ${g.albums.join(', ')} — ${abs(`/
 
 ${squadLine(SQUAD.filter((p) => squadOf(p) === 'first-team'))}
 
-${section('Youth (U-17) squad', squadLine(SQUAD.filter((p) => squadOf(p) === 'youth')))}${section('Veterans squad', squadLine(SQUAD.filter((p) => squadOf(p) === 'veterans')))}${section('Committee and office-bearers', committeeLines().join('\n'))}${section('In Memoriam — founding members, forever remembered', memoriamLines().join('\n'))}${section(`Members of ${CLUB.name} (active)`, memberLines().join('\n'))}## Membership
+${section('Youth (U-17) squad', squadLine(SQUAD.filter((p) => squadOf(p) === 'youth')))}${section('Veterans squad', squadLine(SQUAD.filter((p) => squadOf(p) === 'veterans')))}${section('Committee and office-bearers', committeeLines().join('\n'))}${section('In Memoriam — members who have passed away, forever remembered', memoriamLines().join('\n'))}${section(`Members of ${CLUB.name} (active)`, memberLines().join('\n'))}## Membership
 
 ${MEMBERSHIP_TIERS.map((t) => `- ${t.name} (${t.price}): ${t.perks.join('; ')}`).join('\n')}
 

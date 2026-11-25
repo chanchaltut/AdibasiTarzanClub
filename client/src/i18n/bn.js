@@ -1068,4 +1068,9 @@ export default {
   'Our Crest — The Story Behind the ATC Crest': 'আমাদের প্রতীক — ATC প্রতীকের পেছনের গল্প',
   'What every part of the Adibasi Tarzan Club crest means: Estd. 1981, the jungle, Tarzan, the bow and arrows, the Tumdak and Tamak, the Bengali inscription, the football, ATC, the shield and the maroon and blue colours.':
     'আদিবাসী টারজান ক্লাবের প্রতীকের প্রতিটি অংশের অর্থ: প্রতিষ্ঠা 1981, জঙ্গল, টারজান, তির-ধনুক, তুমদাক ও তামাক, বাংলা লেখা, ফুটবল, ATC, ঢাল আর মেরুন ও নীল রং।',
+  'With love and respect': 'ভালোবাসা ও শ্রদ্ধায়',
+  'Members of the ATC family who are no longer with us. Their names stay with the club.': 'ATC পরিবারের সেই সদস্যরা, যাঁরা আর আমাদের মধ্যে নেই। তাঁদের নাম চিরকাল ক্লাবের সঙ্গে থাকবে।',
+  'Life Members': 'আজীবন সদস্য',
+  'Patrons': 'পৃষ্ঠপোষক',
+  'Well-wishers': 'শুভানুধ্যায়ী',
 };
