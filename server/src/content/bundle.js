@@ -243,7 +243,9 @@ export async function buildBundle() {
     COMMITTEE: lists.committee.map((c) => compact({ id: id(c), role: c.role, name: c.name, photo: img(c.photo) })),
     MEMBERS: lists.members.map((m) => compact({
       id: id(m), name: m.name, kind: m.kind, since: m.since, photo: img(m.photo),
-      memoriam: m.memoriam || undefined, years: m.memoriam ? m.years : undefined, tribute: m.memoriam ? m.tribute : undefined,
+    })),
+    MEMORIAM: lists.memoriam.map((m) => compact({
+      id: id(m), name: m.name, kind: m.kind, years: m.years, tribute: m.tribute, photo: img(m.photo), memoriam: true,
     })),
     HONOURS: lists.honours.map((h) => ({ comp: h.comp, count: h.count, unit: h.unit, icon: h.icon || 'cup' })),
     TIMELINE: lists.timeline.map((t) => ({ year: t.year, title: t.title, text: t.text })),

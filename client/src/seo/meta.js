@@ -18,10 +18,10 @@ import { LANG_CODES, LANGS, langFromPath, localePath, stripLang, translate } fro
 // The content these functions describe. Every exported function calls sync() first, so it
 // always works from whatever the site currently shows (server content, saved copy or defaults).
 let CLUB; let EVENTS; let FAQ; let FIXTURES; let HONOURS; let MEMBERSHIP_TIERS; let NEWS; let RESULTS; let SQUAD; let TEAMS; let TIMELINE; let GALLERY; let COMMITTEE; let MEMBERS;
-let MATCH_INFO; let TOURNAMENTS; let PROGRAMMES;
+let MATCH_INFO; let TOURNAMENTS; let PROGRAMMES; let MEMORIAM;
 function sync() {
   ({
-    CLUB, EVENTS, FAQ, FIXTURES, HONOURS, MEMBERSHIP_TIERS, NEWS, RESULTS, SQUAD, TEAMS, TIMELINE, GALLERY, COMMITTEE, MEMBERS, MATCH_INFO, TOURNAMENTS, PROGRAMMES,
+    CLUB, EVENTS, FAQ, FIXTURES, HONOURS, MEMBERSHIP_TIERS, NEWS, RESULTS, SQUAD, TEAMS, TIMELINE, GALLERY, COMMITTEE, MEMBERS, MATCH_INFO, TOURNAMENTS, PROGRAMMES, MEMORIAM,
   } = getContent());
 }
 
@@ -438,9 +438,9 @@ function pageExtras(path, lang) {
         : {};
     }
     case '/members': {
-      const remembered = MEMBERS.filter((m) => m.memoriam);
-      const active = MEMBERS.filter((m) => !m.memoriam);
-      return MEMBERS.length
+      const remembered = MEMORIAM.map((m) => ({ ...m, memoriam: true }));
+      const active = MEMBERS;
+      return MEMBERS.length || MEMORIAM.length
         ? {
           page: {
             mainEntity: [
@@ -757,8 +757,8 @@ const squadLine = (players) => ['Goalkeeper', 'Defender', 'Midfielder', 'Forward
   .join('\n');
 
 const committeeLines = () => COMMITTEE.filter((c) => named(c.name)).map((c) => `- ${c.role}: ${c.name}`);
-const memberLines = () => MEMBERS.filter((m) => !m.memoriam).map((m) => `- ${m.name} — ${m.kind || 'Member'}${m.since ? `, since ${m.since}` : ''}`);
-const memoriamLines = () => MEMBERS.filter((m) => m.memoriam).map((m) => `- ${m.name} — ${m.kind || 'Member'}${m.years ? ` (${m.years})` : ''}${m.tribute ? `: ${m.tribute}` : ''}`);
+const memberLines = () => MEMBERS.map((m) => `- ${m.name} — ${m.kind || 'Member'}${m.since ? `, since ${m.since}` : ''}`);
+const memoriamLines = () => MEMORIAM.map((m) => `- ${m.name} — ${m.kind || 'Member'}${m.years ? ` (${m.years})` : ''}${m.tribute ? `: ${m.tribute}` : ''}`);
 
 const tournamentLines = () => TOURNAMENTS.map((x) => {
   const { fixtures, results } = tournamentMatches(x, getContent());
@@ -781,8 +781,8 @@ function peopleSummary() {
   return [
     ...committeeLines(),
     ...(first.length ? [`- First team: ${first.length} players${captain ? `, captained by ${captain.first} ${captain.last}` : ''} — ${abs('/squad')}`] : []),
-    ...(MEMBERS.some((m) => !m.memoriam) ? [`- Members: ${MEMBERS.filter((m) => !m.memoriam).length} named active club members — ${abs('/members')}`] : []),
-    ...(MEMBERS.some((m) => m.memoriam) ? [`- In Memoriam: ${MEMBERS.filter((m) => m.memoriam).map((m) => m.name).join(', ')} — members who have passed away, remembered by the club, ${abs('/members#in-memoriam')}`] : []),
+    ...(MEMBERS.length ? [`- Members: ${MEMBERS.length} named active club members — ${abs('/members')}`] : []),
+    ...(MEMORIAM.length ? [`- In Memoriam: ${MEMORIAM.map((m) => m.name).join(', ')} — members who have passed away, remembered by the club, ${abs('/members#in-memoriam')}`] : []),
     `- Everyone listed on ${abs('/squad')}, ${abs('/committee')} and ${abs('/members')} belongs to ${CLUB.name}.`,
   ];
 }

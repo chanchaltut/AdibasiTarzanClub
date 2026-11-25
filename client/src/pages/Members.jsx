@@ -6,7 +6,7 @@ import { Garland, MemberJersey, MemorialJersey, Photo } from '../components/ui/A
 import { CARD_NAME_STYLES, nameClasses } from '../components/layout/Lettering';
 
 const ALL = 'All';
-const PLURAL = { 'Founding Member': 'Founding Members', 'Life Member': 'Life Members', Member: 'Members', Patron: 'Patrons', 'Well-wisher': 'Well-wishers' };
+const PLURAL = { 'Founding Member': 'Founding Members', 'Former Player': 'Former Players', 'Former Office-bearer': 'Former Office-bearers', 'Life Member': 'Life Members', Member: 'Members', Patron: 'Patrons', 'Well-wisher': 'Well-wishers' };
 
 /** One member on a player-style card. Remembered members get the sepia, gold-framed version. */
 function MemberTile({ m, i, nameClass }) {
@@ -41,15 +41,15 @@ function MemberTile({ m, i, nameClass }) {
 
 export default function Members() {
   const { t, ta } = useLang();
-  const { MEMBERS, PAGES, LETTERING } = useContent();
+  const { MEMBERS, MEMORIAM, PAGES, LETTERING } = useContent();
   const nameClass = `player-card__name ${nameClasses(LETTERING?.memberNames, CARD_NAME_STYLES, 'display')}`;
   const [kind, setKind] = useState(ALL);
 
-  const remembered = MEMBERS.filter((m) => m.memoriam);
+  const remembered = MEMORIAM.map((m) => ({ ...m, memoriam: true }));
   // Remembered members in groups by type — founding members first — keeping the admin's order inside each.
   const rememberedKinds = [...new Set(remembered.map((m) => m.kind || 'Member'))]
     .sort((a, b) => (b === 'Founding Member') - (a === 'Founding Member'));
-  const active = MEMBERS.filter((m) => !m.memoriam);
+  const active = MEMBERS;
   const kinds = [...new Set(active.map((m) => m.kind).filter(Boolean))];
   const current = kinds.includes(kind) ? kind : ALL;
   const shown = current === ALL ? active : active.filter((m) => m.kind === current);
@@ -65,26 +65,25 @@ export default function Members() {
         crumbs={[{ label: 'Club', href: '/club' }, { label: 'Members' }]}
       />
 
-      {remembered.length > 0 && (
-        <section className="section memoriam bg-bark-deep" id="in-memoriam" aria-labelledby="memoriam-title">
-          <div className="wrapper">
-            <header className="memoriam__head">
-              <p className="kicker">{t('With love and respect')}</p>
-              <h2 className="h2 display" id="memoriam-title">{t('In Memoriam')}</h2>
-              <p className="memoriam__line script">{t('Forever Remembered, Never Forgotten')}</p>
-              <p className="memoriam__intro serif">{t('Members of the ATC family who are no longer with us. Their names stay with the club.')}</p>
-            </header>
-            {rememberedKinds.map((k) => (
-              <div key={k} className="memoriam__group">
-                {rememberedKinds.length > 1 && <h3 className="memoriam__group-title display">{t(PLURAL[k] || k)}</h3>}
-                <ul className="members-grid members-grid--memoriam">
-                  {remembered.filter((m) => (m.kind || 'Member') === k).map((m, i) => <li key={m.id || `${m.name}-${i}`}><MemberTile m={m} i={i} nameClass={nameClass} /></li>)}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+      <section className="section memoriam bg-bark-deep" id="in-memoriam" aria-labelledby="memoriam-title">
+        <div className="wrapper">
+          <header className="memoriam__head">
+            <p className="kicker">{t('With love and respect')}</p>
+            <h2 className="h2 display" id="memoriam-title">{t('In Memoriam')}</h2>
+            <p className="memoriam__line script">{t('Forever Remembered, Never Forgotten')}</p>
+            <p className="memoriam__intro serif">{t('Members of the ATC family who are no longer with us. Their names stay with the club.')}</p>
+          </header>
+          {!remembered.length && <p className="memoriam__empty serif">{t('The names of members who have passed away will be remembered here.')}</p>}
+          {rememberedKinds.map((k) => (
+            <div key={k} className="memoriam__group">
+              {rememberedKinds.length > 1 && <h3 className="memoriam__group-title display">{t(PLURAL[k] || k)}</h3>}
+              <ul className="members-grid members-grid--memoriam">
+                {remembered.filter((m) => (m.kind || 'Member') === k).map((m, i) => <li key={m.id || `${m.name}-${i}`}><MemberTile m={m} i={i} nameClass={nameClass} /></li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <section className="section bg-parchment" id="club-members" aria-labelledby="club-members-title">
         <div className="wrapper">

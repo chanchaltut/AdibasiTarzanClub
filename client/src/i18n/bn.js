@@ -1073,4 +1073,9 @@ export default {
   'Life Members': 'আজীবন সদস্য',
   'Patrons': 'পৃষ্ঠপোষক',
   'Well-wishers': 'শুভানুধ্যায়ী',
+  'The names of members who have passed away will be remembered here.': 'যে সদস্যরা আর আমাদের মধ্যে নেই, তাঁদের নাম এখানে স্মরণ করা হবে।',
+  'Former Player': 'প্রাক্তন খেলোয়াড়',
+  'Former Players': 'প্রাক্তন খেলোয়াড়',
+  'Former Office-bearer': 'প্রাক্তন পদাধিকারী',
+  'Former Office-bearers': 'প্রাক্তন পদাধিকারী',
 };

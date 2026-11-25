@@ -409,6 +409,7 @@ export default {
   SQUAD,
   COMMITTEE,
   MEMBERS: [],
+  MEMORIAM: [],
   HONOURS,
   TIMELINE,
   FAQ,

@@ -1075,4 +1075,9 @@ export default {
   'Life Members': 'आजीवन सदस्य',
   'Patrons': 'संरक्षक',
   'Well-wishers': 'शुभचिंतक',
+  'The names of members who have passed away will be remembered here.': 'जो सदस्य हमारे बीच नहीं रहे, उनके नाम यहाँ याद किए जाएँगे।',
+  'Former Player': 'पूर्व खिलाड़ी',
+  'Former Players': 'पूर्व खिलाड़ी',
+  'Former Office-bearer': 'पूर्व पदाधिकारी',
+  'Former Office-bearers': 'पूर्व पदाधिकारी',
 };

@@ -24,7 +24,7 @@ export default function Search({ open, onClose }) {
   const [q, setQ] = useState('');
   const input = useRef(null);
   const { t, name, lang } = useLang();
-  const { NEWS, SQUAD, MEMBERS, EVENTS, VIDEOS, TOURNAMENTS, PROGRAMMES } = useContent();
+  const { NEWS, SQUAD, MEMBERS, MEMORIAM, EVENTS, VIDEOS, TOURNAMENTS, PROGRAMMES } = useContent();
 
   useEffect(() => {
     if (!open) return;
@@ -40,18 +40,14 @@ export default function Search({ open, onClose }) {
     ...PAGES.map((p) => ({ ...p, title: t(p.title), en: p.title })),
     ...NEWS.map((n) => ({ title: t(n.title), en: n.title, href: `/news/${n.slug}`, type: 'News' })),
     ...SQUAD.map((p) => ({ title: `${name(p)} — #${p.no} ${t(p.pos)}`, en: `${p.first} ${p.last} ${p.pos}`, href: '/squad', type: 'Player' })),
-    ...MEMBERS.map((m) => ({
-      title: `${t(m.name)} — ${t(m.kind || 'Member')}${m.memoriam ? ` · ${t('In Memoriam')}` : ''}`,
-      en: `${m.name} ${m.kind || 'Member'}${m.memoriam ? ' In Memoriam late' : ''}`,
-      href: m.memoriam ? '/members#in-memoriam' : '/members',
-      type: 'Member',
-    })),
+    ...MEMBERS.map((m) => ({ title: `${t(m.name)} — ${t(m.kind || 'Member')}`, en: `${m.name} ${m.kind || 'Member'}`, href: '/members', type: 'Member' })),
+    ...MEMORIAM.map((m) => ({ title: `${t(m.name)} — ${t('In Memoriam')}`, en: `${m.name} ${m.kind || ''} In Memoriam late`, href: '/members#in-memoriam', type: 'Member' })),
     ...EVENTS.map((e) => ({ title: t(e.title), en: e.title, href: '/schedule?tab=events', type: 'Event' })),
     ...VIDEOS.map((v) => ({ title: t(v.title), en: v.title, href: '/gallery#videos', type: 'Video' })),
     ...TOURNAMENTS.map((x) => ({ title: t(x.name), en: x.name, href: '/tournaments', type: 'Event' })),
     ...PROGRAMMES.map((x) => ({ title: t(x.title), en: x.title, href: '/register', type: 'Event' })),
     ...GALLERY_SECTIONS.flatMap((g) => [g.title, ...g.albums].map((a) => ({ title: `${t(a)} — ${t('Gallery')}`, en: `${a} gallery photos`, href: `/gallery?section=${g.id}`, type: 'Page' }))),
-  ], [lang, NEWS, SQUAD, MEMBERS, EVENTS, VIDEOS, TOURNAMENTS, PROGRAMMES]); // eslint-disable-line react-hooks/exhaustive-deps
+  ], [lang, NEWS, SQUAD, MEMBERS, MEMORIAM, EVENTS, VIDEOS, TOURNAMENTS, PROGRAMMES]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const results = useMemo(() => {
     const s = q.trim().toLowerCase();

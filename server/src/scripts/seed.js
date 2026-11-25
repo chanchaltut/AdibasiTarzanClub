@@ -153,7 +153,7 @@ await insert('tiers', D.MEMBERSHIP_TIERS.map((t) => ({ name: t.name, price: t.pr
 await insert('gallery', D.GALLERY.map((g) => ({ photo: img(g.photo), caption: g.cap, section: g.section, album: g.album, published: true })));
 if (D.MEMBERS.length) {
   await insert('members', D.MEMBERS.map((m) => ({
-    name: m.name, kind: m.kind || 'Member', since: m.since, photo: img(m.photo), memoriam: Boolean(m.memoriam), years: m.years, tribute: m.tribute, published: true,
+    name: m.name, kind: m.kind || 'Member', since: m.since, photo: img(m.photo), published: true,
   })));
 }
 

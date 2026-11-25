@@ -549,17 +549,17 @@ describe('events & participations, gallery sections, members', () => {
     assert.deepEqual([puja.section, puja.album], ['celebrations', 'Kali Puja']);
   });
 
-  test('members remembered In Memoriam are marked, with their years', async () => {
-    const r = await c.post('/api/admin/c/members', { name: 'Founder Test', kind: 'Founding Member', memoriam: true, years: '1950 – 2018', tribute: 'One of the first', published: true });
+  test('people who have passed away have their own In Memoriam list, apart from the members', async () => {
+    const r = await c.post('/api/admin/c/memoriam', { name: 'Founder Test', kind: 'Founding Member', years: '1950 – 2018', tribute: 'One of the first', published: true });
     assert.equal(r.status, 201, JSON.stringify(r.body));
-    const a = await c.post('/api/admin/c/members', { name: 'Active Test', kind: 'Member', years: 'ignored', published: true });
+    const a = await c.post('/api/admin/c/members', { name: 'Active Test', kind: 'Member', published: true });
     assert.equal(a.status, 201);
     const { body } = await client().get('/api/public/content');
-    const f = body.MEMBERS.find((m) => m.name === 'Founder Test');
-    assert.deepEqual([f.memoriam, f.years, f.tribute], [true, '1950 – 2018', 'One of the first']);
-    const m = body.MEMBERS.find((x) => x.name === 'Active Test');
-    assert.equal(m.memoriam, undefined);
-    assert.equal(m.years, undefined, 'years only kept for members in memoriam');
+    const f = body.MEMORIAM.find((m) => m.name === 'Founder Test');
+    assert.deepEqual([f.memoriam, f.kind, f.years, f.tribute], [true, 'Founding Member', '1950 – 2018', 'One of the first']);
+    assert.ok(!body.MEMBERS.some((m) => m.name === 'Founder Test'), 'never mixed with the living members');
+    assert.ok(body.MEMBERS.some((m) => m.name === 'Active Test'));
+    assert.ok(!body.MEMORIAM.some((m) => m.name === 'Active Test'));
   });
 
   test('a visitor signs up for an event; it lands in Sign-ups, never on the website', async () => {

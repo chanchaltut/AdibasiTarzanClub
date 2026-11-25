@@ -678,3 +678,4 @@
   .signup-form { grid-template-columns: 1fr; padding: 40px 22px 36px; }
   .signup-form__foot .btn { width: 100%; }
 }
+.memoriam__empty { text-align: center; font-style: italic; font-size: 18px; color: var(--on-dark-muted); max-width: 520px; margin: 0 auto; padding: 22px 24px; border: 1px dashed rgba(233, 190, 106, .3); }

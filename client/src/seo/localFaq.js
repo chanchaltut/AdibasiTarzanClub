@@ -13,7 +13,7 @@ const real = (name) => Boolean(name) && name !== 'To be announced';
 
 /** `tr(text, vars)` translates into the page language. Items are already translated (`done`). */
 export function localFaq(content, tr) {
-  const { CLUB, COMMITTEE = [], SQUAD = [], MEMBERS = [], HONOURS = [], TOURNAMENTS = [], PROGRAMMES = [] } = content;
+  const { CLUB, COMMITTEE = [], SQUAD = [], MEMBERS = [], MEMORIAM = [], HONOURS = [], TOURNAMENTS = [], PROGRAMMES = [] } = content;
   const founded = CLUB.founded;
   const years = Math.floor((new Date().getFullYear() - founded) / 5) * 5;
   const address = (CLUB.address || []).map((l) => tr(l)).join(', ');
@@ -23,7 +23,7 @@ export function localFaq(content, tr) {
   const officers = COMMITTEE.filter((c) => real(c.name)).map((c) => `${tr(c.name)} (${tr(c.role)})`).join(', ');
   const firstTeam = SQUAD.filter((p) => (p.squad || 'first-team') === 'first-team');
   const captain = firstTeam.find((p) => p.captain);
-  const founders = MEMBERS.filter((m) => /found/i.test(m.kind || ''));
+  const founders = [...MEMORIAM, ...MEMBERS].filter((m) => /found/i.test(m.kind || ''));
   const cup = TOURNAMENTS[0];
   const programmes = PROGRAMMES.filter((x) => x.signup).map((x) => tr(x.title)).join(', ');
 
@@ -57,7 +57,7 @@ export function localFaq(content, tr) {
       q: tr('Who are the founding members of Adibasi Tarzan Club?'),
       a: [
         tr('Adibasi Tarzan Club was founded in {founded} in S. Akhanagar, Kaliyaganj. The founding members named on the Members page are: {list}.', { founded, list: founders.map((m) => tr(m.name)).join(', ') }),
-        founders.some((m) => m.memoriam) && tr('Those who are no longer with us are remembered there In Memoriam — forever remembered, never forgotten.'),
+        founders.some((m) => MEMORIAM.includes(m)) && tr('Those who are no longer with us are remembered there In Memoriam — forever remembered, never forgotten.'),
       ],
     },
     {
